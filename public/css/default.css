@@ -1,0 +1,48 @@
+/* Alinha o formulário ao centro */
+.container {
+    max-width: 500px;
+    margin: auto;
+  }
+
+  /* Alinha a imagem do aluno ao centro */
+  .img-thumbnail {
+    display: block;
+    margin: auto;
+  }
+
+  /* Ajusta o espaçamento dos elementos da página */
+  .card {
+    margin-top: 20px;
+  }
+
+  /* Ajusta o espaçamento do motivo do status */
+  .message {
+    margin-top: 10px;
+  }
+
+  /* Estiliza o texto do motivo do status */
+  #motivo-status {
+    font-style: italic;
+  }
+
+  /* Estiliza o ícone do tooltip */
+  .fa-info-circle {
+    font-size: 20px;
+    color: #007bff;
+    cursor: pointer;
+  }
+
+  /* Define o estilo do tooltip */
+  .tooltip-inner {
+    max-width: 200px;
+    font-size: 14px;
+    text-align: center;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    padding: 8px;
+  }
+
+  .acesso{
+    font-size:40px;
+  }
