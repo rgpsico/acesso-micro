@@ -76,43 +76,6 @@ class AcessoControllerApi extends Controller
 
 
 
-    public function validacao($matricula)
-    {
-
-        $bloqueioAcesso = $this->service->validacaoBloqueioGeral($matricula);
-
-        $bloqueioCadastro = $this->service->validacaoBloqueioCadastro($matricula);
-
-        $estaEmDia = $this->service->validacaoPlano($matricula);
-
-        $validacaoCarteira = $this->service->validacaoCarteira($matricula);
-
-        $validacaoDocumento = $this->service->validacaoDocumento($matricula);
-
-
-        if ($bloqueioCadastro) {
-            return response()->json(['content' => 'aluno bloqueio cadastro'],  200);
-        }
-
-
-        if ($bloqueioAcesso) {
-            return response()->json(['content' => 'aluno bloqueado'],  200);
-        }
-
-
-        if ($estaEmDia) {
-            return response()->json(['content' => 'aluno não está em dia'], 200);
-        }
-
-        if ($validacaoDocumento) {
-            return response()->json(['content' => 'bloqueio documento'], 200);
-        }
-
-        if ($validacaoCarteira) {
-            return response()->json(['content' => 'bloqueio carteira'], 200);
-        }
-    }
-
 
     public function byNome(Request $request)
     {
@@ -138,13 +101,25 @@ class AcessoControllerApi extends Controller
 
         $validacaoResult = Validacao::where('nome', $validacao)->firstOrFail();
 
+        $temValidacao = UserValidacao::where('validacao_id', $validacaoResult->id)->exists();
+
+
+        if( $temValidacao)
+        {
+            return response()->json(['message' => 'Aluno já tem essa validação'], 409);
+        }
+
+
         if($validacaoResult)
         {
 
-             UserValidacao::updateOrCreate(
-                ['user_id' =>  request('userId')],
-                ['validacao_id' => $validacaoResult->id]
+             $addValidacao = UserValidacao::updateOrCreate(
+                ['validacao_id' =>  $validacaoResult->id],
+                ['user_id' => $userId ]
             );
+
+
+
             return response()->json(['message' => 'Validação adicionada com sucesso!'], 200);
         }
 
