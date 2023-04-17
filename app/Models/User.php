@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function validacao()
+    {
+        return $this->belongsToMany(Validacao::class, 'UserValidacao', 'user_id', 'validacao_id');
+    }
 }

@@ -65,51 +65,13 @@ class AcessoController extends Controller
         return $this->validacao->validacoes($matricula);
     }
 
-    $catraca = app(CatracaService::class);
-    $catraca->liberarCatraca();
-
     $aluno = User::all(['id', 'nome', 'email'])->where('id', $matricula);
     return $this->response($aluno);
-}
-
-
-
-    public function validacao($matricula)
-    {
-
-        $bloqueioAcesso = $this->service->validacaoBloqueioGeral($matricula);
-
-        $bloqueioCadastro = $this->service->validacaoBloqueioCadastro($matricula);
-
-        $estaEmDia = $this->service->validacaoPlano($matricula);
-
-        $validacaoCarteira = $this->service->validacaoCarteira($matricula);
-
-        $validacaoDocumento = $this->service->validacaoDocumento($matricula);
-
-
-        if ($bloqueioCadastro) {
-            return response()->json(['content' => 'aluno bloqueio cadastro'],  200);
-        }
-
-
-        if ($bloqueioAcesso) {
-            return response()->json(['content' => 'aluno bloqueado'],  200);
-        }
-
-
-        if ($estaEmDia) {
-            return response()->json(['content' => 'aluno não está em dia'], 200);
-        }
-
-        if ($validacaoDocumento) {
-            return response()->json(['content' => 'bloqueio documento'], 200);
-        }
-
-        if ($validacaoCarteira) {
-            return response()->json(['content' => 'bloqueio carteira'], 200);
-        }
     }
+
+
+
+
 
 
     public function byNome(Request $request)

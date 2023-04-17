@@ -21,38 +21,61 @@ class AcessoService
     public function validacoes($matricula)
     {
 
-        $bloqueioAcesso = $this->service->validacaoBloqueioGeral($matricula);
+        $bloqueioAcesso = $this->service->validacaoBloqueioCadastro($matricula);
 
-        $bloqueioCadastro = $this->service->validacaoBloqueioCadastro($matricula);
+        if ($bloqueioAcesso)
+        {
+            return response()->json(['content' => 'Aluno está bloqueado'], 200);
+        }
 
-        $estaEmDia = $this->service->validacaoPlano($matricula);
+
+        $validacaoPlanoEstaEmDia = $this->service->validacaoPlano($matricula);
+
+        if ($validacaoPlanoEstaEmDia)
+        {
+            return response()->json(['content' => 'aluno não está em dia, bloqueio Plano'], 200);
+        }
+
 
         $validacaoCarteira = $this->service->validacaoCarteira($matricula);
 
+        if ($validacaoCarteira)
+        {
+            return response()->json(['content' => 'Bloqueio Carteira'], 200);
+        }
+
+
+         $validacaoDocumento = $this->service->validacaoDocumento($matricula);
+
+         if ($validacaoDocumento)
+        {
+            return response()->json(['content' => 'Bloqueio Documento'], 200);
+        }
+
+
         $validacaoDocumento = $this->service->validacaoDocumento($matricula);
 
-
-        if ($bloqueioCadastro) {
-            return response()->json(['content' => 'aluno bloqueio cadastro'],  200);
-        }
-
-
-        if ($bloqueioAcesso) {
-            return response()->json(['content' => 'aluno bloqueado'],  200);
-        }
+        if ($validacaoDocumento)
+       {
+           return response()->json(['content' => 'Bloqueio Documento'], 200);
+       }
 
 
-        if ($estaEmDia) {
-            return response()->json(['content' => 'aluno não está em dia'], 200);
-        }
+       $validacaoAcesso = $this->service->validacaoAcesso($matricula);
 
-        if ($validacaoDocumento) {
-            return response()->json(['content' => 'bloqueio documento'], 200);
-        }
+       if ($validacaoAcesso)
+       {
+            return response()->json(['content' => 'aluno bloqueio Acesso'],  200);
+       }
 
-        if ($validacaoCarteira) {
-            return response()->json(['content' => 'bloqueio carteira'], 200);
-        }
+
+        // if ($validacaoDocumento) {
+        //     return response()->json(['content' => 'bloqueio documento'], 200);
+        // }
+
+        // if ($validacaoCarteira) {
+        //     return response()->json(['content' => 'bloqueio carteira'], 200);
+        // }
     }
 
 

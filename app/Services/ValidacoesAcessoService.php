@@ -2,245 +2,128 @@
 
 namespace App\Services;
 
+use App\Models\Config;
 use App\Models\EmpresaCancelamento;
 use App\Models\User;
 use App\Models\UserValidacao;
+use App\Models\Validacao;
 
 class ValidacoesAcessoService
 {
 
     public $model;
     public $aluno;
-    public function __construct(UserValidacao $model, User $aluno)
+    public $config;
+
+
+    public function __construct(UserValidacao $model, User $aluno, Config $config)
     {
         $this->model = $model;
+        $this->config = $config;
         $this->aluno = $aluno;
     }
 
 
-
-    public function validacoes($matricula)
+    public function temValidacao($matricula, $validacaoNome)
     {
-        return  $this->model::with('validacao')->where('user_id', $matricula)->get();
-    }
-
-    public function getAlunoById($matricula)
-    {
-        return  $this->aluno::where('id', $matricula)->get();
-    }
-
-
-    public function getIdsValidacoes($matricula)
-    {
-        $validacoes = $this->model::where('user_id', $matricula)->pluck('validacao_id')->toArray();
-        return $validacoes;
-    }
-
-
-    public function Bloqueio($matricula, $nomeValidacao)
-    {
-        $validacoes = $this->validacoes($matricula);
-
-        $result = false;
-
-        foreach ($validacoes as $value)
+        $validacao = Validacao::where('nome', $validacaoNome)->first();
+        if ($validacao)
         {
-            if ($value->validacao->nome == $nomeValidacao)
+            $userValidacao = UserValidacao::where('user_id', $matricula)->where('validacao_id', $validacao->id)->first();
+            if ($userValidacao)
             {
-               $result = true;
+                return true;
             }
         }
 
-       return $result;
-    }
-
-
-
-    public function validacaoBloqueioGeral($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueio');
-       $result = false;
-
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
-
-                $dataPlano = $aluno->created_at;
-
-                if($dataPlano == true){ // Validação
-                    $result =  true;
-                }
-
-            }
-            return $result;
+        return false;
     }
 
 
 
     public function validacaoPlano($matricula)
     {
-       $bloqueio = $this->Bloqueio($matricula, 'plano');
-       $result = false;
+        $result = false;
+        $validacaoNome = 'plano';
+        $config = $this->config::where('nome', $validacaoNome)->get();
 
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
+        if($config->value('status') == 1 && $this->temValidacao($matricula, $validacaoNome))
+        {
+            return true;
+        }
 
-                $dataPlano = $aluno->created_at;
-
-                if($dataPlano == true){ // Validação
-                    $result =  true;
-                }
-
-            }
-            return $result;
+         return $result;
     }
 
-
-
-    public function validacaoCarteira($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'carteira');
-       $result = false;
-
-       if ($bloqueio)
-       {
-           $aluno = User::find($matricula);
-           $dataPlano = $aluno->created_at;
-
-           if($dataPlano == true){ // Validação
-               $result =  true;
-           }
-       }
-
-       return $result;
-    }
-
-
-    public function validacaoHorarios($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueio');
-
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
-
-                $dataPlano = $aluno->created_at;
-                dd('AQUIaaaa');
-
-            }
-    }
-
-
-    public function validacaoSessao($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueio');
-
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
-
-                $dataPlano = $aluno->created_at;
-                dd('AQUIaaaaa');
-
-            }
-    }
-
-    public function validacaoGympass($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueio');
-
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
-
-                $dataPlano = $aluno->created_at;
-                dd('AQUIaaa');
-
-            }
-    }
-
-    public function validacaoTurmas($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueio');
-
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
-
-                $dataPlano = $aluno->created_at;
-                dd('AQUI');
-
-            }
-    }
-
-
-    public function validacaoCadastro($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueio');
-
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
-
-                $dataPlano = $aluno->created_at;
-                dd('AQUI');
-
-            }
-    }
-
-
-    public function validacaoFacial($matricula)
-    {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueio');
-
-            if ($bloqueio)
-            {
-                $aluno = User::find($matricula);
-
-                $dataPlano = $aluno->created_at;
-                dd('AQUI');
-
-            }
-    }
 
 
     public function validacaoBloqueioCadastro($matricula)
     {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueioCadastro');
-        $result = false;
-        if ($bloqueio)
-        {
-            $aluno = User::find($matricula);
-            $dataPlano = $aluno->created_at;
+         $result = false;
+         $validacao = 'BloqueioCadastro';
 
-            if($dataPlano == true)
-            { // Validação
-                $result =  true;
-            }
-        }
+         $config = $this->config::where('nome', $validacao )->get();
 
-        return $result;
+
+
+         if($config->value('status') == 1 && $this->temValidacao($matricula, $validacao))
+         {
+             return true;
+         }
+
+          return $result;
+    }
+
+
+    public function validacaoCarteira($matricula)
+    {
+         $result = false;
+         $validacao = 'carteira';
+
+         $config = $this->config::where('nome', $validacao)->get();
+
+         if($config->value('status') == 1 && $this->temValidacao($matricula, $validacao))
+         {
+             return true;
+         }
+
+          return $result;
     }
 
 
     public function validacaoDocumento($matricula)
     {
-       $bloqueio = $this->Bloqueio($matricula, 'bloqueioDocumento');
-        $result = false;
-        if ($bloqueio)
-        {
-            $aluno = User::find($matricula);
-            $dataPlano = $aluno->created_at;
+         $result = false;
+         $validacao = 'documento';
 
-            if($dataPlano == true)
-            { // Validação
-                $result =  true;
-            }
-        }
+         $config = $this->config::where('nome', $validacao)->get();
 
-        return $result;
+         if($config->value('status') == 1 && $this->temValidacao($matricula, $validacao))
+         {
+             return true;
+         }
+
+          return $result;
     }
+
+
+    public function validacaoAcesso($matricula)
+    {
+         $result = false;
+         $validacao = 'acesso';
+
+         $config = $this->config::where('nome', $validacao)->get();
+
+         if($config->value('status') == 1 && $this->temValidacao($matricula, $validacao))
+         {
+             return true;
+         }
+
+          return $result;
+    }
+
+
+
 
 
 }

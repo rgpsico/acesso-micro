@@ -3,7 +3,9 @@
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
+
 <div class="container acesso">
+    @include('sidebar')
     <div class="form-group mb-2">
       <label for="matricula" class="label"></label>
       <div class="input-group">
@@ -23,7 +25,7 @@
           <div class="card-body">
             <div class="text-center">
               <h5 class="card-title" id="nomeAluno">Nome do Aluno</h5>
-              <p class="card-text">Matrícula: <b id="matricula-aluno"></b></p>
+              <p class="card-text">Matrícula:<b id="matricula-aluno"></b></p>
             </div>
             <div class="text-center">
               <span class="badge badge-success" id="status">Liberado</span>
@@ -73,7 +75,24 @@ $(document).ready(function(){
             // trate o erro, se necessário
         });
     })
+
+    function execultarTeste()
+    {
+        $.get('executar-comando', function(data){
+
+    })
+
+    }
+    $(document).on('click', '#buscar', function() {
+    var matricula = 10;
+        $.get('https://vendas.mufitness.com.br/004/aluno/3/byid',function(data){
+                    if(data.data.released == false){
+                        execultarTeste()
+                    }
+            })
+        });
 })
+
 
 </script>
 @endsection

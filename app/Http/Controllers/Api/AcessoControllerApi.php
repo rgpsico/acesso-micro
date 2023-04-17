@@ -67,8 +67,8 @@ class AcessoControllerApi extends Controller
         return $this->validacao->validacoes($matricula);
     }
 
-    $catraca = app(CatracaService::class);
-    $catraca->liberarCatraca();
+    // $catraca = app(CatracaService::class);
+    // $catraca->liberarCatraca();
 
     $aluno = User::all(['id', 'nome', 'email'])->where('id', $matricula);
     return $this->response($aluno);
