@@ -7,10 +7,7 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" >Config</a>
+          <a class="nav-link " href="{{ route('config.index') }}" tabindex="-1" >Config</a>
         </li>
       </ul>
 

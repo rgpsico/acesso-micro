@@ -33,7 +33,7 @@ Route::prefix('admin')->group(function () {
 
 
 Route::get('/executar-comando', function () {
-    exec('C:\Users\barbara.MU\Downloads\Debug\nseUSB2E2S.exe');
+    exec('C:\Users\barbara.MU\Downloads\Debug\nseUSB2E2S3121.exe');
   });
 
 Auth::routes();
