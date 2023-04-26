@@ -2,47 +2,11 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<style>
-    /* Fontes */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
-    /* Estilos para h1 */
-    h1.card-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin-bottom: 0;
-      text-transform: uppercase;
-    }
-
-    /* Estilos para h2 */
-    h2.card-text {
-      font-family: 'Roboto', sans-serif;
-      font-size: 24px;
-      font-weight: 400;
-      margin-top: 0.5rem;
-    }
-
-    /* Estilos para parágrafo */
-    p#motivo-status {
-      background-color: #FFA500;
-      border-radius: 50px;
-      color: #fff;
-      font-family: 'Roboto', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin: 1rem 0 0;
-      padding: 1rem 2rem;
-      text-transform: uppercase;
-    }
-  </style>
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 
 <audio id="liberado" src="{{ asset('music/success.mp3') }}"></audio>
 <audio id="bloqueado" src="{{ asset('music/error.mp3') }}"></audio>
-
+<button id="fullscreenToggle"><i class="fas fa-expand"></i></button>
 <div class="container acesso">
     <input type="hidden" name="cliente_id" id="cliente_id" value="{{ env('CLIENTE') }}">
     <div class="form-group mb-2 col-4">
@@ -105,16 +69,15 @@ $(document).ready(function(){
 
 function buscarByMatricula(matricula)
        {
+        $('#foto_avatar').fadeOut();;
         $.get('https://vendas.mufitness.com.br/'+$('#cliente_id').val() +'/aluno/'+matricula+'/byid',function(data){
             var res = data.data;
 
             $('#foto_avatar').attr('src', res.photoUrl).on('error', function() {
                 $(this).attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg');
-            });
+            }).fadeIn();;
 
             if(res.released ==  true){
-                execultarTeste()
-                document.getElementById("liberado").play();
                 $('#nomeAluno').text(res.nome)
                 $("#matricula-aluno").text(res.id)
                 $('#status').text('LIBERADO')
@@ -124,12 +87,17 @@ function buscarByMatricula(matricula)
                 $("#motivo-status").removeClass('bg-info')
                 $('#motivo-status').addClass('bg-success')
                 $('#motivo-status').text(res.text)
+                $('#app').removeClass('bg-dark')
+                $('#app').addClass('bg-success')
+
+                document.getElementById("liberado").play();
             } else {
                 $('#nomeAluno').text(res.nome)
                 $("#matricula-aluno").text(res.id)
                 $('#status').text('BLOQUEADO')
                 $(".message").removeClass('text-success')
                 $(".message").addClass('text-danger')
+
                 document.getElementById("bloqueado").play();
             }
 
@@ -151,6 +119,22 @@ function buscarByMatricula(matricula)
         });
 
        }
+
+       $("#fullscreenToggle").on("click", function() {
+        toggleFullscreen();
+    });
+
+       function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    }
+
+
 
 
     function execultarTeste()
