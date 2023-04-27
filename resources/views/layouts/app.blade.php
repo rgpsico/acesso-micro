@@ -23,7 +23,7 @@
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
 </head>
-<body class="bg-dark">
+<body>
     <div id="app" class="bg-dark">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

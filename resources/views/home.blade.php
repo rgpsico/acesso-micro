@@ -6,7 +6,44 @@
 
 <audio id="liberado" src="{{ asset('music/success.mp3') }}"></audio>
 <audio id="bloqueado" src="{{ asset('music/error.mp3') }}"></audio>
-<button id="fullscreenToggle"><i class="fas fa-expand"></i></button>
+ 
+  <button id="fullscreenToggle">
+    <i class="fas fa-expand"></i>
+  </button>
+
+<style>
+  .notification-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 250px;
+    height: 200px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+}
+
+.user-status {
+    font-size: 14px;
+    color: #333333;
+}
+</style>
+
+<div class="notification-box" style="display:none;">
+  <div class="notification-content">
+      <span class="user-status">Usuário entrou</span>
+  </div>
+</div>
 <div class="container acesso">
     <input type="hidden" name="cliente_id" id="cliente_id" value="{{ env('CLIENTE') }}">
     <div class="form-group mb-2 col-4">
@@ -50,7 +87,11 @@ $(document).ready(function(){
 //Liberado 186
 
 
+
+
+
     $(document).on('click', '#buscar', function(event) {
+      showNotification()
         var matricula = $('#matricula').val();
          buscarByMatricula(matricula)
     });
@@ -69,14 +110,15 @@ $(document).ready(function(){
 
 function buscarByMatricula(matricula)
        {
+        var contrato = $('#cliente_id').val() 
         $('#foto_avatar').fadeOut();;
-        $.get('https://vendas.mufitness.com.br/'+$('#cliente_id').val() +'/aluno/'+matricula+'/byid',function(data){
+        $.get('https://vendas.mufitness.com.br/'+502+'/aluno/'+matricula+'/byid',function(data){
             var res = data.data;
 
             $('#foto_avatar').attr('src', res.photoUrl).on('error', function() {
                 $(this).attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg');
             }).fadeIn();;
-
+            showNotification() 
             if(res.released ==  true){
                 $('#nomeAluno').text(res.nome)
                 $("#matricula-aluno").text(res.id)
@@ -87,17 +129,19 @@ function buscarByMatricula(matricula)
                 $("#motivo-status").removeClass('bg-info')
                 $('#motivo-status').addClass('bg-success')
                 $('#motivo-status').text(res.text)
+                $('.user-status').text(res.text)
                 $('#app').removeClass('bg-dark')
-                $('#app').addClass('bg-success')
+               
 
                 document.getElementById("liberado").play();
+               
             } else {
                 $('#nomeAluno').text(res.nome)
                 $("#matricula-aluno").text(res.id)
                 $('#status').text('BLOQUEADO')
                 $(".message").removeClass('text-success')
                 $(".message").addClass('text-danger')
-
+                $('.user-status').text(res.text)
                 document.getElementById("bloqueado").play();
             }
 
@@ -135,6 +179,13 @@ function buscarByMatricula(matricula)
     }
 
 
+    function showNotification() {
+    $(".notification-box").slideDown(500, function () {
+        setTimeout(function () {
+            $(".notification-box").slideUp(500);
+        }, 3000); // A notificação desaparece após 3 segundos
+    });
+}
 
 
     function execultarTeste()
