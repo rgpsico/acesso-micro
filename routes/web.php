@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+
 
 Route::prefix('admin')->group(function () {
     Route::prefix('acesso')->group(function () {
@@ -34,10 +34,11 @@ Route::get('/executar-comando', function () {
     exec('C:\Users\barbara.MU\Downloads\Debug\nseUSB2E2S3121.exe');
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

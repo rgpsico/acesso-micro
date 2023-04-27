@@ -1,89 +1,73 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@include('layouts.header')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Acesso Micro</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="dns-prefetch" href="{{ asset('css/default.css') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon//favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <!-- Scripts -->
-    @vite(['resources/js/app.js'])
-</head>
 <body>
+    <style>
+    .menu-flutuante {
+        position: fixed;
+        width:3%;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9999;
+        opacity: 0.2;
+        padding: 10px;
+        height: 100%;
+
+    }
+
+#menu-opcoes {
+  position: absolute;
+  top: 40%;
+  left: 60px;
+  z-index: 999;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  width:300px;
+}
+
+#menu-opcoes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#menu-opcoes li {
+  padding: 10px;
+}
+
+#menu-opcoes a {
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+#menu-opcoes a:hover {
+  background-color: #f5f5f5;
+}
+
+    </style>
+
+
+<button id="menu-flutuante" class="btn btn-primary menu-flutuante">Menu</button>
+
+    <div id="menu-opcoes" class="d-none">
+        <ul>
+            <li><a href="#" class="list-group-item" id="liberacaoManual">Liberar Manual</a></li>
+            <li><a href="#" class="list-group-item" id="liberacaoManual">Liberar Catraca</a></li>
+        </ul>
+    </div>
+
+
     <div id="app" class="bg-dark">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Acesso
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Configurações</a>
-                        </li>
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Sair
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </html>
