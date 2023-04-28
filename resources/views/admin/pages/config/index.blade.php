@@ -4,27 +4,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <style>
-    body {
-      background-color: #f5f5f5;
-    }
-
-    .config-container {
+     .container {
       background-color: #ffffff;
       border-radius: 5px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 30px;
+      height: 660px;
     }
 
     .form-check-label {
       font-weight: 500;
     }
-    #flexSwitchCheckDefault{
 
-    }
   </style>
-    <div class="container mt-5">
+    <div class="container">
 
-        <h1 class="mb-4" style="color:#fff;">Configuração de Controle de Acesso</h1>
+        <h1 style="color:#000; margin-top:10px;">Configuração de Controle de Acesso</h1>
 
         <div class="row bg-light">
             <div class="col-md-6 col-6">
@@ -76,6 +70,11 @@
                 <div class="form-check form-switch  my-3">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Permitir reservar aula coletiva estando inativo</label>
                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                </div>
+
+                <div class="form-check form-switch  my-3">
+                    <label class="form-check-label" for="">Justificativa</label>
+                    <input class="form-check-input" type="checkbox" id="">
                 </div>
             </div>
             <div class="col-6 my-3">

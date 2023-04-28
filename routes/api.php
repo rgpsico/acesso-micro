@@ -10,10 +10,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/teste', function () {
-    exec('C:\Users\gerro\OneDrive\Imagens\logo.svg');
-    return true;
-});
 
 Route::prefix('acesso')->group(function () {
     Route::post('addPermissao', [AcessoControllerApi::class, 'addpermissoes']);
@@ -21,4 +17,5 @@ Route::prefix('acesso')->group(function () {
     Route::post('byNome', [AcessoControllerApi::class, 'byNome']);
     Route::get('validacoes', [AcessoControllerApi::class, 'validacoes']);
     Route::post('removerPermissao', [AcessoControllerApi::class, 'removerPermissao']);
+    Route::post('savejustificativa', [AcessoController::class, 'saveJustificativa']);
 });

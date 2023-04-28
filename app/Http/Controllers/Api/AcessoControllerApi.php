@@ -16,6 +16,7 @@ use App\Services\ValidacoesAcessoService;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use PiPHP\GPIO\GPIO;
 use PiPHP\GPIO\Output\OutputPin;
 
@@ -146,6 +147,27 @@ class AcessoControllerApi extends Controller
         }
 
             return response()->json(['message' => 'Validação não foi excluida!'], 404);
+    }
+
+    public function saveJustificativa(Request $request)
+    {
+        $idUser = $request->input('id_user');
+        $idAluno = $request->input('id_aluno');
+        $justificativa = $request->input('justificativa');
+
+        try {
+            DB::table('sf_configuracao_acesso')->insert([
+                'id_user' => $idUser,
+                'id_aluno' => $idAluno,
+                'justificativa' => $justificativa,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false, 'message' => $ex->getMessage()]);
+        }
     }
 
 
