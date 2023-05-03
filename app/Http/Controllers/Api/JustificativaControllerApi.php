@@ -27,6 +27,9 @@ class JustificativaControllerApi extends Controller
 
     protected $model;
 
+    public $timestamps = false;
+
+    protected $connection = 'sqlsrvNovoBanco';
 
     public function __construct(Justificativa $model )
     {
@@ -36,6 +39,13 @@ class JustificativaControllerApi extends Controller
     public function all()
     {
         return $this->model::all();
+    }
+
+    public function store()
+    {
+        $this->model::store([
+            ''
+        ]);
     }
 
 

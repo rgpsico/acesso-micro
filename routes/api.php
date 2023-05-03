@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AcessoControllerApi;
 use App\Http\Controllers\Api\ConfiguracaoControllerApi;
+use App\Http\Controllers\Api\JustificativaControllerApi;
+use App\Http\Controllers\AuthController;
 use App\Models\ConfiguracaoLegado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,11 +26,14 @@ Route::prefix('acesso')->group(function () {
 
 
 Route::prefix('justificativa')->group(function () {
-    Route::post('store', [AcessoControllerApi::class, 'store']);
-
+    Route::post('store', [JustificativaControllerApi::class, 'store']);
 });
 
 
 Route::prefix('configuracao')->group(function () {
     Route::put('update', [ConfiguracaoControllerApi::class, 'updateConfiguracao']);
+});
+
+Route::prefix('auth')->group(function () {
+    Route::post('login', [AuthController::class, 'auth']);
 });
