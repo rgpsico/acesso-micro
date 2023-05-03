@@ -9,9 +9,14 @@ class ConfiguracaoLegado extends Model
 {
     protected $table = 'sf_configuracao';
 
+
+
+
     public $timestamps = false;
 
     protected $connection = 'sqlsrvNovoBanco';
 
 }
+
+
 

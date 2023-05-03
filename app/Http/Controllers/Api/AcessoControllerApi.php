@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RedesFormRequest;
+use App\Models\AcessoLegado;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Models\Redes;
@@ -170,6 +171,26 @@ class AcessoControllerApi extends Controller
         }
     }
 
+    public function create(Request $request)
+    {
+        // validar os dados recebidos do formulário
+        $validated = $request->validate([
+            'id_fornecedor' => 'required|integer',
+            'data_acesso' => 'required|date',
+            'status_acesso' => 'required|string',
+            'liberado_por' => 'required|string',
+            'motivo_liberacao' => 'required|string',
+            'ambiente' => 'required|string',
+            'id_empresa_acesso' => 'required|integer',
+        ]);
+
+        // criar um novo registro usando o Model Acesso
+        $acesso = AcessoLegado::create($validated);
+
+        // redirecionar para a página de exibição do registro criado
+        return redirect()->route('acesso.show', ['id' => $acesso->id]);
+    }
+
 
 
     public function response($aluno)
@@ -191,6 +212,8 @@ class AcessoControllerApi extends Controller
         return response()->json(['Mensagem' => 'Aluno não encontrado'], 404);
 
     }
+
+
 
 
 
