@@ -66,15 +66,13 @@
 
   @-webkit-keyframes slide-ligar {
     0%{
-      right: 20px;
-      bottom: 50%;
-
-    }
-    100% {
-      right: 20px;
-      bottom: 60%;
-
-    }
+        right: 20%;
+        bottom: 50%;
+      }
+      100% {
+          right: 10%;
+          bottom:61%;
+      }
   }
 
   @keyframes slide-ligar {
@@ -100,12 +98,12 @@
 
   @-webkit-keyframes slide-whatsapp {
     0%{
-        right: 20%;
+        right: 15%;
         bottom: 50%;
       }
       100% {
-      right: 50%;
-      bottom: 60%;
+        right: 10%;
+       bottom:55%;
       }
   }
 
@@ -141,8 +139,8 @@
         bottom: 50%;
       }
       100% {
-      right: 50%;
-      bottom: 60%;
+      right: 10%;
+       bottom:49%;
       }
   }
 

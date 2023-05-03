@@ -2,20 +2,21 @@
 
 namespace App\View\Components;
 
-use App\Models\ConfiguracaoLegado;
+use App\Models\Justificativa;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class menuflutuante extends Component
+class justificativacomponent extends Component
 {
-    protected $config;
+    protected $model;
     /**
      * Create a new component instance.
      */
-    public function __construct(ConfiguracaoLegado $config)
+    public function __construct(Justificativa $model)
     {
-        $this->config = $config;
+        $this->model = $model;
+
     }
 
     /**
@@ -23,8 +24,9 @@ class menuflutuante extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.menuflutuante',[
-            'config' => $this->config::all()
+        $model = $this->model::all();
+        return view('components.justificativacomponent',[
+            'model' => $model
         ]);
     }
 }

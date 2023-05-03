@@ -2,20 +2,20 @@
 
 namespace App\View\Components;
 
-use App\Models\ConfiguracaoLegado;
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class menuflutuante extends Component
+class usercomponent extends Component
 {
-    protected $config;
+    protected $user;
     /**
      * Create a new component instance.
      */
-    public function __construct(ConfiguracaoLegado $config)
+    public function __construct(User $user)
     {
-        $this->config = $config;
+        $this->user = $user;
     }
 
     /**
@@ -23,8 +23,8 @@ class menuflutuante extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.menuflutuante',[
-            'config' => $this->config::all()
-        ]);
+        $user = $this->user::all();
+
+        return view('components.usercomponent',compact('user'));
     }
 }

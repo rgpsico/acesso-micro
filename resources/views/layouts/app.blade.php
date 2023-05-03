@@ -12,6 +12,7 @@
 
     <div id="app" class="bg-dark">
         <main class="py-4">
+            <x-modalmicro/>
             @yield('content')
         </main>
     </div>

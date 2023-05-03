@@ -5,9 +5,13 @@ $(document).ready(function(){
     //Liberado 186
 
     // Função para abrir o modal
-    $(".liberacaoManual").click(function() {
+    $(".liberacaoJustificada").click(function() {
       $("#modal_micro").fadeIn();
     });
+
+    $(".liberacaoManual").click(function() {
+        execultarApp()
+      });
 
     // Função para fechar o modal
     $("#fecharModal").click(function() {
@@ -28,13 +32,22 @@ $(document).ready(function(){
 
 
 
-
-
         $(document).on('click', '#buscar', function(event) {
           showNotification()
             var matricula = $('#matricula').val();
              buscarByMatricula(matricula)
+
+                  // Exemplo de dados a serem enviados
+        var data = {
+            id_fornecedores_despesas: 1,
+            id_web: 2,
+            nativa: true
+        };
+
+        sendData(data);
         });
+
+
 
         $(document).keypress(function(event) {
             var matricula = $('#matricula').val();
@@ -43,29 +56,50 @@ $(document).ready(function(){
             }
 
         });
-
-
-
-
-
     });
 
-        function getLogo(contrato)
-        {
-            let logo = `http://127.0.0.1/projetos/mu.fitness.gestao/Pessoas/${contrato}/Empresa/logo_001.png?rd=`+1235;
-            $('#logo').attr('src', logo)
+
+
+    async function sendData(data) {
+        try {
+          const response = await fetch("http://localhost:8001/306/redes/store", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          });
+
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log("Requisição bem-sucedida:", responseData);
+            // Insira o código para manipular a resposta bem-sucedida
+          } else {
+            console.error("Erro na requisição:", response.status, response.statusText);
+            // Insira o código para manipular o erro
+          }
+        } catch (error) {
+          console.error("Erro na requisição:", error);
+          // Insira o código para manipular o erro
         }
+      }
 
 
-        function buscarByMatricula(matricula)
-        {
-            $('#foto_avatar').fadeOut();;
 
-            $.ajax({
-      url: 'http://localhost:8001/'+306+'/aluno/'+matricula+'/byid',
-      statusCode: {
-        404: function() {
-            $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
+    function getLogo(contrato)
+    {
+        let logo = `http://127.0.0.1/projetos/mu.fitness.gestao/Pessoas/${contrato}/Empresa/logo_001.png?rd=`+1235;
+        $('#logo').attr('src', logo)
+    }
+
+    function buscarByMatricula(matricula)
+    {
+        $('#foto_avatar').fadeOut();;
+        $.ajax({
+            url: 'http://localhost:8001/'+306+'/aluno/'+matricula+'/byid',
+            statusCode: {
+            404: function() {
+          $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
           $('#nomeAluno').text('')
           $("#matricula-aluno").text('')
           $('#motivo-status').text('')
@@ -148,9 +182,9 @@ $(document).ready(function(){
         }
 
 
-        function execultarTeste()
+        function execultarApp()
         {
-            $.get('executar-comando', function(data){
+            $.get('/executar-comando', function(data){
 
         })
 
@@ -185,6 +219,4 @@ $(document).ready(function(){
               });
 
 
-              $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-              });
+

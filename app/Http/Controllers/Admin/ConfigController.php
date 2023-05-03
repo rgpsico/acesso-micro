@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RedesFormRequest;
-
+use App\Models\ConfiguracaoLegado;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserValidacao;
@@ -26,11 +26,12 @@ class ConfigController extends Controller
     protected $model;
     protected $service;
     protected $validacao;
-
-    public function __construct(ValidacoesAcessoService $service, AcessoService $validacao )
+    protected $configuracao;
+    public function __construct(ValidacoesAcessoService $service, AcessoService $validacao, ConfiguracaoLegado $configuracao )
     {
         $this->service = $service;
         $this->validacao = $validacao;
+        $this->configuracao = $configuracao;
     }
 
 
@@ -38,7 +39,9 @@ class ConfigController extends Controller
     {
         $pageTitle = $this->pageTitle;
 
-        return view($this->view.'.index', compact('pageTitle') );
+        $configuracao = $this->configuracao->get();
+
+        return view($this->view.'.index', compact('pageTitle','configuracao') );
     }
 
 

@@ -22,7 +22,7 @@
 
 </style>
 
-    <x-modalmicro/>
+   
 
     <x-notificationbox />
 
@@ -34,7 +34,13 @@
 
         <div class="form-group col-5 d-flex align-items-center my-2 mr-2">
             <div class="input-group">
-                <input type="text" class="form-control mr-2" placeholder="Contrato" id="contrato">
+           <select name="" id="id_filial" class="form-select">
+            <option value="" selected>Selecione</option>
+            <option value="">Empresa 004</option>
+            <option value="">Empresa 02</option>
+            <option value="">Empresa 03</option>
+            <option value="">Empresa 04</option>
+           </select>
                 <input type="text" class="form-control" placeholder="Matrícula" id="matricula">
             </div>
         </div>

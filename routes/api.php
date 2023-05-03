@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AcessoControllerApi;
+use App\Http\Controllers\Api\ConfiguracaoControllerApi;
+use App\Models\ConfiguracaoLegado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +20,15 @@ Route::prefix('acesso')->group(function () {
     Route::get('validacoes', [AcessoControllerApi::class, 'validacoes']);
     Route::post('removerPermissao', [AcessoControllerApi::class, 'removerPermissao']);
     Route::post('savejustificativa', [AcessoController::class, 'saveJustificativa']);
+});
+
+
+Route::prefix('justificativa')->group(function () {
+    Route::post('store', [AcessoControllerApi::class, 'store']);
+
+});
+
+
+Route::prefix('configuracao')->group(function () {
+    Route::put('update', [ConfiguracaoControllerApi::class, 'updateConfiguracao']);
 });
