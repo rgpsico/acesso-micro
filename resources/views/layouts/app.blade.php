@@ -17,6 +17,7 @@
         </main>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script type="module" src="{{ asset('js/default.js') }}"></script>
+
 </html>

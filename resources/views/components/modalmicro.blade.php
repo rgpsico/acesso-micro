@@ -36,8 +36,8 @@
     }
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 
 <div id="modal_micro" class="modal">
     <div class="modal-content-micro">
@@ -67,17 +67,14 @@
                 <div class="form-group col-12 mb-0">
                     <label for="" class="form-label mb-0">Tipo de Entrada</label>
                     <div class="d-flex align-items-center">
-                        <input type="radio" name="tipo_entrada" id="aluno"  class="mr-2 tipo_entrada" value="aluno">
+                        <input type="radio" name="tipo_entrada" id="tipo_entrada"  class="mr-2 tipo_entrada" value="aluno">
                         <label for="aluno" class="form-label  mr-5" style="margin:5px;">Aluno</label>
-                        <input type="radio" name="tipo_entrada" id="outros" style="margin:5px;" class="mr-2 tipo_entrada" style="margin-left:20px;" value="outros">
+                        <input type="radio" name="tipo_entrada" id="tipo_entrada" style="margin:5px;" class="mr-2 tipo_entrada" style="margin-left:20px;" value="outros">
                         <label for="outros" class="form-label">Outros</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 nome_div">
-                        <label for="nome" class="form-label mb-0">Nome</label>
-                        <input type="text" class="form-control" name="nomeAluno" id="nomeAluno">
-                    </div>
+                    <x-alunoscomponent/>
 
                     <x-justificativacomponent/>
 
@@ -97,6 +94,8 @@
         </div>
     </div>
 </div>
+
+
 
 <script>
   $(document).ready(function(){
@@ -142,14 +141,21 @@
 
     $('#salvar').click(function(){
         var id_user = $('#username').val();
-        var tipo_entrada = $('input[name="tipo_entrada"]:checked').val();
+
         var nome = $('#nome').val();
         var descricao = $('#descricao').val();
-        var id_aluno = $('#nome_aluno').val();
-        var motivoLiberacao = $('#motivoLiberacao').text()
+        var id_aluno = $('#nomeAluno').val();
+
+        var tipo_entrada = $('input[name="tipo_entrada"]:checked').val();
+
+        if(tipo_entrada == 'outros'){
+            id_aluno = 0;
+        }
+
+        var motivoLiberacao = $('#motivoLiberacao :selected').text()
 
         $.ajax({
-            url: 'api/justificativa/store',
+            url: '/api/justificativa/store',
             type: 'POST',
             data:{
                 "id_fornecedor": id_aluno,
@@ -163,7 +169,9 @@
             },
             success: function(response, status){
                 if(status == 'success'){
-                    execultarApp()
+                    $.get('/executar-comando', function(data){
+
+})
                 }
             },
             error: function(xhr, status, error){
@@ -172,6 +180,18 @@
             }
         });
     })
+
+
+
 });
 
+
+
 </script>
+
+<script src="{{ !! url('') }}">
+    $(document).ready(function(){
+      var $disabledResults = $("#aluno");
+      $disabledResults.select2();
+      });
+  </script>
