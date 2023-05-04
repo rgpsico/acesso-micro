@@ -37,6 +37,8 @@
 </style>
 
 
+<script src={{ asset('js/tostr.js') }}></script>
+<link rel="stylesheet" href="{{ asset('css/tostr.css') }}">
 
 
 <div id="modal_micro" class="modal">
@@ -67,14 +69,20 @@
                 <div class="form-group col-12 mb-0">
                     <label for="" class="form-label mb-0">Tipo de Entrada</label>
                     <div class="d-flex align-items-center">
-                        <input type="radio" name="tipo_entrada" id="tipo_entrada"  class="mr-2 tipo_entrada" value="aluno">
-                        <label for="aluno" class="form-label  mr-5" style="margin:5px;">Aluno</label>
+                        <input type="radio" name="tipo_entrada" checked id="tipo_entrada"  class="mr-2 tipo_entrada" value="aluno">
+                        <label for="aluno" class="form-label  mr-5"  style="margin:5px;">Aluno</label>
                         <input type="radio" name="tipo_entrada" id="tipo_entrada" style="margin:5px;" class="mr-2 tipo_entrada" style="margin-left:20px;" value="outros">
                         <label for="outros" class="form-label">Outros</label>
                     </div>
                 </div>
                 <div class="row">
-                    <x-alunoscomponent/>
+                    <div class="form-group col-6">
+                        <label for="" class="form-label m-0 label-aluno">Alunos:</label>
+                         <input type='txt' name="nomeAluno" id="nomeAluno"  class="form-control">
+                         <input type='txt' name="aluno_id" id="aluno_id"  class="form-control" style="display:none;">
+                         <select name="aluno_select" id="aluno_select" class="form-control js-states" style="display:none;">
+                        </select>
+                    </div>
 
                     <x-justificativacomponent/>
 
@@ -101,11 +109,18 @@
   $(document).ready(function(){
 
     $('.tipo_entrada').click(function(){
+
         if($(this).val() == 'aluno'){
-            $('.nome_div').show()
+            $('#label-aluno').show()
+            $('#nomeAluno').show()
+            $('#aluno').show()
             return;
         }
-        $('.nome_div').hide()
+        $('#nomeAluno').hide()
+        $('#aluno').hide()
+        $('.label-aluno').hide()
+        $('.aluno').hide()
+
     })
 
     $('#password').change(function(){
@@ -140,11 +155,12 @@
 
 
     $('#salvar').click(function(){
+
         var id_user = $('#username').val();
 
         var nome = $('#nome').val();
         var descricao = $('#descricao').val();
-        var id_aluno = $('#nomeAluno').val();
+        var id_aluno = $('#aluno_id').val();
 
         var tipo_entrada = $('input[name="tipo_entrada"]:checked').val();
 
@@ -169,10 +185,10 @@
             },
             success: function(response, status){
                 if(status == 'success'){
+                    alert('Liberado com sucesso')
                     $.get('/executar-comando', function(data){
+})                }
 
-})
-                }
             },
             error: function(xhr, status, error){
                 // Callback de erro
@@ -186,12 +202,31 @@
 });
 
 
+$(document).ready(function() {
+    $('#nomeAluno').on('keyup', function() {
+        var query = $(this).val();
+        $('#aluno_select').show()
+        if (query.length >= 3) {
+            $.get('/api/alunos/byName', { q: query }, function(data) {
+                var options = '<option></option>';
+                $.each(data, function(key, value) {
+                    options += '<option selected value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
+                });
+                $('#aluno_select').html(options);
+            }, 'json');
+        }
+    });
+
+
+    $('#aluno_select').on('click', function() {
+        var selectedOption = $(this).find(':selected');
+        $('#nomeAluno').val(selectedOption.text());
+        $('#aluno_id').val(selectedOption.val());
+        $('#aluno_select').hide()
+    });
+});
+
 
 </script>
 
-<script src="{{ !! url('') }}">
-    $(document).ready(function(){
-      var $disabledResults = $("#aluno");
-      $disabledResults.select2();
-      });
-  </script>
+
