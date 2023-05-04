@@ -22,6 +22,7 @@ Route::prefix('acesso')->group(function () {
     Route::get('validacoes', [AcessoControllerApi::class, 'validacoes']);
     Route::post('removerPermissao', [AcessoControllerApi::class, 'removerPermissao']);
     Route::post('savejustificativa', [AcessoController::class, 'saveJustificativa']);
+    Route::post('log', [AcessoControllerApi::class, 'logjustificativa']);
 });
 
 

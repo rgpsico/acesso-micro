@@ -3,37 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RedesFormRequest;
-use App\Models\Empresa;
-use App\Models\Justificativa;
+use App\Models\AcessoLegado;
+use App\Models\Config;
+use App\Models\ConfiguracaoLegado;
 use Illuminate\Http\Request;
-use App\Models\Redes;
-use App\Models\User;
-use App\Models\UserValidacao;
-use App\Models\Validacao;
-use App\Services\AcessoService;
-use App\Services\CatracaService;
-use App\Services\ValidacoesAcessoService;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\DB;
-use PiPHP\GPIO\GPIO;
-use PiPHP\GPIO\Output\OutputPin;
+
 
 
 class JustificativaControllerApi extends Controller
 {
 
     protected $model;
+    protected $config;
 
-    public $timestamps = false;
 
-    protected $connection = 'sqlsrvNovoBanco';
 
-    public function __construct(Justificativa $model )
+    public function __construct(AcessoLegado $model, ConfiguracaoLegado $config )
     {
         $this->model = $model;
+        $this->config = $config;
     }
 
     public function all()
@@ -41,11 +29,25 @@ class JustificativaControllerApi extends Controller
         return $this->model::all();
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $this->model::store([
-            ''
+        $configuracao_legado = $this->config->where('id',1)->first();
+        $tipo_liberacao = $configuracao_legado->JUSTIFICATIVA == 1 ? 'liberação justificada' : 'Liberação manual';
+
+         $sf_acesso = $this->model::create([
+            'id_fornecedor' => $request->input('id_fornecedor'),
+            'data_acesso' => now(),
+            'status_acesso' => $request->input('status_acesso'),
+            'liberador_por' => $request->input('liberador_por'),
+            'motivo_liberacao' => $request->input('motivo_liberacao'),
+            'ambiente' => $request->input('ambiente'),
+            'id_empresa_local' => $request->input('id_empresa_local'),
+            'id_empresa_origem' => $request->input('id_empresa_origem'),
+            'descricao_acesso' => $request->input('descricao_acesso'),
+            'tipo_liberacao' => $tipo_liberacao ,
         ]);
+
+        return response()->json($sf_acesso, 201);
     }
 
 

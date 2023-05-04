@@ -50,7 +50,6 @@
             </div>
         </div>
         <div class="modal-body-micro my-2">
-            <input type="hidden" name="id_user" id="id_user" class="form-control">
             <div class="row form-container">
                <x-usercomponent/>
                 <div class="col-6">
@@ -77,7 +76,7 @@
                 <div class="row">
                     <div class="col-12 nome_div">
                         <label for="nome" class="form-label mb-0">Nome</label>
-                        <input type="text" class="form-control" name="nome" id="nome">
+                        <input type="text" class="form-control" name="nomeAluno" id="nomeAluno">
                     </div>
 
                     <x-justificativacomponent/>
@@ -146,21 +145,26 @@
         var tipo_entrada = $('input[name="tipo_entrada"]:checked').val();
         var nome = $('#nome').val();
         var descricao = $('#descricao').val();
-        var obs = $('#obs').val();
+        var id_aluno = $('#nome_aluno').val();
+        var motivoLiberacao = $('#motivoLiberacao').text()
 
         $.ajax({
             url: 'api/justificativa/store',
             type: 'POST',
-            data: {
-                id_user: id_user,
-                tipo_entrada: tipo_entrada,
-                nome: nome,
-                descricao: descricao,
-                obs: obs
+            data:{
+                "id_fornecedor": id_aluno,
+                "status_acesso": 1,
+                "liberador_por": id_user,
+                "motivo_liberacao": motivoLiberacao,
+                "ambiente": 1,
+                "id_empresa_acesso": 123,
+                "id_empresa_origem": 3,
+                "descricao_acesso": descricao
             },
-            success: function(response){
-                // Callback de sucesso
-                console.log(response);
+            success: function(response, status){
+                if(status == 'success'){
+                    execultarApp()
+                }
             },
             error: function(xhr, status, error){
                 // Callback de erro

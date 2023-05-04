@@ -20,7 +20,10 @@ class AcessoLegado extends Model
         'liberado_por',
         'motivo_liberacao',
         'ambiente',
-        'id_empresa_acesso',
+        'id_empresa_origem',
+        'id_empresa_local',
+        'descricao_acesso',
+        'tipo_liberacao'
     ];
 
 }

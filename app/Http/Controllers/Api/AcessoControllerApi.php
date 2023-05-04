@@ -171,7 +171,7 @@ class AcessoControllerApi extends Controller
         }
     }
 
-    public function create(Request $request)
+    public function logjustificativa(Request $request)
     {
         // validar os dados recebidos do formulário
         $validated = $request->validate([
@@ -183,6 +183,8 @@ class AcessoControllerApi extends Controller
             'ambiente' => 'required|string',
             'id_empresa_acesso' => 'required|integer',
         ]);
+
+        dd('aaaa');
 
         // criar um novo registro usando o Model Acesso
         $acesso = AcessoLegado::create($validated);
