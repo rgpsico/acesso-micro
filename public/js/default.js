@@ -85,6 +85,17 @@ $(document).ready(function(){
       }
 
 
+      function formatarDataBr(data) {
+        // separa a string da data em ano, mês e dia
+        let partes = data.split('-');
+
+        // rearranja as partes da data na ordem DD/MM/YYYY
+        let dataBr = [partes[2], partes[1], partes[0]].join('/');
+
+        return dataBr;
+      }
+
+
 
     function getLogo(contrato)
     {
@@ -108,7 +119,21 @@ $(document).ready(function(){
           $('#motivo-status').removeClass('bg-success');
           $('#motivo-status').addClass('bg-danger');
 
-        }
+        },
+        403: function(data) {
+            var res = data.data;
+
+            $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
+            $('#nomeAluno').text('')
+            $("#matricula-aluno").text('')
+            $('#motivo-status').text('')
+            $('#status').text(res);
+            $('#motivo-status').text('Aluno Bloqueado Manualmente');
+            $('#motivo-status').removeClass('bg-success');
+            $('#motivo-status').addClass('bg-danger');
+
+          }
+
       },
       success: function(data) {
         var res = data.data;
@@ -118,7 +143,8 @@ $(document).ready(function(){
         }).fadeIn();
 
         if(res.released ==  true){
-          $('#nomeAluno').text(res.nome)
+
+          $('.nome_Aluno1').text(res.nome)
           $("#matricula-aluno").text(res.id)
           $('#status').text('LIBERADO')
           $(".message").removeClass('text-danger')
@@ -126,6 +152,7 @@ $(document).ready(function(){
           $("#motivo-status").removeClass('bg-danger')
           $("#motivo-status").removeClass('bg-info')
           $('#motivo-status').addClass('bg-success')
+          $('#data_venct').text(formatarDataBr(res.dueDate))
           $('#motivo-status').text(res.text)
           $('.user-status').text(res.text)
           $('#descricaoPlano').text(res.descricaoPlano)

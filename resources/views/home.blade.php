@@ -22,7 +22,7 @@
 
 </style>
 
-   
+
 
     <x-notificationbox />
 
@@ -60,13 +60,14 @@
         <div class="card p-2">
             <div class="card-header text-center" style="min-height:300px; max-height:300px;">
                 <img src="https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg"
-                    alt="Imagem do aluno" class="img-thumbnail" id="foto_avatar" width="280px" height="250px">
+                    alt="Imagem do aluno" class="img-thumbnail" id="foto_avatar" width="280px" height="240px" style="max-height:240px;">
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <h1 class="card-title" id="nomeAluno">Nome do Aluno</h1>
+                    <h1 class="card-title nome_Aluno1" id="nomeAluno">Nome do Aluno</h1>
                     <h2 class="card-text">Matrícula: <b id="matricula-aluno"></b></h2>
                     <h3 class="card-text">Plano: <b id="descricaoPlano"></b></h3>
+                    <h5 class="card-text">Data Vencimento: <b id="data_venct"></b></h3>
                     <h5 class="card-text">Motivo: <b id="acessoMsg"></b></h3>
                 </div>
             </div>
