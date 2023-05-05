@@ -184,10 +184,11 @@
                 "descricao_acesso": descricao
             },
             success: function(response, status){
-                if(status == 'success'){
-                    alert('Liberado com sucesso')
+                if(status == 'success')
+                {
+                        alert('Liberado com sucesso')
                     $.get('/executar-comando', function(data){
-})                }
+})              }
 
             },
             error: function(xhr, status, error){
