@@ -121,14 +121,14 @@ $(document).ready(function(){
 
         },
         403: function(data) {
-            var res = data.data;
+            var res = data.content;
 
             $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
             $('#nomeAluno').text('')
-            $("#matricula-aluno").text('')
-            $('#motivo-status').text('')
-            $('#status').text(res);
-            $('#motivo-status').text('Aluno Bloqueado Manualmente');
+            $("#matricula-aluno").text('Bloqueio Manual')
+            $('#motivo-status').text('Bloqueio Manual')
+            $('#status').text("Bloqueio Manual");
+            $('#motivo-status').text("Bloqueio Manual");
             $('#motivo-status').removeClass('bg-success');
             $('#motivo-status').addClass('bg-danger');
 
