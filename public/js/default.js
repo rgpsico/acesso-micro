@@ -32,6 +32,64 @@ const vendas_url = 'http://localhost:8001'
 
 
 
+
+    $(document).on('change', '#id_filial', function(event) {
+        var idweb = $(this).val();
+        var formattedId = String(idweb).padStart(3, '0');
+
+        $('#buscar_aluno').val('')
+        $('#matricula').val('')
+        $.get(vendas_url+'/'+formattedId+'/alunos', function(data){
+
+            $('#alunos_multifilai').empty();
+
+            // Preencher o select com os dados recebidos
+            data.forEach(function(item){
+                $('#alunos_multifilai').append('<option value="' + item.id + '">' + item.name + '</option>');
+            });
+        });
+    });
+
+    $(document).ready(function() {
+
+        $('#buscar_aluno').on('keyup', function() {
+            var searchText = $(this).val().toLowerCase();
+            $('#alunos_multifilai').show();
+
+            $('#alunos_multifilai option').each(function() {
+                var currentOption = $(this);
+                var currentOptionText = currentOption.text().toLowerCase();
+
+                if (currentOptionText.indexOf(searchText) !== -1) {
+                    currentOption.show();
+                } else {
+                    currentOption.hide();
+                }
+            });
+        });
+
+
+        $('#alunos_multifilai').on('change', function() {
+            var selectedOption = $(this).find(':selected');
+            $('#buscar_aluno').val(selectedOption.text());
+            $('#matricula').val(selectedOption.val());
+            $('#alunos_multifilai').hide();
+        });
+
+        // Esconda o select 'alunos_multifilai' quando clicar fora dele
+        $(document).on('click', function(e) {
+            if (!$(e.target).is('#alunos_multifilai, #buscar_aluno')) {
+                $('#alunos_multifilai').hide();
+            }
+        });
+
+        // Mostrar o select 'alunos_multifilai' quando o input 'buscar_aluno' estiver focado
+        $('#buscar_aluno').on('focus', function() {
+            $('#alunos_multifilai').show();
+        });
+    });
+
+
         $(document).on('click', '#buscar', function(event) {
 
             var matricula = $('#matricula').val();
@@ -231,7 +289,7 @@ const vendas_url = 'http://localhost:8001'
                 $('#id_filial').append(selectOption);
 
                 for (let i = 0; i < data.length; i++) {
-                    let option = new Option(data[i].nome_empresa, data[i].id_fornecedores_despesas);
+                    let option = new Option(data[i].nome_empresa, data[i].id_web);
                     $('#id_filial').append(option);
                 }
             });
@@ -267,6 +325,5 @@ const vendas_url = 'http://localhost:8001'
                 $('#floating-emergencia').toggle();
                 $('#floating-home').toggle();
               });
-
 
 

@@ -9,6 +9,7 @@
 
 <script>
     const empresaId = '306';
+
 </script>
 
     @vite('resources/js/app.js')
