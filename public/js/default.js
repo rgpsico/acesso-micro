@@ -33,7 +33,7 @@ const vendas_url = 'http://localhost:8001'
 
 
         $(document).on('click', '#buscar', function(event) {
-          showNotification()
+
             var matricula = $('#matricula').val();
              buscarByMatricula(vendas_url, matricula)
 
@@ -110,7 +110,6 @@ const vendas_url = 'http://localhost:8001'
             url: vendas_url+'/'+empresaId+'/aluno/'+matricula+'/byid',
             statusCode: {
             404: function(data) {
-                console.log(data)
           $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
           $('#nomeAluno').text('')
           $("#matricula-aluno").text('')
@@ -159,6 +158,7 @@ const vendas_url = 'http://localhost:8001'
           $('#descricaoPlano').text(res.descricaoPlano)
           $('#acessoMsg').text(res.acessoMsg)
           document.getElementById("liberado").play();
+          showNotification()
         } else {
           $('#nomeAluno').text(res.nome)
           $("#matricula-aluno").text(res.id)
@@ -169,6 +169,7 @@ const vendas_url = 'http://localhost:8001'
           $('#descricaoPlano').text(res.descricaoPlano)
           $('#acessoMsg').text(res.text)
           $('.user-status').text(res.text)
+
           document.getElementById("bloqueado").play();
         }
 
