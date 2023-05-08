@@ -1,8 +1,7 @@
 
 $(document).ready(function(){
-    //acesso nao encontrado 1232
-    //Cliente Vencido 104
-    //Liberado 186
+
+    getMultiFiliais(empresaId)
 
     // Função para abrir o modal
     $(".liberacaoJustificada").click(function() {
@@ -62,7 +61,7 @@ $(document).ready(function(){
 
     async function sendData(data) {
         try {
-          const response = await fetch("http://localhost:8001/306/redes/store", {
+          const response = await fetch("http://localhost:8001/"+empresaId+"/redes/store", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -107,7 +106,7 @@ $(document).ready(function(){
     {
         $('#foto_avatar').fadeOut();;
         $.ajax({
-            url: 'http://localhost:8001/'+306+'/aluno/'+matricula+'/byid',
+            url: 'http://localhost:8001/'+empresaId+'/aluno/'+matricula+'/byid',
             statusCode: {
             404: function() {
           $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
@@ -211,11 +210,29 @@ $(document).ready(function(){
 
         function execultarApp()
         {
-            $.get('/executar-comando', function(data){
-
-        })
-
+            $.get('/executar-comando', function(data){ })
         }
+
+
+        function getMultiFiliais(idweb)
+        {
+            $.get('api/legado/' + idweb + '/multifilial', function(data) {
+                // Limpar opções existentes
+                $('#id_filial').empty();
+
+                // Adicionar opção "Selecione"
+                let selectOption = new Option('Selecione', '');
+                $('#id_filial').append(selectOption);
+
+                for (let i = 0; i < data.length; i++) {
+                    let option = new Option(data[i].nome_empresa, data[i].id_fornecedores_despesas);
+                    $('#id_filial').append(option);
+                }
+            });
+        }
+
+
+
 
         const clock = document.getElementById("clock");
 

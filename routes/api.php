@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AcessoControllerApi;
 use App\Http\Controllers\Api\AlunoControllerApi;
 use App\Http\Controllers\Api\ConfiguracaoControllerApi;
 use App\Http\Controllers\Api\JustificativaControllerApi;
+use App\Http\Controllers\Api\LegadoControllerApi;
 use App\Http\Controllers\AuthController;
 use App\Models\ConfiguracaoLegado;
 use Illuminate\Http\Request;
@@ -24,6 +25,12 @@ Route::prefix('acesso')->group(function () {
     Route::post('removerPermissao', [AcessoControllerApi::class, 'removerPermissao']);
     Route::post('savejustificativa', [AcessoController::class, 'saveJustificativa']);
     Route::post('log', [AcessoControllerApi::class, 'logjustificativa']);
+});
+
+
+Route::prefix('legado')->group(function () {
+    Route::get('{idweb}/multifilial', [LegadoControllerApi::class, 'multiFilial']);
+
 });
 
 
