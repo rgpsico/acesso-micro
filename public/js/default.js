@@ -1,10 +1,11 @@
 
 $(document).ready(function(){
-
+const vendas_url = 'http://localhost:8001'
     getMultiFiliais(empresaId)
 
     // Função para abrir o modal
     $(".liberacaoJustificada").click(function() {
+
       $("#modal_micro").fadeIn();
     });
 
@@ -34,7 +35,7 @@ $(document).ready(function(){
         $(document).on('click', '#buscar', function(event) {
           showNotification()
             var matricula = $('#matricula').val();
-             buscarByMatricula(matricula)
+             buscarByMatricula(vendas_url, matricula)
 
                   // Exemplo de dados a serem enviados
         var data = {
@@ -43,7 +44,7 @@ $(document).ready(function(){
             nativa: true
         };
 
-        sendData(data);
+        //sendData(vendas_url, data);
         });
 
 
@@ -59,9 +60,9 @@ $(document).ready(function(){
 
 
 
-    async function sendData(data) {
+    async function sendData(vendas_url, data) {
         try {
-          const response = await fetch("http://localhost:8001/"+empresaId+"/redes/store", {
+          const response = await fetch(vendas_url+"/"+empresaId+"/redes/store", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -102,13 +103,14 @@ $(document).ready(function(){
         $('#logo').attr('src', logo)
     }
 
-    function buscarByMatricula(matricula)
+    function buscarByMatricula(vendas_url, matricula)
     {
         $('#foto_avatar').fadeOut();;
         $.ajax({
-            url: 'http://localhost:8001/'+empresaId+'/aluno/'+matricula+'/byid',
+            url: vendas_url+'/'+empresaId+'/aluno/'+matricula+'/byid',
             statusCode: {
-            404: function() {
+            404: function(data) {
+                console.log(data)
           $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
           $('#nomeAluno').text('')
           $("#matricula-aluno").text('')
@@ -160,9 +162,12 @@ $(document).ready(function(){
         } else {
           $('#nomeAluno').text(res.nome)
           $("#matricula-aluno").text(res.id)
-          $('#status').text('BLOQUEADO')
+          $('#status').text(res.status)
           $(".message").removeClass('text-success')
           $(".message").addClass('text-danger')
+          $('#data_venct').text(formatarDataBr(res.dueDate))
+          $('#descricaoPlano').text(res.descricaoPlano)
+          $('#acessoMsg').text(res.text)
           $('.user-status').text(res.text)
           document.getElementById("bloqueado").play();
         }

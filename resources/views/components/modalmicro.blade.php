@@ -54,7 +54,7 @@
         <div class="modal-body-micro my-2">
             <div class="row form-container">
                <x-usercomponent/>
-                <div class="col-6">
+                <div class="col-4">
                     <label for="" class="form-label mb-0">Password:</label>
                     <input type="password" name="password" id="password" class="form-control">
                     <div class="valid-feedback">
@@ -64,6 +64,9 @@
                     <div class="invalid-feedback">
                         Ok
                     </div>
+                </div>
+                <div class="col-2 my-4">
+                    <button class="btn btn-success" id="logar">Logar</button>
                 </div>
 
                 <div class="form-group col-12 mb-0">
@@ -123,7 +126,7 @@
 
     })
 
-    $('#password').change(function(){
+    $('#logar').click(function(){
     var selectedEmail = $('#user').find(":selected").data("email");
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
@@ -134,13 +137,11 @@
         },
         data: {
             email:selectedEmail,
-            password: $(this).val(),
+            password: $('#password').val(),
         },
         success: function(response){
-            // Callback de sucesso
-
+            console.log(response)
             $("#salvar").prop('disabled', false)
-
             $('#password').removeClass('is-invalid').addClass('is-valid');
             $('.valid-feedback').text('Logado com sucesso!');
         },
