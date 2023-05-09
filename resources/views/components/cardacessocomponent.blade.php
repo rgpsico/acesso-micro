@@ -1,7 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="container acesso">
-    <input type="txt" id="id_empresa" class="form-control">
+''
     <div class="row">
         <div class="col-1 d-flex align-items-center justify-content-start">
             <img src="" id="logo" alt="" height="40" width="100">
@@ -11,8 +11,9 @@
                 <select name="" id="id_filial" class="form-select mr-2">
                 </select>
 
+                <input type="hidden" id="nativaId" class="form-control">
                 <input type="hidden" id="matricula" class="form-control">
-                <input type="text" id="buscar_aluno" class="form-control ml-3">
+                <input type="text" id="buscar_aluno" class="form-control ml-3" style="margin-left:10px;" placeholder="Nome Aluno" autocomplete="off" >
 
                 <div class="" style="position:absolute; right:0; width:250px; top:105%; z-index:10000;">
                     <select name="alunos_multifilai" id="alunos_multifilai" class="form-select"  style="display:none;" placeholder="Nome Aluno" style="position:absoulute;">
