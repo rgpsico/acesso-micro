@@ -16,8 +16,13 @@
             @yield('content')
         </main>
     </div>
+    <script type="module" src="{{ asset('js/default.js') }}"></script>
+
+
+    </body>
+    </html>
 </body>
 
-<script type="module" src="{{ asset('js/default.js') }}"></script>
+
 
 </html>
