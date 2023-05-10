@@ -129,6 +129,7 @@
     $('#logar').click(function(){
     var selectedEmail = $('#user').find(":selected").data("email");
     var token = $('meta[name="csrf-token"]').attr('content');
+
     $.ajax({
         url: '/api/auth/login',
         type: 'POST',
@@ -152,6 +153,7 @@
             $('.invalid-feedback').text('Erro ao fazer login!');
         }
     });
+    
 });
 
 

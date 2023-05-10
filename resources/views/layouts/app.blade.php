@@ -16,8 +16,9 @@
             @yield('content')
         </main>
     </div>
+    <script type="module" src="{{ asset('js/response.js') }}"></script>
     <script type="module" src="{{ asset('js/default.js') }}"></script>
-
+    <script type="module" src="{{ asset('js/justificarModal.js') }}"></script>
 
     </body>
     </html>
