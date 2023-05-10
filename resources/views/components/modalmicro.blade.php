@@ -42,6 +42,7 @@
 
 
 <div id="modal_micro" class="modal">
+
     <div class="modal-content-micro">
         <div class="row">
             <div class="col-11">
@@ -53,6 +54,7 @@
         </div>
         <div class="modal-body-micro my-2">
             <div class="row form-container">
+                <input type="hidden" name="idweb" id="idweb" class="form-control">
                <x-usercomponent/>
                 <div class="col-4">
                     <label for="" class="form-label mb-0">Password:</label>
@@ -78,10 +80,11 @@
                         <label for="outros" class="form-label">Outros</label>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="" class="form-label m-0 label-aluno">Alunos:</label>
-                         <input type='txt' name="nomeAluno" id="nomeAluno"  class="form-control">
+                         <input type='txt' name="nomeAluno" id="nomeAluno"  class="form-control" autocomplete="off">
                          <input type='txt' name="aluno_id" id="aluno_id"  class="form-control" style="display:none;">
                          <select name="aluno_select" id="aluno_select" class="form-control js-states" style="display:none;">
                         </select>
@@ -113,12 +116,14 @@
 
     $('.tipo_entrada').click(function(){
 
-        if($(this).val() == 'aluno'){
+        if($(this).val() == 'aluno')
+        {
             $('#label-aluno').show()
             $('#nomeAluno').show()
             $('#aluno').show()
             return;
         }
+
         $('#nomeAluno').hide()
         $('#aluno').hide()
         $('.label-aluno').hide()
@@ -141,25 +146,26 @@
             password: $('#password').val(),
         },
         success: function(response){
-            console.log(response)
+
             $("#salvar").prop('disabled', false)
             $('#password').removeClass('is-invalid').addClass('is-valid');
             $('.valid-feedback').text('Logado com sucesso!');
+            $('.valid-feedback').show()
         },
         error: function(xhr, status, error){
             $("#salvar").prop('disabled', true)
-            console.log(error);
+
             $('#password').removeClass('is-valid').addClass('is-invalid');
             $('.invalid-feedback').text('Erro ao fazer login!');
         }
     });
-    
-});
+
+
 
 
     $('#salvar').click(function(){
 
-        var id_user = $('#username').val();
+        var id_user = $('#user').val();
 
         var nome = $('#nome').val();
         var descricao = $('#descricao').val();
@@ -171,27 +177,39 @@
             id_aluno = 0;
         }
 
-        var motivoLiberacao = $('#motivoLiberacao :selected').text()
+        var justificativa = $('#justificativa :selected').text()
 
         $.ajax({
-            url: '/api/justificativa/store',
+            url: vendas_url+'/053/svjustificativa',
             type: 'POST',
             data:{
-                "id_fornecedor": id_aluno,
+                "id_aluno": id_aluno,
+                "id_user":id_user,
                 "status_acesso": 1,
                 "liberador_por": id_user,
-                "motivo_liberacao": motivoLiberacao,
+                "justificativa": justificativa,
                 "ambiente": 1,
                 "id_empresa_acesso": 123,
-                "id_empresa_origem": 3,
+                "id_empresa_origem": $('#cliente_id').val(),
                 "descricao_acesso": descricao
             },
             success: function(response, status){
+
                 if(status == 'success')
                 {
-                        alert('Liberado com sucesso')
+                    $("#salvar").prop('disabled', true)
+                    alert(response.success)
                     $.get('/executar-comando', function(data){
+                        $('#modal_micro').fadeOut();
+                        $('#password').removeClass('is-valid')
+
+                        $('#user').val('')
+                        $('#nome').val('')
+                        $("#nomeAluno").val('')
+                        $('#descricao').val('')
+                        $('#aluno_id').val('')
 })              }
+
 
             },
             error: function(xhr, status, error){
@@ -206,7 +224,7 @@
 });
 
 
-$(document).ready(function() {
+
     $('#nomeAluno').on('keyup', function() {
         var query = $(this).val();
         $('#aluno_select').show()

@@ -1,11 +1,5 @@
 
 $(document).ready(function(){
-
-
-    const vendas_url = 'http://localhost:8001'
-    const contrato = $('#cliente_id').val()
-
-
     getMultiFiliais(empresaId)
     getNativa(empresaId)
     getEmpresasByIdweb(vendas_url, empresaId)
@@ -152,7 +146,7 @@ $(document).ready(function(){
 
     function getLogo(contrato)
     {
-        let logo = `http://127.0.0.1/projetos/mu.fitness.gestao/Pessoas/${contrato}/Empresa/logo_001.png?rd=`+1235;
+        let logo = legado_url+`/Pessoas/${contrato}/Empresa/logo_001.png?rd=`+1235;
         $('#logo').attr('src', logo)
     }
 
@@ -209,7 +203,9 @@ $(document).ready(function(){
 
         function execultarApp()
         {
-            $.get('/executar-comando', function(data){ })
+            $.get('/executar-comando', function(data){
+
+            })
         }
 
         function getEmpresasByIdweb(vendas_url, idweb)
@@ -233,20 +229,28 @@ $(document).ready(function(){
         function getMultiFiliais(idweb) {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
 
-                // Filtrar data para excluir as filiais com nativa igual a 1
-                const filteredData = data.filter(filial => filial.nativa !== "1");
+                try {
 
-                // Limpar opções existentes
-                $('#id_filial').empty();
+                    const filteredData = data.filter(filial => filial.nativa !== "1");
 
-                // Adicionar opção "Selecione"
-                let selectOption = new Option('Nativa', '');
-                $('#id_filial').append(selectOption);
+                    $('#id_filial').empty();
 
-                for (let i = 0; i < filteredData.length; i++) {
-                    let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
-                    $('#id_filial').append(option);
+                    // Adicionar opção "Selecione"
+                    let selectOption = new Option('Nativa', '');
+                    $('#id_filial').append(selectOption);
+
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
+                        $('#id_filial').append(option);
+                    }
+
+
+                } catch (error) {
+
                 }
+
+
+
 
             });
 
@@ -256,15 +260,25 @@ $(document).ready(function(){
 
         function getNativa(idweb)
         {
-            $.get('api/legado/' + idweb + '/multifilial', function (data) {
+            try {
+                $.get('api/legado/' + idweb + '/multifilial', function (data) {
+                    console.log(data)
+                    // Filtrar data para excluir as filiais com nativa igual a 1
+                    if(data.length  > 0){
+                        const nativa = data.filter(filial => filial.nativa == "1");
+                        var idWebNativa = nativa[0].id_web
+                        $('#nativaId').val(idWebNativa)
+                    }
 
-                // Filtrar data para excluir as filiais com nativa igual a 1
-                const nativa = data.filter(filial => filial.nativa == "1");
 
-               var idWebNativa = nativa[0].id_web
-                $('#nativaId').val(idWebNativa)
 
-            });
+
+                });
+
+            } catch (error) {
+
+            }
+
         }
 
 

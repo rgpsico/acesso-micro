@@ -4,7 +4,7 @@ $(document).ready(function(){
         $("#modal_micro").fadeIn();
       });
 
-    
+
 
       // Função para fechar o modal
       $("#fecharModal").click(function() {
