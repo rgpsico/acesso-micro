@@ -1,6 +1,7 @@
 <style>
     .desabilitada{
         opacity: 0.5;
+        display: none;
     }
 </style>
 <div id="floating-menu">

@@ -54,11 +54,13 @@ function menuFlutuante(vendas_url, idweb )
            $("#floating-whatsapp").addClass('liberacaoManual')
            $("#floating-whatsapp").removeClass('liberacaoJustificada')
            $("#floating-whatsapp").removeClass('desabilitada')
+
               return;
             case '1':
               $("#floating-whatsapp").addClass('liberacaoJustificada')
               $("#floating-whatsapp").removeClass('liberacaoManual')
               $("#floating-whatsapp").removeClass('desabilitada')
+
 
               return;
             case '2':

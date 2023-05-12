@@ -8,6 +8,7 @@ $(document).ready(function(){
 
 
 
+
     $(document).on('click', '.liberacaoManual', function(event) {
         execultarApp()
      });
