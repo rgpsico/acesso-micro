@@ -113,6 +113,22 @@
 
 <script>
   $(document).ready(function(){
+    getJustificativas(vendas_url, empresaId)
+
+    function getJustificativas(vendas_url, idweb)
+        {
+            var formattedId = String(idweb).padStart(3, '0');
+            $.get(vendas_url+'/'+ formattedId+'/justificativa/all', function(data){
+                $('#justificativa').empty();
+
+                data.forEach(function(item){
+                    $('#justificativa').append('<option value="' + item.id + '">' +item.id + '-' +item.justificativa + '</option>');
+                });
+            });
+
+        }
+
+
 
     $('.tipo_entrada').click(function(){
 
@@ -177,21 +193,23 @@
             id_aluno = 0;
         }
 
+
         var justificativa = $('#justificativa :selected').text()
 
         $.ajax({
-            url: vendas_url+'/053/svjustificativa',
+            url: vendas_url+'/'+contrato+'/acesso/store',
             type: 'POST',
             data:{
-                "id_aluno": id_aluno,
-                "id_user":id_user,
-                "status_acesso": 1,
-                "liberador_por": id_user,
-                "justificativa": justificativa,
+                "id_fonecedor":id_aluno,
+                "status_acesso": "AP",
+                "liberado_por": id_user,
+                "motivo_liberacao": justificativa,
                 "ambiente": 1,
-                "id_empresa_acesso": 123,
-                "id_empresa_origem": $('#cliente_id').val(),
-                "descricao_acesso": descricao
+                "id_empresa_acesso":$('#cliente_id').val(),
+                "descricao_acesso":descricao,
+                "id_empresa_origem":$('#nativaId').val(),
+                "id_empresa_local":$('#cliente_id').val(),
+                "tipo_liberacao":"JUSTIFICADA"
             },
             success: function(response, status){
 
@@ -228,11 +246,14 @@
     $('#nomeAluno').on('keyup', function() {
         var query = $(this).val();
         $('#aluno_select').show()
+
         if (query.length >= 3) {
-            $.get('/api/alunos/byName', { q: query }, function(data) {
+
+            $.get(vendas_url+'/053'+'/aluno/byname', { name: query }, function(data) {
+                console.log(data)
                 var options = '<option></option>';
                 $.each(data, function(key, value) {
-                    options += '<option selected value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
+                    options += '<option selected data-empresa_origem='+value.empresa+' value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
                 });
                 $('#aluno_select').html(options);
             }, 'json');

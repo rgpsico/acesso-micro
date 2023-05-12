@@ -1,8 +1,5 @@
 $(document).ready(function(){
-    $(".liberacaoJustificada").click(function() {
-        $('#password').val('')
-        $("#modal_micro").fadeIn();
-      });
+  
 
 
 

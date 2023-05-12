@@ -13,7 +13,7 @@ class AlunoControllerApi extends Controller
      */
     public function byName(Request $request)
     {
-        $alunos = Aluno::select('id_fornecedores_despesas', 'razao_social')->where('razao_social', 'like', '%' . $request->query('q') . '%')->get();
+        $alunos = Aluno::select('id_fornecedores_despesas', 'razao_social', 'empresa')->where('razao_social', 'like', '%' . $request->query('q') . '%')->get();
         return response()->json($alunos);
     }
 

@@ -3,25 +3,39 @@ $(document).ready(function(){
     getMultiFiliais(empresaId)
     getNativa(empresaId)
     getEmpresasByIdweb(vendas_url, empresaId)
-    getLogo(contrato)
+    getLogo(empresaId)
 
 
-    $(".liberacaoManual").click(function() {
+
+
+    $(document).on('click', '.liberacaoManual', function(event) {
         execultarApp()
      });
 
 
 
+    $(document).on('click', '.liberacaoJustificada', function(event) {
+        $('#password').val('')
+        $("#modal_micro").fadeIn();
+      });
+
+
+
     $(document).on('change', '#id_filial', function(event) {
         $('#buscar_aluno').val('');
+
         var idweb = $(this).val();
         var formattedId = String(idweb).padStart(3, '0');
 
-        if(formattedId == '000'){
+        if(formattedId == '000')
+        {
             formattedId = $('#nativaId').val()
         }
 
+
         getEmpresasByIdweb(vendas_url, formattedId)
+
+
     });
 
 
@@ -135,19 +149,17 @@ $(document).ready(function(){
       }
 
 
-      function formatarDataBr(data)
-      {
-        let partes = data.split('-');
-        let dataBr = [partes[2], partes[1], partes[0]].join('/');
-        return dataBr;
-      }
 
 
 
     function getLogo(contrato)
     {
-        let logo = legado_url+`/Pessoas/${contrato}/Empresa/logo_001.png?rd=`+1235;
+        let logo = legado_url+`/Pessoas/${contrato}/Empresa/logo_001.png`;
         $('#logo').attr('src', logo)
+
+        $('#logo').attr('src', logo).on('error', function() {
+            $(this).attr('src', legado_url+'/img/logo_mu.png');
+        }).fadeIn();
     }
 
 
@@ -156,7 +168,7 @@ $(document).ready(function(){
         $('#foto_avatar').fadeOut();;
 
         $.ajax({
-            url: vendas_url+'/'+empresaId+'/aluno/'+matricula+'/byid',
+            url: vendas_url+'/'+empresaId+'/primeiroacessototal/'+matricula,
             statusCode: {
             404: function(data) {
                 erro_004()
@@ -169,8 +181,9 @@ $(document).ready(function(){
 
       },
       success: function(data) {
-        var res = data.data;
+        var res = data;
         success_response(res)
+        showNotification()
 
       }
     });
@@ -179,34 +192,13 @@ $(document).ready(function(){
         }
 
 
-        function toggleFullscreen()
-        {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
 
 
-        function showNotification()
-        {
-            $(".notification-box").slideDown(500, function () {
-                setTimeout(function () {
-                    $(".notification-box").slideUp(500);
-                }, 3000); // A notificação desaparece após 3 segundos
-            });
-        }
 
 
-        function execultarApp()
-        {
-            $.get('/executar-comando', function(data){
 
-            })
-        }
+
+
 
         function getEmpresasByIdweb(vendas_url, idweb)
         {
@@ -249,9 +241,6 @@ $(document).ready(function(){
 
                 }
 
-
-
-
             });
 
 
@@ -269,10 +258,6 @@ $(document).ready(function(){
                         var idWebNativa = nativa[0].id_web
                         $('#nativaId').val(idWebNativa)
                     }
-
-
-
-
                 });
 
             } catch (error) {
@@ -280,93 +265,6 @@ $(document).ready(function(){
             }
 
         }
-
-
-        function erro_004()
-        {
-            $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
-            $('#nomeAluno').text('')
-            $("#matricula-aluno").text('')
-            $('#motivo-status').text('')
-            $('#status').text('BLOQUEADO');
-            $('#motivo-status').text('Aluno não encontrado');
-            $('#motivo-status').removeClass('bg-success');
-            $('#motivo-status').addClass('bg-danger');
-            $('#buscar_aluno').focus()
-            $('#buscar_aluno').val('')
-
-        }
-
-
-
-            function erro_403()
-            {
-                $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
-                $('#nomeAluno').text('')
-                $("#matricula-aluno").text('Bloqueio Manual')
-                $('#motivo-status').text('Bloqueio Manual')
-                $('#status').text("Bloqueio Manual");
-                $('#motivo-status').text("Bloqueio Manual");
-                $('#motivo-status').removeClass('bg-success');
-                $('#motivo-status').addClass('bg-danger');
-                $('#buscar_aluno').focus()
-                $('#buscar_aluno').val('')
-
-            }
-
-            function success_response(res)
-            {
-                $('#foto_avatar').attr('src', res.photoUrl).on('error', function() {
-                    $(this).attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg');
-                }).fadeIn();
-
-                if(res.released ==  true){
-
-                    $('.nome_Aluno1').text(res.nome)
-                    $("#matricula-aluno").text(res.id)
-                    $('#status').text('LIBERADO')
-                    $(".message").removeClass('text-danger')
-                    $(".message").addClass('text-success')
-                    $("#motivo-status").removeClass('bg-danger')
-                    $("#motivo-status").removeClass('bg-info')
-                    $('#motivo-status').addClass('bg-success')
-                    $('#data_venct').text(formatarDataBr(res.dueDate))
-                    $('#motivo-status').text(res.text)
-                    $('.user-status').text(res.text)
-                    $('#descricaoPlano').text(res.descricaoPlano)
-                    $('#acessoMsg').text(res.acessoMsg)
-                    document.getElementById("liberado").play();
-                    showNotification()
-                    execultarApp()
-                } else {
-                    $('#nomeAluno').text(res.nome)
-                    $("#matricula-aluno").text(res.id)
-                    $('#status').text(res.status)
-                    $(".message").removeClass('text-success')
-                    $(".message").addClass('text-danger')
-                    $('#data_venct').text(formatarDataBr(res.dueDate))
-                    $('#descricaoPlano').text(res.descricaoPlano)
-                    $('#acessoMsg').text(res.text)
-                    $('.user-status').text(res.text)
-
-                    document.getElementById("bloqueado").play();
-                }
-
-                if(res.text == 'Cliente Vencido') {
-                    $("#motivo-status").removeClass('bg-success')
-                    $('#motivo-status').addClass('bg-danger')
-                    $('#motivo-status').text(res.text)
-                } else if(res.text == 'acesso nao encontrado') {
-                    $("#motivo-status").removeClass('bg-success')
-                    $('#motivo-status').addClass('bg-danger')
-                    $('#motivo-status').text(res.text)
-                }
-
-                $("#matricula").val('');
-                $("#matricula").focus();
-                $('#buscar_aluno').focus()
-                $('#buscar_aluno').val('')
-            }
 
 
 
