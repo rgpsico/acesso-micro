@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1da875adcb39740bdd1e8c03098cd16",
+    "content-hash": "85841dc81cb0930f1099590975f2a722",
     "packages": [
         {
             "name": "brick/math",
@@ -3055,53 +3055,6 @@
                 }
             ],
             "time": "2023-04-15T23:01:58+00:00"
-        },
-        {
-            "name": "somarkn99/apibasicsetting",
-            "version": "1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/somarkn99/api-basic-setting.git",
-                "reference": "e2bf6a57d912e5aecef88c15dc07e4dcbd51ad05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/somarkn99/api-basic-setting/zipball/e2bf6a57d912e5aecef88c15dc07e4dcbd51ad05",
-                "reference": "e2bf6a57d912e5aecef88c15dc07e4dcbd51ad05",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Somarkn99\\ApiBasicSetting\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Somar Kesen",
-                    "email": "contact@somar-kesen.com"
-                }
-            ],
-            "description": "This package allows you to secure and configure the essentials of your business using the API",
-            "keywords": [
-                "api",
-                "cors",
-                "framework",
-                "laravel",
-                "localization"
-            ],
-            "support": {
-                "issues": "https://github.com/somarkn99/api-basic-setting/issues",
-                "source": "https://github.com/somarkn99/api-basic-setting/tree/1.0.6"
-            },
-            "time": "2022-10-12T18:37:26+00:00"
         },
         {
             "name": "symfony/console",
