@@ -15,7 +15,7 @@ menuFlutuante(getUrlVendas(), contrato )
 
 
 function getUrlVendas() {
-    const isHttps = vendas_url_producao.startsWith('https'); // Verifica se a URL de produção começa com "https"
+    const isHttps = vendas_url_producao.startsWith('httpst'); // Verifica se a URL de produção começa com "https"
 
     if (isHttps && isProducao) {
       return vendas_url_producao; // Retorna a URL de produção
@@ -26,7 +26,7 @@ function getUrlVendas() {
 
 
   function getUrlLegado() {
-    const isHttps = vendas_url_producao.startsWith('https'); // Verifica se a URL de produção começa com "https"
+    const isHttps = vendas_url_producao.startsWith('httpst'); // Verifica se a URL de produção começa com "https"
 
     if (isHttps && isProducao) {
       return vendas_url_producao; // Retorna a URL de produção
