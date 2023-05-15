@@ -194,6 +194,7 @@ $(document).ready(function(){
       },
       success: function(data) {
         var res = data;
+        console.log(res)
         success_response(res)
         showNotification()
 

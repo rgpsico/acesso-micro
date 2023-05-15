@@ -1,6 +1,5 @@
 function execultarApp()
 {
-
     $.get('/executar-comando', function(data){
 
     })
