@@ -230,18 +230,17 @@ $(document).ready(function(){
                 try {
 
                     const filteredData = data.filter(filial => filial.nativa !== "1");
-                    console.log(filteredData)
+                    console.log(filteredData);
                     $('#id_filial').empty();
 
                     // Adicionar opção "Selecione"
                     let selectOption = new Option('Nativa', '');
                     $('#id_filial').append(selectOption);
 
-                    for (let i = 0; i < filteredData.length; i++) {
-                        let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
-                        $('#id_filial').append(option);
-                    }
-
+                    filteredData.forEach(filial => {
+                      let option = new Option(`${filial.id_web}/${filial.nome_empresa}`, filial.id_web);
+                      $('#id_filial').append(option);
+                    });
 
                 } catch (error) {
 
