@@ -32,7 +32,9 @@ Route::prefix('legado')->group(function () {
 
 });
 
-
+Route::prefix('teste')->group(function () {
+   return "aaaa";
+});
 Route::prefix('justificativa')->group(function () {
     Route::post('store', [JustificativaControllerApi::class, 'store']);
 });
