@@ -1,8 +1,13 @@
 function execultarApp()
 {
-    $.get('http://127.0.0.1:8000/meu_endpoint', function(data){
-
-    })
+      $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: 'http://127.0.0.1:8000/meu_endpoint',
+            success: function (data) {
+                console.log(data);
+            }
+        });
 }
 
 
