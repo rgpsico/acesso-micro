@@ -226,11 +226,11 @@ $(document).ready(function(){
 
         function getMultiFiliais(idweb) {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-                console.log(data)
+
                 try {
 
                     const filteredData = data.filter(filial => filial.nativa !== "1");
-
+                    console.log(filteredData)
                     $('#id_filial').empty();
 
                     // Adicionar opção "Selecione"
