@@ -2,7 +2,7 @@
 $(document).ready(function(){
     getMultiFiliais(empresaId)
     getNativa(empresaId)
-    getEmpresasByIdweb(vendas_url_local, empresaId)
+    getEmpresasByIdweb(getUrlVendas(), empresaId)
     getLogo(empresaId)
 
 
@@ -34,7 +34,7 @@ $(document).ready(function(){
         }
 
 
-        getEmpresasByIdweb(vendas_url_local, formattedId)
+        getEmpresasByIdweb(getUrlVendas(), formattedId)
 
 
     });
@@ -100,7 +100,7 @@ $(document).ready(function(){
                 alert('Matricula não encontrada')
             }
 
-            buscarByMatricula(vendas_url_local,empresaFormate, matricula)
+            buscarByMatricula(getUrlVendas(),empresaFormate, matricula)
 
                   // Exemplo de dados a serem enviados
                 var data = {

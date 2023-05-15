@@ -7,14 +7,25 @@ const legado_url_producao = 'http://127.0.0.1/projetos/mu.fitness.gestao/'
 const contrato = '053'
 
 
-menuFlutuante(vendas_url_local, contrato )
+menuFlutuante(getUrlVendas(), contrato )
 
 
 
 
 
 
-function getUrl() {
+function getUrlVendas() {
+    const isHttps = vendas_url_producao.startsWith('https'); // Verifica se a URL de produção começa com "https"
+
+    if (isHttps && isProducao) {
+      return vendas_url_producao; // Retorna a URL de produção
+    } else {
+      return vendas_url_local; // Retorna a URL local
+    }
+  }
+
+
+  function getUrlLegado() {
     const isHttps = vendas_url_producao.startsWith('https'); // Verifica se a URL de produção começa com "https"
 
     if (isHttps && isProducao) {
@@ -61,33 +72,35 @@ function menuFlutuante(vendas_url_local, idweb )
           var res = data;
 
           switch (res.liberacao_justificada) {
-            case null:
-            case '0':
+           case null:
+           case '0':
+
            $("#floating-whatsapp").addClass('liberacaoManual')
            $("#floating-whatsapp").removeClass('liberacaoJustificada')
            $("#floating-whatsapp").removeClass('desabilitada')
 
-              return;
+            return;
             case '1':
               $("#floating-whatsapp").addClass('liberacaoJustificada')
               $("#floating-whatsapp").removeClass('liberacaoManual')
               $("#floating-whatsapp").removeClass('desabilitada')
 
-
-              return;
+            return;
             case '2':
+
               $("#floating-whatsapp").addClass('desabilitada')
               $("#floating-whatsapp").removeClass('liberacaoJustificada')
               $("#floating-whatsapp").removeClass('liberacaoManual')
 
 
-              return;
+            return;
             default:
+
                 $("#floating-whatsapp").addClass('desabilitada')
                 $("#floating-whatsapp").removeClass('liberacaoJustificada')
                 $("#floating-whatsapp").removeClass('liberacaoManual')
 
-              return;
+            return;
           }
         }
     });
