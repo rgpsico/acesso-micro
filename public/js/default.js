@@ -223,12 +223,23 @@ $(document).ready(function(){
 
 
 
-        function getMultiFiliais(idweb) {
+        const getMultiFiliais = (idweb) => {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-                console.log(data)
-                try {
+                console.log(data);
 
-                    const filteredData = data.filter(filial => filial.nativa !== "1");
+                try {
+                    // New data array with trimmed keys
+                    const newData = data.map(item => {
+                        let newItem = {};
+
+                        for (let key in item) {
+                            newItem[key.trim()] = item[key];
+                        }
+
+                        return newItem;
+                    });
+
+                    const filteredData = newData.filter(filial => filial.nativa !== "1");
 
                     $('#id_filial').empty();
 
@@ -240,16 +251,13 @@ $(document).ready(function(){
                         let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
                         $('#id_filial').append(option);
                     }
-
-
                 } catch (error) {
-
+                    // Consider logging the error for debugging purposes
+                    console.error(error);
                 }
-
             });
+        };
 
-
-        }
 
 
         function getNativa(idweb)
