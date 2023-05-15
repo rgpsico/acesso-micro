@@ -23,17 +23,9 @@
             </g>
         </svg>
     </a>
-    @foreach ($config as $value )
-    @php
-          $class = match ($value->JUSTIFICATIVA) {
-            0 => 'liberacaoManual',
-            1 => 'liberacaoJustificada',
-            2 => 'desabilitada',
-            default => '',
-        };
-    @endphp
 
-        <div id="floating-whatsapp"  class='{{ $class }}' style="display: block;" data-toggle="tooltip" title="Acesso">
+
+        <div id="floating-whatsapp"  class='' style="display: block;" data-toggle="tooltip" title="Acesso">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#fff" height="800px" width="800px" version="1.1" id="Layer_1" viewBox="0 0 485.017 485.017" xml:space="preserve">
                 <g>
                     <path d="M361.205,68.899c-14.663,0-28.447,5.71-38.816,16.078c-21.402,21.403-21.402,56.228,0,77.631   c10.368,10.368,24.153,16.078,38.815,16.078s28.447-5.71,38.816-16.078c21.402-21.403,21.402-56.228,0-77.631   C389.652,74.609,375.867,68.899,361.205,68.899z M378.807,141.394c-4.702,4.702-10.953,7.292-17.603,7.292   s-12.901-2.59-17.603-7.291c-9.706-9.706-9.706-25.499,0-35.205c4.702-4.702,10.953-7.291,17.603-7.291s12.9,2.589,17.603,7.291   C388.513,115.896,388.513,131.688,378.807,141.394z"/>
