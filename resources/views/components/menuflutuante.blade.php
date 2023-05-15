@@ -33,7 +33,7 @@
                 </g>
             </svg>
         </div>
-    @endforeach
+
 
     <div id="floating-emergencia" data-toggle="tooltip" title="Configurações" style="display: block;">
         <a href="{{ route('config.index') }}"><i class="fa fa-cog" aria-hidden="true"></i></a>
