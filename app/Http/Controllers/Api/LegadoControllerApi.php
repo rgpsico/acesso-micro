@@ -14,7 +14,7 @@ class LegadoControllerApi extends Controller
 
     public function multiFilial($idweb)
     {
-        $url = 'http://localhost:8001/'.$idweb.'/sfmfrede';
+        $url = 'https://vendas.mufitness.com.br/'.$idweb.'/sfmfrede';
 
         try {
             $response = Http::get($url);
