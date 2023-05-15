@@ -7,7 +7,7 @@ const legado_url_producao = 'http://127.0.0.1/projetos/mu.fitness.gestao/'
 const contrato = '053'
 
 
-menuFlutuante(getUrlVendas(), contrato )
+//menuFlutuante(getUrlVendas(), contrato )
 
 
 
