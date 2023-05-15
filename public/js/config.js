@@ -1,13 +1,13 @@
-const vendas_url_local = 'http://localhost:8001'
-const legado_url_local = 'http://127.0.0.1/projetos/mu.fitness.gestao/'
+const vendas_url_local = 'https://vendas.mufitness.com.br/'
+const legado_url_local = 'https://app.mufitness.com.br/v2/'
 
-const vendas_url_producao = 'http://localhost:8001'
-const legado_url_producao = 'http://127.0.0.1/projetos/mu.fitness.gestao/'
+const vendas_url_producao = 'https://vendas.mufitness.com.br/'
+const legado_url_producao = 'https://app.mufitness.com.br/v2/'
 
 const contrato = '053'
 
 console.log(getUrlVendas())
-//menuFlutuante(getUrlVendas(), contrato )
+menuFlutuante(getUrlVendas(), contrato )
 
 
 
