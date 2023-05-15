@@ -113,12 +113,12 @@
 
 <script>
   $(document).ready(function(){
-    getJustificativas(vendas_url, empresaId)
+    getJustificativas(vendas_url_local, empresaId)
 
-    function getJustificativas(vendas_url, idweb)
+    function getJustificativas(vendas_url_local, idweb)
         {
             var formattedId = String(idweb).padStart(3, '0');
-            $.get(vendas_url+'/'+ formattedId+'/justificativa/all', function(data){
+            $.get(vendas_url_local+'/'+ formattedId+'/justificativa/all', function(data){
                 $('#justificativa').empty();
 
                 data.forEach(function(item){
@@ -197,7 +197,7 @@
         var justificativa = $('#justificativa :selected').text()
 
         $.ajax({
-            url: vendas_url+'/'+contrato+'/acesso/store',
+            url: vendas_url_local+'/'+contrato+'/acesso/store',
             type: 'POST',
             data:{
                 "id_fonecedor":id_aluno,
@@ -249,7 +249,7 @@
 
         if (query.length >= 3) {
 
-            $.get(vendas_url+'/053'+'/aluno/byname', { name: query }, function(data) {
+            $.get(vendas_url_local+'/053'+'/aluno/byname', { name: query }, function(data) {
                 console.log(data)
                 var options = '<option></option>';
                 $.each(data, function(key, value) {

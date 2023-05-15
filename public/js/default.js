@@ -2,7 +2,7 @@
 $(document).ready(function(){
     getMultiFiliais(empresaId)
     getNativa(empresaId)
-    getEmpresasByIdweb(vendas_url, empresaId)
+    getEmpresasByIdweb(vendas_url_local, empresaId)
     getLogo(empresaId)
 
 
@@ -34,7 +34,7 @@ $(document).ready(function(){
         }
 
 
-        getEmpresasByIdweb(vendas_url, formattedId)
+        getEmpresasByIdweb(vendas_url_local, formattedId)
 
 
     });
@@ -100,7 +100,7 @@ $(document).ready(function(){
                 alert('Matricula não encontrada')
             }
 
-            buscarByMatricula(vendas_url,empresaFormate, matricula)
+            buscarByMatricula(vendas_url_local,empresaFormate, matricula)
 
                   // Exemplo de dados a serem enviados
                 var data = {
@@ -109,7 +109,7 @@ $(document).ready(function(){
                     nativa: true
                 };
 
-             //cadastrarRedesQuandoForPrimeiroAcesso(vendas_url, data);
+             //cadastrarRedesQuandoForPrimeiroAcesso(vendas_url_local, data);
         });
 
 
@@ -125,9 +125,9 @@ $(document).ready(function(){
 
 
 
-    async function cadastrarRedesQuandoForPrimeiroAcesso(vendas_url, data) {
+    async function cadastrarRedesQuandoForPrimeiroAcesso(vendas_url_local, data) {
         try {
-          const response = await fetch(vendas_url+"/"+empresaId+"/redes/store", {
+          const response = await fetch(vendas_url_local+"/"+empresaId+"/redes/store", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -155,21 +155,32 @@ $(document).ready(function(){
 
     function getLogo(contrato)
     {
-        let logo = legado_url+`/Pessoas/${contrato}/Empresa/logo_001.png`;
-        $('#logo').attr('src', logo)
+        try {
+            let logo = legado_url_local+`/Pessoas/${contrato}/Empresa/logo_001.png`;
+            $('#logo').attr('src', logo)
 
-        $('#logo').attr('src', logo).on('error', function() {
-            $(this).attr('src', legado_url+'/img/logo_mu.png');
-        }).fadeIn();
+            $('#logo').attr('src', logo).on('error', function() {
+                $(this).attr('src', legado_url_local+'/img/logo_mu.png');
+            }).fadeIn();
+
+        } catch (error) {
+
+        }
+
     }
 
 
-    function buscarByMatricula(vendas_url,empresaId, matricula)
+    function buscarByMatricula(vendas_url_local,empresaId, matricula, tipo_liberacao = 'multiflial' )
     {
         $('#foto_avatar').fadeOut();;
 
         $.ajax({
-            url: vendas_url+'/'+empresaId+'/primeiroacessototal/'+matricula,
+            url: vendas_url_local+'/'+empresaId+'/primeiroacessototal/'+matricula,
+            data:{
+                idweb:empresaId,
+                empresa_local:empresaId,
+                tipo_liberacao: tipo_liberacao
+            },
             statusCode: {
             404: function(data) {
                 erro_004()
@@ -194,18 +205,11 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-
-
-
-        function getEmpresasByIdweb(vendas_url, idweb)
+        function getEmpresasByIdweb(vendas_url_local, idweb)
         {
             var formattedId = String(idweb).padStart(3, '0');
 
-            $.get(vendas_url+'/'+ formattedId+'/alunosmf', function(data){
+            $.get(vendas_url_local+'/'+ formattedId+'/alunosmf', function(data){
 
                 $('#alunos_multifilai').empty();
 

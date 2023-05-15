@@ -9,7 +9,7 @@ use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Models\Redes;
 use App\Models\User;
-use App\Models\UserValidacao;
+
 use App\Models\Validacao;
 use App\Services\AcessoService;
 use App\Services\CatracaService;

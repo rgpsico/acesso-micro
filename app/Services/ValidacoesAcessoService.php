@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Config;
-use App\Models\EmpresaCancelamento;
 use App\Models\User;
-use App\Models\UserValidacao;
+
 use App\Models\Validacao;
 
 class ValidacoesAcessoService
@@ -16,10 +14,10 @@ class ValidacoesAcessoService
     public $config;
 
 
-    public function __construct(UserValidacao $model, User $aluno, Config $config)
+    public function __construct(User $aluno)
     {
-        $this->model = $model;
-        $this->config = $config;
+
+
         $this->aluno = $aluno;
     }
 

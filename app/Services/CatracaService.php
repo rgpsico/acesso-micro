@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\EmpresaCancelamento;
 use App\Models\User;
-use App\Models\UserValidacao;
+
 
 class CatracaService
 {

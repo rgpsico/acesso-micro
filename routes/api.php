@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\ConfiguracaoControllerApi;
 use App\Http\Controllers\Api\JustificativaControllerApi;
 use App\Http\Controllers\Api\LegadoControllerApi;
 use App\Http\Controllers\AuthController;
-use App\Models\ConfiguracaoLegado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

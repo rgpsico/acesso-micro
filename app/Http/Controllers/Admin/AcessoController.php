@@ -7,7 +7,7 @@ use App\Http\Requests\RedesFormRequest;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\UserValidacao;
+
 use App\Models\Validacao;
 use App\Services\AcessoService;
 use App\Services\CatracaService;

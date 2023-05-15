@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Models\Justificativa;
+
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -13,9 +13,9 @@ class justificativacomponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(Justificativa $model)
+    public function __construct()
     {
-        $this->model = $model;
+
 
     }
 
@@ -24,9 +24,7 @@ class justificativacomponent extends Component
      */
     public function render(): View|Closure|string
     {
-        $model = $this->model::all();
-        return view('components.justificativacomponent',[
-            'model' => $model
-        ]);
+
+        return view('components.justificativacomponent');
     }
 }
