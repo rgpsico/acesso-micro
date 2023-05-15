@@ -3,7 +3,7 @@ $(document).ready(function(){
     getMultiFiliais(empresaId)
     getNativa(empresaId)
     getEmpresasByIdweb(getUrlVendas(), empresaId)
-    // getLogo(empresaId)
+    getLogo(empresaId)
 
 
 
