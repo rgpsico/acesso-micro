@@ -1,6 +1,7 @@
 function execultarApp()
 {
-    $.get('http://127.0.0.1:8000/executar-comando', function(data){
+
+    $.get('/executar-comando', function(data){
 
     })
 }
