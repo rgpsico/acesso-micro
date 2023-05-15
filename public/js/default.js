@@ -194,7 +194,6 @@ $(document).ready(function(){
       },
       success: function(data) {
         var res = data;
-        console.log(res)
         success_response(res)
         showNotification()
 
@@ -226,21 +225,22 @@ $(document).ready(function(){
 
         function getMultiFiliais(idweb) {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-
+                console.log(data)
                 try {
 
                     const filteredData = data.filter(filial => filial.nativa !== "1");
-                    console.log(filteredData);
+
                     $('#id_filial').empty();
 
                     // Adicionar opção "Selecione"
                     let selectOption = new Option('Nativa', '');
                     $('#id_filial').append(selectOption);
 
-                    filteredData.forEach(filial => {
-                      let option = new Option(`${filial.id_web}/${filial.nome_empresa}`, filial.id_web);
-                      $('#id_filial').append(option);
-                    });
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
+                        $('#id_filial').append(option);
+                    }
+
 
                 } catch (error) {
 
