@@ -15,8 +15,8 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'register', 'oauth/*'],
-    'allowed_methods' => ['OPTIONS,POST,PUT,DELETE,GET'],
+    'paths' => ['*', 'api/*', 'register', 'oauth/*'],
+    'allowed_methods' => ['OPTIONS, POST, PUT, DELETE, GET'],
     'allowed_origins' => ['*'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
