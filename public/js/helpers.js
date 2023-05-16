@@ -3,7 +3,7 @@ function execultarApp()
       $.ajax({
             type: "GET",
             dataType: "json",
-            url: 'http://127.0.0.1:8000/executar-comando',
+            url: 'http://127.0.0.1:8000/meu_endpoint',
             success: function (data) {
                 console.log(data);
             }
