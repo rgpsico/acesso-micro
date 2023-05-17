@@ -7,7 +7,7 @@ const legado_url_producao = 'https://app.mufitness.com.br/v2/'
 
 
 
-menuFlutuante(getUrlVendas(), empresaId )
+// menuFlutuante(getUrlVendas(), empresaId )
 
 
 
