@@ -114,6 +114,9 @@
 <script>
   $(document).ready(function(){
     getJustificativas(vendas_url_local, empresaId)
+    getUsers(vendas_url_local, empresaId)
+
+
 
     function getJustificativas(vendas_url_local, idweb)
         {
@@ -123,6 +126,19 @@
 
                 data.forEach(function(item){
                     $('#justificativa').append('<option value="' + item.id + '">' +item.id + '-' +item.justificativa + '</option>');
+                });
+            });
+
+        }
+
+        function getUsers(vendas_url_local, idweb)
+        {
+            var formattedId = String(idweb).padStart(3, '0');
+            $.get(vendas_url_local+'/'+ formattedId+'/users/all', function(data){
+                $('#user').empty();
+
+                data.forEach(function(item){
+                    $('#user').append('<option value="' + item.id_usuario + '">' +item.id_usuario + '-' +item.nome + '</option>');
                 });
             });
 
@@ -155,7 +171,7 @@
         url: '/api/auth/login',
         type: 'POST',
         headers: {
-                'Authorization': 'Bearer ' + token // Substitua 'token' pelo seu token de autenticação
+                'Authorization': 'Bearer ' + token //
         },
         data: {
             email:selectedEmail,
@@ -249,7 +265,7 @@
 
         if (query.length >= 3) {
 
-            $.get(vendas_url_local+'/053'+'/aluno/byname', { name: query }, function(data) {
+            $.get(vendas_url_local+'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
                 console.log(data)
                 var options = '<option></option>';
                 $.each(data, function(key, value) {
