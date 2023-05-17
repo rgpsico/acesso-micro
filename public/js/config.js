@@ -39,20 +39,25 @@ function getUrlVendas() {
 function getSfConfig(vendas_url_local, idweb, nomeConfiguracao)
 {
     var formattedId = String(idweb).padStart(3, '0');
+    try {
+        $.ajax({
+            type: 'GET',
+            contentType:'json',
+            url: vendas_url_local+'/'+ formattedId+'/configbyname',
+            data: {
+                configName: nomeConfiguracao
+            },
 
-     $.ajax({
-        type: 'GET',
-        contentType:'json',
-        url: vendas_url_local+'/'+ formattedId+'/configbyname',
-        data: {
-            configName: nomeConfiguracao
-        },
+            success: function(data) {
+              var res = data;
 
-        success: function(data) {
-          var res = data;
+            }
+        });
 
-        }
-    });
+    } catch (error) {
+
+    }
+
 }
 
 

@@ -22,15 +22,15 @@
             <span id="clock" class="bg-dark  d-flex" ></span>
         </div>
         <h1 style="color:#000; margin-top:10px;">Configuração de Controle de Acesso</h1>
-        @foreach ($configuracao as $value )
+
         <div class="row bg-light">
             <div class="col-md-6 col-6">
                 <div class="form-check form-switch  my-3">
                     <label class="form-check-label" for="">Justificativa</label>
-                    <input class="form-check-input" type="checkbox" id="justificativa" {{ $value->JUSTIFICATIVA == 1 ? 'checked' : '' }}>
+                    <input class="form-check-input" type="checkbox" id="justificativa">
                 </div>
             </div>
-            @endforeach
+
 
         </div>
     </div>

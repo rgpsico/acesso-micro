@@ -4,7 +4,7 @@ $(document).ready(function(){
     getNativa(empresaId)
     getEmpresasByIdweb(getUrlVendas(), empresaId)
     getLogo(empresaId)
-
+   
 
 
 
@@ -141,7 +141,7 @@ $(document).ready(function(){
 
 
 
-    async function cadastrarRedesQuandoForPrimeiroAcesso(vendas_url_local, data) {
+    async function cadastrarRedesQuandoForPrimeiroAcesso(vendas_url_local,empresaId, data) {
         try {
           const response = await fetch(vendas_url_local+"/"+empresaId+"/redes/store", {
             method: "POST",

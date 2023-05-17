@@ -27,11 +27,11 @@ class ConfigController extends Controller
     protected $service;
     protected $validacao;
     protected $configuracao;
-    public function __construct(ValidacoesAcessoService $service, AcessoService $validacao, ConfiguracaoLegado $configuracao )
+    public function __construct(ValidacoesAcessoService $service, AcessoService $validacao)
     {
         $this->service = $service;
         $this->validacao = $validacao;
-        $this->configuracao = $configuracao;
+
     }
 
 
@@ -39,9 +39,9 @@ class ConfigController extends Controller
     {
         $pageTitle = $this->pageTitle;
 
-        $configuracao = $this->configuracao->get();
 
-        return view($this->view.'.index', compact('pageTitle','configuracao') );
+
+        return view($this->view.'.index', compact('pageTitle') );
     }
 
 
