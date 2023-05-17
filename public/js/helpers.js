@@ -19,14 +19,19 @@ function formatarDataBr(data)
 }
 
 
-function showNotification()
-{
+function showNotification() {
     $(".notification-box").slideDown(500, function () {
+        if ($(window).width() < 576) {
+            $(".notification-box").addClass("small-notification");
+        }
         setTimeout(function () {
-            $(".notification-box").slideUp(500);
+            $(".notification-box").slideUp(500, function () {
+                $(".notification-box").removeClass("small-notification");
+            });
         }, 3000); // A notificação desaparece após 3 segundos
     });
 }
+
 
 
 function toggleFullscreen()
