@@ -4,10 +4,10 @@ const legado_url_local = 'https://app.mufitness.com.br/v2/'
 const vendas_url_producao = 'https://vendas.mufitness.com.br'
 const legado_url_producao = 'https://app.mufitness.com.br/v2/'
 
-const contrato = '004'
 
 
-menuFlutuante(getUrlVendas(), contrato )
+
+menuFlutuante(getUrlVendas(), empresaId )
 
 
 
