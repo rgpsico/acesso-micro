@@ -138,7 +138,7 @@
                 $('#user').empty();
 
                 data.forEach(function(item){
-                    $('#user').append('<option value="' + item.id_usuario + '">' +item.id_usuario + '-' +item.nome + '</option>');
+                    $('#user').append('<option value="' + item.id_usuario + '" data-name='+item.nome+'>' +item.id_usuario + '-' +item.nome + '</option>');
                 });
             });
 
@@ -164,21 +164,19 @@
     })
 
     $('#logar').click(function(){
-    var selectedEmail = $('#user').find(":selected").data("email");
+    var selectedNome = $('#user').find(":selected").data("name");
     var token = $('meta[name="csrf-token"]').attr('content');
 
     $.ajax({
-        url: '/api/auth/login',
-        type: 'POST',
-        headers: {
-                'Authorization': 'Bearer ' + token //
-        },
+        url: vendas_url_local+empresaId+'/auth',
+        dataType: 'json',
+        method: 'POST',
+
         data: {
-            email:selectedEmail,
-            password: $('#password').val(),
+            nome:selectedNome,
+            senha: $('#password').val(),
         },
         success: function(response){
-
             $("#salvar").prop('disabled', false)
             $('#password').removeClass('is-invalid').addClass('is-valid');
             $('.valid-feedback').text('Logado com sucesso!');
