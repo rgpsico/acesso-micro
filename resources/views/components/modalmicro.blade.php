@@ -193,8 +193,9 @@
 
 
 
-    $('#salvar').click(function(){
 
+     $('#salvar').on('keyup', function(e) {
+        e.PreventDefault();
         var id_user = $('#user').val();
 
         var nome = $('#nome').val();
