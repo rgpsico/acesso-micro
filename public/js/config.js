@@ -6,7 +6,7 @@ const legado_url_producao = 'https://app.mufitness.com.br/v2'
 
 const contrato = '004'
 
-console.log(getUrlVendas())
+
 menuFlutuante(getUrlVendas(), contrato )
 
 
