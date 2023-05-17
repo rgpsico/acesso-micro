@@ -236,3 +236,8 @@
       #buscar[disabled] {
         cursor: not-allowed;
       }
+
+      .small-notification {
+       width:30px;
+       height:30px;
+    }
