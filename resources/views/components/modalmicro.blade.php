@@ -211,7 +211,7 @@
         var justificativa = $('#justificativa :selected').text()
 
         $.ajax({
-            url: vendas_url_local+'/'+contrato+'/acesso/store',
+            url: vendas_url_local+'/'+empresaId+'/acesso/store',
             type: 'POST',
             data:{
                 "id_fonecedor":id_aluno,
