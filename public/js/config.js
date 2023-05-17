@@ -15,7 +15,7 @@ menuFlutuante(getUrlVendas(), contrato )
 
 
 function getUrlVendas() {
-    const isHttps = vendas_url_producao.startsWith('httpst'); // Verifica se a URL de produção começa com "https"
+    const isHttps = vendas_url_producao.startsWith('https'); // Verifica se a URL de produção começa com "https"
 
     if (isHttps && isProducao) {
       return vendas_url_producao; // Retorna a URL de produção
@@ -69,7 +69,7 @@ function menuFlutuante(vendas_url_local, idweb )
     $.ajax({
         type: 'GET',
         contentType:'json',
-        url: vendas_url_local+'/'+ formattedId+'/configbyname',
+        url: vendas_url_local+''+ formattedId+'/configbyname',
         data: {
             configName: 'liberacao_justificada'
         },
