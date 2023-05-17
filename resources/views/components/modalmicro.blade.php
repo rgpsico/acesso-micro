@@ -194,7 +194,7 @@
 
 
 
-     $('#salvar').on('keyup', function(e) {
+     $('#salvar').on('click', function(e) {
         e.PreventDefault();
         var id_user = $('#user').val();
 
