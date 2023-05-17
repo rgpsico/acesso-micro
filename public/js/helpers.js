@@ -22,7 +22,7 @@ function formatarDataBr(data)
 function showNotification() {
     $(".notification-box").slideDown(500, function () {
         if ($(window).width() < 576) {
-            $(".notification-box").addClass("small-notification");
+           // $(".notification-box").addClass("small-notification");
         }
         setTimeout(function () {
             $(".notification-box").slideUp(500, function () {
