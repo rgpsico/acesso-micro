@@ -115,9 +115,25 @@ $(document).ready(function(){
 
 
         $(document).keypress(function(event) {
-            var matricula = $('#matricula').val();
             if(event.which == 13){
-                buscarByMatricula(matricula)
+                var matricula = $('#matricula').val();
+
+                var empresa = $('#id_filial').val();
+
+                if(empresa == '')
+                {
+                   empresa = $('#nativaId').val()
+
+                }
+
+                var empresaFormate = String(empresa).padStart(3, '0');
+
+                if(matricula == '')
+                {
+                    alert('Matricula não encontrada')
+                }
+
+                buscarByMatricula(getUrlVendas(),empresaFormate, matricula)
             }
 
         });
