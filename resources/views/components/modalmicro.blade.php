@@ -194,8 +194,9 @@
 
 
 
-     $('#salvar').on('click', function(e) {
-        e.PreventDefault();
+
+        $(document).on('click', '#salvar', function(event) {
+        event.preventDefault();
         var id_user = $('#user').val();
 
         var nome = $('#nome').val();
