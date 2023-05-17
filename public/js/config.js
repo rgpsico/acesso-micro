@@ -6,8 +6,7 @@ const legado_url_producao = 'https://app.mufitness.com.br/v2/'
 
 
 
-
-// menuFlutuante(getUrlVendas(), empresaId )
+menuFlutuante(getUrlVendas(), empresaId )
 
 
 
@@ -70,7 +69,7 @@ function menuFlutuante(vendas_url_local, idweb )
 
     $.ajax({
         type: 'GET',
-        contentType:'json',
+
         url: vendas_url_local+''+ formattedId+'/configbyname',
         data: {
             configName: 'liberacao_justificada'

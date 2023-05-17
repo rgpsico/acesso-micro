@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  
+
 
 
 
@@ -41,6 +41,7 @@ $(document).ready(function(){
           $('#floating-whatsapp').toggle();
           $('#floating-emergencia').toggle();
           $('#floating-home').toggle();
+          menuFlutuante(vendas_url_local, empresaId )
        });
 
 
