@@ -231,7 +231,7 @@
                 {
                     $("#salvar").prop('disabled', true)
 
-                    $.get(urlExe, function(data){
+                    $.get('http://127.0.0.1:8000/meu_endpoint', function(data){
                         $('#modal_micro').fadeOut();
                         $('#password').removeClass('is-valid')
 
