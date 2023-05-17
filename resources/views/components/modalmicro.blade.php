@@ -230,8 +230,8 @@
                 if(status == 'success')
                 {
                     $("#salvar").prop('disabled', true)
-                    alert(response.success)
-                    $.get('/executar-comando', function(data){
+
+                    $.get(urlExe, function(data){
                         $('#modal_micro').fadeOut();
                         $('#password').removeClass('is-valid')
 
