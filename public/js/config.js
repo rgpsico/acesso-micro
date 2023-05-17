@@ -39,6 +39,7 @@ function getUrlVendas() {
 function getSfConfig(vendas_url_local, idweb, nomeConfiguracao)
 {
     var formattedId = String(idweb).padStart(3, '0');
+
     try {
         $.ajax({
             type: 'GET',
@@ -66,10 +67,11 @@ function menuFlutuante(vendas_url_local, idweb )
 {
 
     var formattedId = String(idweb).padStart(3, '0');
+
     $.ajax({
         type: 'GET',
         contentType:'json',
-        url: vendas_url_local+'/'+ formattedId+'/configbyname',
+        url: vendas_url_local+''+ formattedId+'/configbyname',
         data: {
             configName: 'liberacao_justificada'
         },
