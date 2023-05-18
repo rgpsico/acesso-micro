@@ -104,7 +104,7 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
 
         // Faça a chamada AJAX
         $.ajax({
-            url: 'http://localhost:8000/api/003/authUrl', // Substitua pela URL correta
+            url: '/api/'+idEmpresa+'/authUrl', // Substitua pela URL correta
             method: 'POST',
             data: data,
             success: function(response)
