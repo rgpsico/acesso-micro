@@ -23,7 +23,7 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
                     <form method="POST" action="">
                         @csrf
 
-                        <input type="text" id="empresaID" name="empresaID" value="{{$empresaId}}">
+                        <input type="hidden" id="empresaID" name="empresaID" value="{{$empresaId}}">
 
                         <div class="row mb-3">
                             <label for="nome" class="col-md-4 col-form-label text-md-end">{{ __('Nome') }}</label>
