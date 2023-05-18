@@ -91,20 +91,21 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
         event.preventDefault();
 
         // Obtenha os valores dos campos
-        var idEmpresa = 004;
+        var idweb = $('#idweb').val();
+        var formattedId = String(idweb).padStart(3, '0');
         var nome = $('#nome').val();
         var senha = $('#senha').val();
 
         // Crie um objeto com os dados a serem enviados
         var data = {
-            idEmpresa: idEmpresa,
+            idEmpresa: idweb,
             nome: nome,
             senha: senha
         };
 
         // Faça a chamada AJAX
         $.ajax({
-            url: '/api/'+idEmpresa+'/authUrl', // Substitua pela URL correta
+            url: '/api/'+idweb+'/authUrl', // Substitua pela URL correta
             method: 'POST',
             data: data,
             success: function(response)
