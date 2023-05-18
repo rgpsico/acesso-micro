@@ -39,14 +39,14 @@ class AuthController extends Controller
     public function authUrl($idweb, Request $request)
     {
 
+    //$url = 'http://localhost:8001/004/auth';
+     $url = 'https://vendas.mufitness.com.br/003/auth';
 
     $data = array(
         'idweb' => $request->idweb,
         'nome' => $request->nome,
         'senha' => $request->senha
     );
-
-    $url = 'https://vendas.mufitness.com.br/'.$request->idweb.'/authUrl';
 
     $client = new Client();
 
@@ -65,9 +65,7 @@ class AuthController extends Controller
             $userExists = User::where('name', $data['nome'])->first();
 
             if(!$userExists) {
-
                 $user->name = $request->nome;
-                $user->email = $request->name.'@123.com';
                 $user->password  = $this->encryptMicro($request->senha, 'VipService123', true);
 
                 $user->save();
