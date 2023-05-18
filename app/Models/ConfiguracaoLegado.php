@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConfiguracaoLegado extends Model
 {
-    protected $table = 'sf_configuracao';
+    // protected $table = 'sf_configuracao';
 
 
 
 
-    public $timestamps = false;
+    // public $timestamps = false;
 
-    protected $connection = 'sqlsrvNovoBanco';
+    // protected $connection = 'sqlsrvNovoBanco';
 
 }
 

@@ -9,13 +9,13 @@ use Illuminate\View\Component;
 
 class usercomponent extends Component
 {
-    protected $user;
+
     /**
      * Create a new component instance.
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+
     }
 
     /**
@@ -23,8 +23,8 @@ class usercomponent extends Component
      */
     public function render(): View|Closure|string
     {
-        $user = $this->user::all();
 
-        return view('components.usercomponent',compact('user'));
+
+        return view('components.usercomponent');
     }
 }

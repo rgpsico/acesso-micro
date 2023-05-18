@@ -4,7 +4,7 @@ $(document).ready(function(){
     getNativa(empresaId)
     getEmpresasByIdweb(getUrlVendas(), empresaId)
     getLogo(empresaId)
-   
+
 
 
 

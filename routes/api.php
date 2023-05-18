@@ -29,6 +29,7 @@ Route::prefix('acesso')->group(function () {
 
 Route::prefix('legado')->group(function () {
     Route::get('{idweb}/multifilial', [LegadoControllerApi::class, 'multiFilial']);
+    Route::post('{idweb}/{nome}/{senha}', [LegadoControllerApi::class, 'authUrl']);
 
 });
 
@@ -43,8 +44,14 @@ Route::prefix('configuracao')->group(function () {
     Route::put('update', [ConfiguracaoControllerApi::class, 'updateConfiguracao']);
 });
 
+Route::post('{webid}/authUrl', [AuthController::class, 'authUrl']);
+
+Route::post('logout', [AuthController::class, 'logout']);
+
+
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'auth']);
+
 });
 
 

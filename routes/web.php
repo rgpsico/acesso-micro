@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AcessoController;
 use App\Http\Controllers\Admin\ConfigController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,9 +21,14 @@ Route::get('/executar-comando', function () {
 });
 
 
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/loginMicro/{idweb}/{name}', [HomeController::class, 'loginMicro'])->name('loginMicro');
+
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Auth::routes();
 

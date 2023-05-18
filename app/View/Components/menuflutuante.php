@@ -13,9 +13,9 @@ class menuflutuante extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(ConfiguracaoLegado $config)
+    public function __construct()
     {
-        $this->config = $config;
+
     }
 
     /**
@@ -23,8 +23,6 @@ class menuflutuante extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.menuflutuante',[
-            'config' => $this->config::all()
-        ]);
+        return view('components.menuflutuante');
     }
 }

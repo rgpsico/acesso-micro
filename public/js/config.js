@@ -8,7 +8,7 @@ const urlExe = 'http://127.0.0.1:8000/meu_endpoint'
 
 menuFlutuante(getUrlVendas(), empresaId )
 
-console.log(empresaId)
+
 
 
 

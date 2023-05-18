@@ -113,10 +113,9 @@
 
 <script>
   $(document).ready(function(){
+
     getJustificativas(vendas_url_local, empresaId)
     getUsers(vendas_url_local, empresaId)
-
-
 
     function getJustificativas(vendas_url_local, idweb)
         {
@@ -197,6 +196,7 @@
 
         $(document).on('click', '#salvar', function(event) {
         event.preventDefault();
+
         var id_user = $('#user').val();
 
         var nome = $('#nome').val();

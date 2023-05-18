@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RedesFormRequest;
-use App\Models\ConfiguracaoLegado;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 
