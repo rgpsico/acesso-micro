@@ -98,7 +98,7 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
 
         // Crie um objeto com os dados a serem enviados
         var data = {
-            idEmpresa: idweb,
+            idEmpresa: formattedId,
             nome: nome,
             senha: senha
         };
