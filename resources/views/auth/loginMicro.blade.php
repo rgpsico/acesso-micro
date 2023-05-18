@@ -23,7 +23,7 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
                     <form method="POST" action="">
                         @csrf
 
-                        <input type="hidden" id="idweb" name="idweb" value="{{ $empresaId }}">
+                        <input type="text" id="empresaID" name="empresaID" value="{{$empresaId}}">
 
                         <div class="row mb-3">
                             <label for="nome" class="col-md-4 col-form-label text-md-end">{{ __('Nome') }}</label>
@@ -91,7 +91,8 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
         event.preventDefault();
 
         // Obtenha os valores dos campos
-        var idweb = $('#idweb').val();
+        var idweb = $('#empresaID').val();
+
         var formattedId = String(idweb).padStart(3, '0');
         var nome = $('#nome').val();
         var senha = $('#senha').val();
