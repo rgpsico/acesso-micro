@@ -115,7 +115,7 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
                  window.location.href = "/home";
                  return;
                }
-               alert(response)
+               alert(response.content)
 
             },
             error: function(xhr, status, error) {
