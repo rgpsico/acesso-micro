@@ -1,7 +1,7 @@
 
 function erro_004()
 {
-    $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
+    $('#foto_avatar').attr('src', '/img/defaultAvatarPng2.png')
     $('#nomeAluno').text('')
     $("#matricula-aluno").text('')
     $('#motivo-status').text('')
@@ -18,7 +18,7 @@ function erro_004()
 
     function erro_403()
     {
-        $('#foto_avatar').attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg')
+        $('#foto_avatar').attr('src', '/img/defaultAvatarPng2.png')
         $('#nomeAluno').text('')
         $("#matricula-aluno").text('Bloqueio Manual')
         $('#motivo-status').text('Bloqueio Manual')
@@ -34,7 +34,7 @@ function erro_004()
     function success_response(res)
     {
         $('#foto_avatar').attr('src', res.photoUrl).on('error', function() {
-            $(this).attr('src', 'https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg');
+            $(this).attr('src', '/img/defaultAvatarPng2.png');
         }).fadeIn();
 
         if(res.released ==  true){

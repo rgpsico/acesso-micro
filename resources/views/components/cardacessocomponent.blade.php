@@ -38,7 +38,7 @@
 
     <div class="card p-2">
         <div class="card-header text-center" style="min-height:300px; max-height:300px;">
-            <img src="https://photografos.com.br/wp-content/uploads/2020/09/fotografia-para-perfil.jpg"
+            <img src="{{ asset('img/defaultAvatarPng2.png') }}"
                 alt="Imagem do aluno" class="img-thumbnail" id="foto_avatar" width="280px" height="240px" style="max-height:240px;">
         </div>
         <div class="card-body">
