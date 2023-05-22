@@ -84,3 +84,18 @@ function erro_004()
         $('#buscar_aluno').val('')
     }
 
+
+
+    function limparCard()
+    {
+        $('#foto_avatar').fadeOut()
+        $('#foto_avatar').attr('src','').on('error', function() {
+            $(this).attr('src', '/img/defaultAvatarPng2.png');
+        }).fadeIn();
+
+        $(".nome_Aluno1").text('NOME DO ALUNO');
+        $("#matricula-aluno").text('');
+        $('#descricaoPlano').text('')
+        $('#data_venct').text(' ')
+        $('#acessoMsg').text('')
+    }

@@ -205,6 +205,10 @@ $(document).ready(function(){
     var control = $select[0].selectize;
     control.clear();
     $('#alunos_multifilai-selectized').focus();
+
+    setTimeout(() => {
+        limparCard()
+    }, 2000);
 }
 
 

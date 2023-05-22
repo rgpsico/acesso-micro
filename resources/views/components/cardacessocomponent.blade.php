@@ -77,7 +77,7 @@ var $select = $('#alunos_multifilai').selectize({
 
     labelField: 'name',
 
-    searchField: ['name'],
+    searchField: ['name', 'id'],
 
     sortField: 'name'
 });
@@ -95,7 +95,7 @@ function loadDataFromApi(url) {
             selectizeControl.addOption({
                 manufacturer: item.manufacturer,
                 value: item.id,
-                name: item.name
+                name: item.id+ '-' +item.name
             });
         });
     });
