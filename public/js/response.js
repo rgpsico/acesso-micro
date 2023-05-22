@@ -97,4 +97,8 @@ function erro_004()
         $('#descricaoPlano').text('')
         $('#data_venct').text(' ')
         $('#acessoMsg').text('')
+
+        $("#motivo-status").removeClass('bg-success')
+        $('#motivo-status').addClass('bg-warning')
+        $('#motivo-status').text('Espera')
     }
