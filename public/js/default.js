@@ -215,7 +215,7 @@ $(document).ready(function(){
 
 function loadCard()
 {
-    var segundos = $('#tempoReloadCard').val() ?? '3'
+    var segundos = $('#tempoReloadCard').val()
 
     setTimeout(() => {
         limparCard()

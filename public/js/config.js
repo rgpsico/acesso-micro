@@ -51,6 +51,7 @@ function getSfConfig(vendas_url_local, idweb, nomeConfiguracao, elemento)
 
             success: function(data)
             {
+                console.log(data)
               var res = data;
               $('#'+elemento).val(res[nomeConfiguracao])
             }
