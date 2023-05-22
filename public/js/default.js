@@ -22,22 +22,7 @@ $(document).ready(function(){
 
 
 
-    $(document).on('change', '#id_filial', function(event) {
-        $('#buscar_aluno').val('');
 
-        var idweb = $(this).val();
-        var formattedId = String(idweb).padStart(3, '0');
-
-        if(formattedId == '000')
-        {
-            formattedId = $('#nativaId').val()
-        }
-
-
-        getEmpresasByIdweb(getUrlVendas(), formattedId)
-
-
-    });
 
 
 
@@ -83,7 +68,8 @@ $(document).ready(function(){
 
         $(document).on('click', '#buscar', function(event)
         {
-            var matricula = $('#matricula').val();
+
+            var matricula = $('#alunos_multifilai').val();
 
             var empresa = $('#id_filial').val();
 
@@ -116,7 +102,7 @@ $(document).ready(function(){
 
         $(document).keypress(function(event) {
             if(event.which == 13){
-                var matricula = $('#matricula').val();
+                var matricula = $('#alunos_multifilai').val();
 
                 var empresa = $('#id_filial').val();
 
@@ -188,6 +174,7 @@ $(document).ready(function(){
 
     function buscarByMatricula(vendas_url_local,empresaId, matricula, tipo_liberacao = 'multiflial' )
     {
+
         $('#foto_avatar').fadeOut();;
 
         $.ajax({
@@ -215,33 +202,20 @@ $(document).ready(function(){
 
       }
     });
+    var control = $select[0].selectize;
+    control.clear();
+    $('#alunos_multifilai-selectized').focus();
+}
 
 
-        }
 
 
-
-        function getEmpresasByIdweb(vendas_url_local, idweb)
-        {
-            var formattedId = String(idweb).padStart(3, '0');
-
-            $.get(vendas_url_local+'/'+ formattedId+'/alunosmf', function(data){
-
-                $('#alunos_multifilai').empty();
-
-                // Preencher o select com os dados recebidos
-                data.forEach(function(item){
-                    $('#alunos_multifilai').append('<option value="' + item.id + '">' +item.id + '-' +item.name + '</option>');
-                });
-            });
-
-        }
 
 
 
         const getMultiFiliais = (idweb) => {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-                console.log(data);
+
 
                 try {
                     // New data array with trimmed keys

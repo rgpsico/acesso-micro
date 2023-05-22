@@ -28,7 +28,6 @@ function erro_004()
         $('#motivo-status').addClass('bg-danger');
         $('#buscar_aluno').focus()
         $('#buscar_aluno').val('')
-
     }
 
     function success_response(res)

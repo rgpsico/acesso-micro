@@ -12,17 +12,16 @@
         </select>
 
         <input type="hidden" id="nativaId" class="form-control">
-        <input type="hidden" id="matricula" class="form-control">
-        <input type="text" id="buscar_aluno" class="form-control ml-3" style="margin-left:10px;" placeholder="Nome Aluno" autocomplete="off">
+        <select name="alunos_multifilai"
+            id="alunos_multifilai"
+            class="form-select  ml-2"
+            style="display:block;"
+            placeholder="Nome Aluno"
+            style="position:absoulute;">
+        </select>
 
         <div class="col-12" style="position:absolute; right:0; width:250px; top:105%; z-index:10000;">
-          <select name="alunos_multifilai"
-                  id="alunos_multifilai"
-                  class="form-select"
-                  style="display:none;"
-                  placeholder="Nome Aluno"
-                  style="position:absoulute;">
-          </select>
+
         </div>
       </div>
     </div>
@@ -57,5 +56,97 @@
     </div>
 </div>
 </div>
+
+<script>
+
+var $select = $('#alunos_multifilai').selectize({
+    options: [],
+    optionGroupRegister: function (optgroup) {
+    var capitalised = optgroup.charAt(0).toUpperCase() + optgroup.substring(1);
+
+    var group = {
+        label: 'Manufacturer: ' + capitalised
+    };
+
+    group[this.settings.optgroupValueField] = optgroup;
+
+    return group;
+    },
+
+    optgroupField: 'manufacturer',
+
+    labelField: 'name',
+
+    searchField: ['name'],
+
+    sortField: 'name'
+});
+
+
+function loadDataFromApi(url) {
+    $.get(url, function(data) {
+        var selectizeControl = $('#alunos_multifilai')[0].selectize;
+
+        // Limpar opções existentes
+        selectizeControl.clearOptions();
+
+        // Preencher o Selectize com os dados recebidos
+        data.forEach(function(item) {
+            selectizeControl.addOption({
+                manufacturer: item.manufacturer,
+                value: item.id,
+                name: item.name
+            });
+        });
+    });
+}
+
+// Chamada de função para carregar os dados
+
+
+
+
+
+$(document).on('change', '#id_filial', function(event) {
+        $('#buscar_aluno').val('');
+
+        var idweb = $(this).val();
+        var formattedId = String(idweb).padStart(3, '0');
+
+        if(formattedId == '000')
+        {
+            formattedId =  String($('#nativaId').val()).padStart(3, '0')
+        }
+
+
+        //getEmpresasByIdweb(getUrlVendas(), formattedId)
+
+        loadDataFromApi(getUrlVendas()+formattedId+'/alunosmf');
+
+
+    });
+
+
+function getEmpresasByIdweb(vendas_url_local, idweb)
+        {
+            var formattedId = String(idweb).padStart(3, '0');
+
+            $.get(vendas_url_local+'/'+ formattedId+'/alunosmf', function(data){
+
+                $('#alunos_multifilai').empty();
+
+                // Preencher o select com os dados recebidos
+                data.forEach(function(item){
+                    $('#alunos_multifilai').append('<option value="' + item.id + '">' +item.id + '-' +item.name + '</option>');
+                });
+            });
+
+        }
+
+
+
+
+
+</script>
 
 
