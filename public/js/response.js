@@ -55,7 +55,7 @@ function erro_004()
             showNotification()
             execultarApp()
         } else {
-            $('#nomeAluno').text(res.nome)
+            $('.nome_Aluno1').text(res.nome)
             $("#matricula-aluno").text(res.id)
             $('#status').text(res.status)
             $(".message").removeClass('text-success')
@@ -64,7 +64,6 @@ function erro_004()
             $('#descricaoPlano').text(res.descricaoPlano)
             $('#acessoMsg').text(res.text)
             $('.user-status').text(res.text)
-
             document.getElementById("bloqueado").play();
         }
 

@@ -9,7 +9,7 @@
     </div>
     <div class="form-group col-12 col-md-5 d-flex align-items-center my-2 mr-2">
       <div class="input-group col-12">
-        <select name="" id="id_filial" class="form-select mr-2 col-12 col-md-auto">
+        <select name="" id="id_filial" class="form-select mr-2 col-12 col-md-auto" style="display:none;">
         </select>
 
         <input type="hidden" id="nativaId" class="form-control">

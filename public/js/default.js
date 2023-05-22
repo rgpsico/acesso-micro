@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
     getMultiFiliais(empresaId)
-    getNativa(empresaId)
+    $('#nativaId').val(empresaId)
     getEmpresasByIdweb(getUrlVendas(), empresaId)
     getLogo(empresaId)
 
@@ -172,7 +172,7 @@ $(document).ready(function(){
     }
 
 
-    function buscarByMatricula(vendas_url_local,empresaId, matricula, tipo_liberacao = 'multiflial' )
+    function buscarByMatricula(vendas_url_local, empresaId, matricula, tipo_liberacao = 'multiflial')
     {
 
         $('#foto_avatar').fadeOut();;
@@ -197,6 +197,7 @@ $(document).ready(function(){
       },
       success: function(data) {
         var res = data;
+        console.log(res.nome)
         success_response(res)
         showNotification()
 
@@ -205,8 +206,7 @@ $(document).ready(function(){
     var control = $select[0].selectize;
     control.clear();
     $('#alunos_multifilai-selectized').focus();
-
-    loadCard()
+    //loadCard()
 }
 
 
@@ -215,7 +215,7 @@ $(document).ready(function(){
 function loadCard()
 {
     var segundos = $('#tempoReloadCard').val() ?? '3'
-    console.log(segundos)
+
     setTimeout(() => {
         limparCard()
     },  segundos * 1000);
@@ -224,11 +224,12 @@ function loadCard()
 
 
         const getMultiFiliais = (idweb) => {
+
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
 
 
                 try {
-                    // New data array with trimmed keys
+
                     const newData = data.map(item => {
                         let newItem = {};
 
@@ -248,11 +249,11 @@ function loadCard()
                     $('#id_filial').append(selectOption);
 
                     for (let i = 0; i < filteredData.length; i++) {
+                        $('#id_filial').show()
                         let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
                         $('#id_filial').append(option);
                     }
                 } catch (error) {
-                    // Consider logging the error for debugging purposes
                     console.error(error);
                 }
             });
@@ -262,6 +263,7 @@ function loadCard()
 
         function getNativa(idweb)
         {
+
             try {
                 $.get('api/legado/' + idweb + '/multifilial', function (data) {
 
