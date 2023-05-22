@@ -9,6 +9,7 @@ const urlExe = 'http://127.0.0.1:8000/meu_endpoint'
 menuFlutuante(getUrlVendas(), empresaId )
 
 
+getSfConfig(vendas_url_local, empresaId, 'tempo_reload_acesso', 'tempoReloadCard')
 
 
 
@@ -36,22 +37,22 @@ function getUrlVendas() {
   }
 
 
-function getSfConfig(vendas_url_local, idweb, nomeConfiguracao)
+function getSfConfig(vendas_url_local, idweb, nomeConfiguracao, elemento)
 {
     var formattedId = String(idweb).padStart(3, '0');
 
     try {
         $.ajax({
             type: 'GET',
-            contentType:'json',
-            url: vendas_url_local+'/'+ formattedId+'/configbyname',
+            url: vendas_url_local+''+ formattedId+'/configbyname',
             data: {
-                configName: nomeConfiguracao
+                configName:nomeConfiguracao
             },
 
-            success: function(data) {
+            success: function(data)
+            {
               var res = data;
-
+              $('#'+elemento).val(res[nomeConfiguracao])
             }
         });
 

@@ -206,14 +206,20 @@ $(document).ready(function(){
     control.clear();
     $('#alunos_multifilai-selectized').focus();
 
-    setTimeout(() => {
-        limparCard()
-    }, 2000);
+    loadCard()
 }
 
 
 
 
+function loadCard()
+{
+    var segundos = $('#tempoReloadCard').val() ?? '3'
+    console.log(segundos)
+    setTimeout(() => {
+        limparCard()
+    },  segundos * 1000);
+}
 
 
 

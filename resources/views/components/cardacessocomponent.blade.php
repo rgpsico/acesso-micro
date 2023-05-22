@@ -3,6 +3,7 @@
 <div class="container acesso">
 ''
 <div class="row">
+    <input type="hidden" id="tempoReloadCard" >
     <div class="col-12 col-md-1 d-flex align-items-center justify-content-center">
       <img src="" id="logo" alt="" height="40" width="100" class="img-fluid mb-4 mx-auto">
     </div>
