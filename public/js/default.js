@@ -254,8 +254,7 @@ $(document).ready(function(){
         {
             try {
                 $.get('api/legado/' + idweb + '/multifilial', function (data) {
-                    console.log(data)
-                    // Filtrar data para excluir as filiais com nativa igual a 1
+
                     if(data.length  > 0){
                         const nativa = data.filter(filial => filial.nativa == "1");
                         var idWebNativa = nativa[0].id_web

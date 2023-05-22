@@ -17,7 +17,7 @@
             class="form-select  ml-2"
             style="display:block;"
             placeholder="Nome Aluno"
-            style="position:absoulute;">
+            style="position:absoulute; font-size:14px;">
         </select>
 
         <div class="col-12" style="position:absolute; right:0; width:250px; top:105%; z-index:10000;">
@@ -140,6 +140,8 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
                     $('#alunos_multifilai').append('<option value="' + item.id + '">' +item.id + '-' +item.name + '</option>');
                 });
             });
+
+             loadDataFromApi(getUrlVendas()+idweb+'/alunosmf');
 
         }
 
