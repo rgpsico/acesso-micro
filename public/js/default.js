@@ -175,6 +175,7 @@ $(document).ready(function(){
     function buscarByMatricula(vendas_url_local, empresaId, matricula, tipo_liberacao = 'multiflial')
     {
 
+
         $('#foto_avatar').fadeOut();;
 
         $.ajax({
@@ -197,7 +198,7 @@ $(document).ready(function(){
       },
       success: function(data) {
         var res = data;
-        console.log(res.nome)
+        console.log(res)
         success_response(res)
         showNotification()
 
@@ -206,7 +207,7 @@ $(document).ready(function(){
     var control = $select[0].selectize;
     control.clear();
     $('#alunos_multifilai-selectized').focus();
-    //loadCard()
+    loadCard()
 }
 
 
@@ -230,6 +231,7 @@ function loadCard()
 
                 try {
 
+
                     const newData = data.map(item => {
                         let newItem = {};
 
@@ -248,8 +250,13 @@ function loadCard()
                     let selectOption = new Option('Nativa', '');
                     $('#id_filial').append(selectOption);
 
+                    if(data.length == 0){
+                        loadDataFromApi(getUrlVendas()+idweb+'/alunosnaosaomf');
+                        return;
+                     }
+
                     for (let i = 0; i < filteredData.length; i++) {
-                        $('#id_filial').show()
+
                         let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
                         $('#id_filial').append(option);
                     }
@@ -258,6 +265,9 @@ function loadCard()
                 }
             });
         };
+
+
+
 
 
 
