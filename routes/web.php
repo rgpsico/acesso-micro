@@ -20,10 +20,16 @@ Route::get('/executar-comando', function () {
     exec('C:\micro\micro.exe');
 });
 
+Route::get('/downloadMicro', function () {
+    $filePath = public_path('downloads/microRequired.rar');
+    return response()->download($filePath);
+});
+
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/loginMicro/{idweb}/{name}', [HomeController::class, 'loginMicro'])->name('loginMicro');
+
 
 
 Auth::routes();
