@@ -21,7 +21,7 @@ Route::get('/executar-comando', function () {
 });
 
 Route::get('/downloadMicro', function () {
-    $filePath = public_path('downloads/microRequired.rar');
+    $filePath = public_path('download/microRequired.rar');
     return response()->download($filePath);
 });
 
