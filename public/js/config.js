@@ -9,17 +9,13 @@ const legado_url_producao = 'https://app.mufitness.com.br/v2/'
 const urlExe = 'http://127.0.0.1:8000/meu_endpoint'
 
 
-
-
 const empresaId = localStorage.getItem('loginEmpresa')
-
 
 
 menuFlutuante(getUrlVendas(), empresaId )
 
 
 pegarValorDaConfiguracaoPeloNome(getUrlVendas(), empresaId, 'tempo_reload_acesso', 'tempoReloadCard')
-
 
 
 function getUrlVendas() {
