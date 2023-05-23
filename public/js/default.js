@@ -122,16 +122,27 @@ $(document).ready(function(){
 
                 var empresaFormate = String(empresa).padStart(3, '0');
 
+
+
                 if(matricula == '')
                 {
                     alert('Matricula não encontrada')
                 }
 
-                buscarByMatricula(getUrlVendas(),empresaFormate, matricula)
+                if(!isNaN(matricula))
+                {
+                    buscarByMatricula(getUrlVendas(),empresaFormate, matricula)
+                    return;
+                }
+
+                console.log('buscar por nome')
             }
 
         });
     });
+
+
+
 
 
 
