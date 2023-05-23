@@ -1,43 +1,56 @@
-const vendas_url_local = 'https://vendas.mufitness.com.br/'
-const legado_url_local = 'https://app.mufitness.com.br/v2/'
 
+const vendas_url_local = 'http://localhost:8001/'
 const vendas_url_producao = 'https://vendas.mufitness.com.br'
+
+
+const legado_url_local = 'http://127.0.0.1/projetos/mu.fitness.gestao/'
 const legado_url_producao = 'https://app.mufitness.com.br/v2/'
+
 const urlExe = 'http://127.0.0.1:8000/meu_endpoint'
-const empresaId = '004';
+
+const url = window.location.href;
+
+const empresaId = url.split('/')[4]
+
+console.log(empresaId)
+
+
+
 
 menuFlutuante(getUrlVendas(), empresaId )
 
 
-getSfConfig(vendas_url_local, empresaId, 'tempo_reload_acesso', 'tempoReloadCard')
-
-
+pegarValorDaConfiguracaoPeloNome(getUrlVendas(), empresaId, 'tempo_reload_acesso', 'tempoReloadCard')
 
 
 
 function getUrlVendas() {
-    const isHttps = vendas_url_producao.startsWith('httpst'); // Verifica se a URL de produção começa com "https"
+    const isHttps = window.location.href.startsWith('https'); // Verifica se a URL atual começa com "https"
 
-    if (isHttps && isProducao) {
+    if (isHttps) {
       return vendas_url_producao; // Retorna a URL de produção
     } else {
       return vendas_url_local; // Retorna a URL local
     }
   }
+
 
 
   function getUrlLegado() {
-    const isHttps = vendas_url_producao.startsWith('httpst'); // Verifica se a URL de produção começa com "https"
+    const isHttps = window.location.href.startsWith('https'); // Verifica se a URL atual começa com "https"
 
-    if (isHttps && isProducao) {
-      return vendas_url_producao; // Retorna a URL de produção
+    if (isHttps) {
+      return legado_url_producao; // Retorna a URL de produção
     } else {
-      return vendas_url_local; // Retorna a URL local
+      return legado_url_local; // Retorna a URL local
     }
   }
 
 
-function getSfConfig(vendas_url_local, idweb, nomeConfiguracao, elemento)
+
+
+
+function pegarValorDaConfiguracaoPeloNome(vendas_url_local, idweb, nomeConfiguracao, elemento)
 {
     var formattedId = String(idweb).padStart(3, '0');
 
@@ -120,18 +133,17 @@ function storeEmpresaId() {
     localStorage.setItem('empresaId', empresaId);
   }
 
-  function generateToken(user, permissions) {
+
+
+function generateToken(user, permissions) {
     const payload = {
       user: user,
       permissions: permissions,
       createdAt: new Date()
     };
 
-    // Codificar o payload em base64
     const encodedPayload = btoa(JSON.stringify(payload));
-
-    // Retornar o token
-    return encodedPayload;
+     return encodedPayload;
   }
 
 

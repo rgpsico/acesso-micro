@@ -70,8 +70,11 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
                         </div>
                     </form>
                 </div>
+
             </div>
+
         </div>
+        <span id="clock" class="bg-dark d-flex"></span>
     </div>
 </div>
 
