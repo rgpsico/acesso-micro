@@ -206,7 +206,7 @@ $(document).ready(function(){
       },
       success: function(data) {
         var res = data;
-        console.log(res)
+
         success_response(res)
         showNotification()
 
@@ -215,7 +215,7 @@ $(document).ready(function(){
     var control = $select[0].selectize;
     control.clear();
     $('#alunos_multifilai-selectized').focus();
-    $('#alunos_multifilai-selectized').empty()
+    $('#alunos_multifilai-selectized').val('')
     loadCard()
 }
 
@@ -235,8 +235,6 @@ function loadCard()
         $.get('api/legado/' + idweb + '/multifilial', function (data) {
             if(data.length > 0){
 
-
-
                 return;
             } else
             {
@@ -251,9 +249,7 @@ function loadCard()
         const getMultiFiliais = (idweb) => {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
 
-
                 try {
-
 
                     const newData = data.map(item => {
                         let newItem = {};
