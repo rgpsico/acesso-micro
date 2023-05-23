@@ -81,24 +81,7 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
   $(document).ready(function(){
 
 
-function storeEmpresaId() {
-  const empresaId = inputEmpresaId.value;
-  localStorage.setItem('empresaId', empresaId);
-}
 
-function generateToken(user, permissions) {
-  const payload = {
-    user: user,
-    permissions: permissions,
-    createdAt: new Date()
-  };
-
-  // Codificar o payload em base64
-  const encodedPayload = btoa(JSON.stringify(payload));
-
-  // Retornar o token
-  return encodedPayload;
-}
 
 try {
     if (decodedToken) {

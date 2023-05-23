@@ -51,7 +51,6 @@ function getSfConfig(vendas_url_local, idweb, nomeConfiguracao, elemento)
 
             success: function(data)
             {
-                console.log(data)
               var res = data;
               $('#'+elemento).val(res[nomeConfiguracao])
             }
@@ -115,6 +114,25 @@ function menuFlutuante(vendas_url_local, idweb )
     });
 
 }
+
+function storeEmpresaId() {
+    const empresaId = inputEmpresaId.value;
+    localStorage.setItem('empresaId', empresaId);
+  }
+
+  function generateToken(user, permissions) {
+    const payload = {
+      user: user,
+      permissions: permissions,
+      createdAt: new Date()
+    };
+
+    // Codificar o payload em base64
+    const encodedPayload = btoa(JSON.stringify(payload));
+
+    // Retornar o token
+    return encodedPayload;
+  }
 
 
 
