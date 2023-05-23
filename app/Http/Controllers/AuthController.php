@@ -37,8 +37,8 @@ class AuthController extends Controller
     public function authUrl($idweb, Request $request)
     {
 
-        $userExists = [];
-     $url = 'http://localhost:8001/'.$idweb.'/auth';
+
+     $url = 'https://vendas.mufitness.com.br/'.$idweb.'/auth';
 
 
     $data = array(
@@ -71,6 +71,7 @@ class AuthController extends Controller
 
 
                 auth()->login($user);
+
 
                 return response(['content' => 'success', 200]);
 
