@@ -78,7 +78,7 @@ $(document).ready(function(){
 
             var matricula = $('#alunos_multifilai').val();
 
-            var empresa = $('#id_filial').val();
+            var empresa = $('#select_id_filial').val();
 
             if(empresa == '')
             {
@@ -111,7 +111,7 @@ $(document).ready(function(){
             if(event.which == 13){
                 var matricula = $('#alunos_multifilai').val();
 
-                var empresa = $('#id_filial').val();
+                var empresa = $('#select_id_filial').val();
 
                 if(empresa == '')
                 {
@@ -238,7 +238,8 @@ function loadCard()
                 return;
             } else
             {
-                $('#id_filial').hide()
+                getTodosAlunos(getUrlVendas()+idweb+'/alunosnaosaomf');
+                $('#select_id_filial').hide()
               return;
             }
         });
@@ -246,9 +247,8 @@ function loadCard()
 
 
         const getMultiFiliais = (idweb) => {
-
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-                console.log(data)
+
 
                 try {
 
@@ -265,18 +265,18 @@ function loadCard()
 
                     const filteredData = newData.filter(filial => filial.nativa !== "1");
 
-                    $('#id_filial').empty();
+                    $('#select_id_filial').empty();
 
-                    // Adicionar opção "Selecione"
+
                     let selectOption = new Option('Nativa', '');
-                    $('#id_filial').append(selectOption);
+                    $('#select_id_filial').append(selectOption);
 
 
 
                     for (let i = 0; i < filteredData.length; i++) {
 
                         let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
-                        $('#id_filial').append(option);
+                        $('#select_id_filial').append(option);
                     }
                 } catch (error) {
                     console.error(error);

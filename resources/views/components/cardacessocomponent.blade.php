@@ -9,7 +9,7 @@
     </div>
     <div class="form-group col-12 col-md-5 d-flex align-items-center my-2 mr-2">
       <div class="input-group col-12">
-        <select name="" id="id_filial" class="form-select mr-2 col-12 col-md-auto" >
+        <select name="" id="select_id_filial" class="form-select mr-2 col-12 col-md-auto" >
         </select>
 
         <input type="hidden" id="nativaId" class="form-control">
@@ -84,7 +84,7 @@ var $select = $('#alunos_multifilai').selectize({
 });
 
 
-function loadDataFromApi(url) {
+function getTodosAlunos(url) {
     $.get(url, function(data) {
 
         var selectizeControl = $('#alunos_multifilai')[0].selectize;
@@ -109,7 +109,8 @@ function loadDataFromApi(url) {
 
 
 
-$(document).on('change', '#id_filial', function(event) {
+$(document).on('change', '#select_id_filial', function(event) {
+
         $('#buscar_aluno').val('');
 
         var idweb = $(this).val();
@@ -123,7 +124,7 @@ $(document).on('change', '#id_filial', function(event) {
 
         //getEmpresasByIdweb(getUrlVendas(), formattedId)
 
-        loadDataFromApi(getUrlVendas()+formattedId+'/alunosmf');
+        getTodosAlunos(getUrlVendas()+formattedId+'/alunosmf');
 
 
     });
@@ -143,7 +144,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
                 });
             });
 
-             loadDataFromApi(getUrlVendas()+idweb+'/alunosmf');
+             getTodosAlunos(getUrlVendas()+idweb+'/alunosmf');
 
         }
 
