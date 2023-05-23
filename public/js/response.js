@@ -64,6 +64,7 @@ function erro_004()
             $('#descricaoPlano').text(res.descricaoPlano)
             $('#acessoMsg').text(res.text)
             $('.user-status').text(res.text)
+            $('.motivo-statu').text(res.text)
             document.getElementById("bloqueado").play();
         }
 
