@@ -82,11 +82,15 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
 <script>
   $(document).ready(function(){
 
+   const url = window.location.href;
+   const loginEmpresa = url.split('/')[4]
+   localStorage.setItem('loginEmpresa', loginEmpresa);
+
     $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
 
 

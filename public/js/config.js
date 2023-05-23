@@ -8,15 +8,10 @@ const legado_url_producao = 'https://app.mufitness.com.br/v2/'
 
 const urlExe = 'http://127.0.0.1:8000/meu_endpoint'
 
-const url = window.location.href;
-
-const loginEmpresa = url.split('/')[4]
-
-localStorage.setItem('loginEmpresa', loginEmpresa);
-const empresaId = getEmpresaId()
 
 
 
+const empresaId = localStorage.getItem('loginEmpresa')
 
 
 
@@ -149,15 +144,7 @@ function generateToken(user, permissions) {
      return encodedPayload;
   }
 
-  function getEmpresaId() {
-    // Obter o valor armazenado de loginEmpresa do localStorage
-    const storedLoginEmpresa = localStorage.getItem('loginEmpresa');
 
-    // Atribuir o valor de storedLoginEmpresa à variável empresaId
-    const empresaId = storedLoginEmpresa;
-
-    return empresaId;
-  }
 
 
 

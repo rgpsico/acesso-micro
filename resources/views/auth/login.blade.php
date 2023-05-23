@@ -83,6 +83,9 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
 
 
 
+
+
+
 try {
     if (decodedToken) {
     window.location.href = "/home";
