@@ -193,7 +193,7 @@ $(document).ready(function(){
 
     function buscarByMatricula(vendas_url_local, empresaId, matricula, tipo_liberacao = 'multiflial')
     {
-
+        $("#spinner").show()
 
         $('#foto_avatar').fadeOut();;
 
@@ -207,11 +207,12 @@ $(document).ready(function(){
             statusCode: {
             404: function(data) {
                 erro_004()
+                $("#spinner").hide()
 
         },
         403: function(data) {
             erro_403()
-
+            $("#spinner").hide()
           }
 
       },
@@ -220,7 +221,7 @@ $(document).ready(function(){
 
         success_response(res)
         showNotification()
-
+        $("#spinner").hide()
       }
     });
     var control = $select[0].selectize;
@@ -259,16 +260,13 @@ function loadCard()
 
         const getMultiFiliais = (idweb) => {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-
+                $("#spinner").show()
                 try {
-
                     const newData = data.map(item => {
                         let newItem = {};
-
                         for (let key in item) {
                             newItem[key.trim()] = item[key];
                         }
-
                         return newItem;
                     });
 
@@ -276,21 +274,21 @@ function loadCard()
 
                     $('#select_id_filial').empty();
 
-
                     let selectOption = new Option('Nativa', '');
                     $('#select_id_filial').append(selectOption);
 
-
-
                     for (let i = 0; i < filteredData.length; i++) {
-
                         let option = new Option(filteredData[i].id_web + '/' + filteredData[i].nome_empresa, filteredData[i].id_web);
                         $('#select_id_filial').append(option);
                     }
                 } catch (error) {
                     console.error(error);
+                } finally {
+                    $("#spinner").hide();
                 }
             });
+
+
         };
 
 
