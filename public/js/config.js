@@ -10,9 +10,12 @@ const urlExe = 'http://127.0.0.1:8000/meu_endpoint'
 
 const url = window.location.href;
 
-const empresaId = url.split('/')[4]
+const loginEmpresa = url.split('/')[4]
 
-console.log(empresaId)
+localStorage.setItem('loginEmpresa', loginEmpresa);
+const empresaId = getEmpresaId()
+
+
 
 
 
@@ -25,24 +28,24 @@ pegarValorDaConfiguracaoPeloNome(getUrlVendas(), empresaId, 'tempo_reload_acesso
 
 
 function getUrlVendas() {
-    const isHttps = window.location.href.startsWith('https'); // Verifica se a URL atual começa com "https"
+    const isHttps = window.location.href.startsWith('https');
 
     if (isHttps) {
-      return vendas_url_producao; // Retorna a URL de produção
+      return vendas_url_producao;
     } else {
-      return vendas_url_local; // Retorna a URL local
+      return vendas_url_local;
     }
   }
 
 
 
   function getUrlLegado() {
-    const isHttps = window.location.href.startsWith('https'); // Verifica se a URL atual começa com "https"
+    const isHttps = window.location.href.startsWith('https');
 
     if (isHttps) {
-      return legado_url_producao; // Retorna a URL de produção
+      return legado_url_producao;
     } else {
-      return legado_url_local; // Retorna a URL local
+      return legado_url_local;
     }
   }
 
@@ -144,6 +147,16 @@ function generateToken(user, permissions) {
 
     const encodedPayload = btoa(JSON.stringify(payload));
      return encodedPayload;
+  }
+
+  function getEmpresaId() {
+    // Obter o valor armazenado de loginEmpresa do localStorage
+    const storedLoginEmpresa = localStorage.getItem('loginEmpresa');
+
+    // Atribuir o valor de storedLoginEmpresa à variável empresaId
+    const empresaId = storedLoginEmpresa;
+
+    return empresaId;
   }
 
 
