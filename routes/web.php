@@ -21,8 +21,8 @@ Route::prefix('admin')->group(function ()
 
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::get('/', [HomeController::class, 'index'])->middleware('auth');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/loginMicro/{idweb}/{name}', [HomeController::class, 'loginMicro'])->name('loginMicro');
 
