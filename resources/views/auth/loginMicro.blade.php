@@ -80,6 +80,8 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
 
 
 <script>
+localStorage.removeItem('loginEmpresa');
+
   $(document).ready(function(){
 
    const url = window.location.href;
