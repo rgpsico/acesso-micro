@@ -93,7 +93,7 @@ $(document).ready(function(){
                 alert('Matricula não encontrada')
             }
 
-            buscarByMatricula(getUrlVendas(),empresaFormate, matricula)
+            buscarByMatricula(getUrlVendas(),empresaFormate, matricula, 'Manual')
 
                   // Exemplo de dados a serem enviados
                 var data = {
@@ -131,7 +131,7 @@ $(document).ready(function(){
 
                 if(!isNaN(matricula))
                 {
-                    buscarByMatricula(getUrlVendas(),empresaFormate, matricula)
+                    buscarByMatricula(getUrlVendas(),empresaFormate, matricula, 'Teclado')
                     return;
                 }
 
