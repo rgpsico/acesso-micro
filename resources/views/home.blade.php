@@ -2,9 +2,7 @@
 
 @section('content')
 
-<script>
-    const empresaId = '004';
-</script>
+
 
 
     <x-notificationbox/>

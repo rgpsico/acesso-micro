@@ -18,18 +18,24 @@ $(document).ready(function(){
       const clock = document.getElementById("clock");
 
       // Atualiza o relógio a cada segundo
-      setInterval(() => {
-      // Cria um objeto Date com a hora atual
-      const now = new Date();
 
-      // Formata a hora e o minuto como texto
-      const hours = now.getHours().toString().padStart(2, "0");
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const seconds = now.getSeconds().toString().padStart(2, "0");
+     try {
+        setInterval(() => {
+            // Cria um objeto Date com a hora atual
+            const now = new Date();
 
-      // Define o conteúdo do span com a hora e o minuto
-      clock.textContent = `${hours}:${minutes}:${seconds}`;
-      }, 1000);
+            // Formata a hora e o minuto como texto
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const seconds = now.getSeconds().toString().padStart(2, "0");
+
+            // Define o conteúdo do span com a hora e o minuto
+            clock.textContent = `${hours}:${minutes}:${seconds}`;
+            }, 1000);
+     } catch (error) {
+
+     }
+
 
       $('#floating-ligar').hide();
       $('#floating-whatsapp').hide();

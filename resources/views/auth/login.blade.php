@@ -72,12 +72,46 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
                 </div>
             </div>
         </div>
+        <span id="clock" class="bg-dark d-flex"></span>
     </div>
 </div>
 
 
 <script>
   $(document).ready(function(){
+
+
+function storeEmpresaId() {
+  const empresaId = inputEmpresaId.value;
+  localStorage.setItem('empresaId', empresaId);
+}
+
+function generateToken(user, permissions) {
+  const payload = {
+    user: user,
+    permissions: permissions,
+    createdAt: new Date()
+  };
+
+  // Codificar o payload em base64
+  const encodedPayload = btoa(JSON.stringify(payload));
+
+  // Retornar o token
+  return encodedPayload;
+}
+
+try {
+    if (decodedToken) {
+    window.location.href = "/home";
+} else {
+    window.location.href = "/login";
+}
+} catch (error) {
+
+}
+
+
+
 
     $.ajaxSetup({
     headers: {
@@ -112,7 +146,9 @@ $nomeUsuario = $pathSegments[count($pathSegments) - 1];
             success: function(response)
             {
                if(response.content == 'success'){
+               // const token = generateToken(user, permissions);
                  window.location.href = "/home";
+
                  return;
                }
                alert(response.content)

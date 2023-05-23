@@ -6,7 +6,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::prefix('admin')->group(function ()
 {
     Route::prefix('acesso')->group(function () {
@@ -19,18 +18,12 @@ Route::prefix('admin')->group(function ()
 });
 
 
-
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/loginMicro/{idweb}/{name}', [HomeController::class, 'loginMicro'])->name('loginMicro');
 
-
-
 Route::get('logout', [AuthController::class, 'logout']);
-
-
 
 Route::get('/executar-comando', function () {
     exec('C:\micro\micro.exe');
@@ -41,11 +34,6 @@ Route::get('/downloadMicro', function () {
     return response()->download($filePath);
 });
 
-
 Auth::routes();
 
-
-
 Auth::routes();
-
-

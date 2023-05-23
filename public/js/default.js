@@ -1,9 +1,15 @@
 
 $(document).ready(function(){
-    getMultiFiliais(empresaId)
-    $('#nativaId').val(empresaId)
-    getEmpresasByIdweb(getUrlVendas(), empresaId)
-    getLogo(empresaId)
+    try {
+        getMultiFiliais(empresaId)
+        $('#nativaId').val(empresaId)
+        getEmpresasByIdweb(getUrlVendas(), empresaId)
+        getLogo(empresaId)
+
+    } catch (error) {
+
+    }
+
 
 
 
@@ -251,7 +257,12 @@ function loadCard()
                     $('#id_filial').append(selectOption);
 
                     if(data.length == 0){
-                        loadDataFromApi(getUrlVendas()+idweb+'/alunosnaosaomf');
+                        try {
+                            loadDataFromApi(getUrlVendas()+idweb+'/alunosnaosaomf');
+                        } catch (error) {
+
+                        }
+
                         return;
                      }
 
