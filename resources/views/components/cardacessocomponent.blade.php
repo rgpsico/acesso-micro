@@ -62,6 +62,7 @@
 
 var $select = $('#alunos_multifilai').selectize({
     options: [],
+
     optionGroupRegister: function (optgroup) {
     var capitalised = optgroup.charAt(0).toUpperCase() + optgroup.substring(1);
 
@@ -78,9 +79,10 @@ var $select = $('#alunos_multifilai').selectize({
 
     labelField: 'name',
 
-    searchField: ['name', 'id'],
+    //searchField: ['name', 'id'],
 
-    sortField: 'name'
+    sortField: 'name',
+    openOnFocus: false,
 });
 
 

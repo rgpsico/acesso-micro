@@ -108,8 +108,9 @@ $(document).ready(function(){
 
 
         $(document).keypress(function(event) {
+
             if(event.which == 13){
-                var matricula = $('#alunos_multifilai').val();
+                var matricula = $('#alunos_multifilai-selectized').val();
 
                 var empresa = $('#select_id_filial').val();
 
