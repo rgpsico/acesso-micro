@@ -1,23 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+
+$url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+$pathSegments = explode('/', parse_url($url, PHP_URL_PATH));
+
+// Obter os valores de empresaId e nomeUsuario
+$empresaId = $pathSegments[count($pathSegments) - 2];
+$nomeUsuario = $pathSegments[count($pathSegments) - 1];
+
+
+@endphp
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{ __('Acesso') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="">
                         @csrf
 
+                        <input type="hidden" id="empresaID" name="empresaID" value="004">
+
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="nome" class="col-md-4 col-form-label text-md-end">{{ __('Nome') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="nome"
+                                type="text"
+                                 class="form-control @error('nome') is-invalid @enderror"
+                               value="{{$nomeUsuario }}"
 
-                                @error('email')
+                                   autofocus>
+
+                                @error('nome')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -26,10 +45,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Senha') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="senha" type="password" class="form-control @error('senha') is-invalid @enderror" name="senha" required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -39,29 +58,14 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="logar">
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+
                             </div>
                         </div>
                     </form>
@@ -70,4 +74,57 @@
         </div>
     </div>
 </div>
+
+
+<script>
+  $(document).ready(function(){
+
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
+
+    $(document).on('click', '#logar', function(event) {
+        event.preventDefault();
+
+        // Obtenha os valores dos campos
+        var idweb = $('#empresaID').val();
+
+        var formattedId = String(idweb).padStart(3, '0');
+        var nome = $('#nome').val();
+        var senha = $('#senha').val();
+
+        // Crie um objeto com os dados a serem enviados
+        var data = {
+            idEmpresa: formattedId,
+            nome: nome,
+            senha: senha
+        };
+
+        // Faça a chamada AJAX
+        $.ajax({
+            url: '/api/'+formattedId+'/authUrl', // Substitua pela URL correta
+            method: 'POST',
+            data: data,
+            success: function(response)
+            {
+               if(response.content == 'success'){
+                 window.location.href = "/home";
+                 return;
+               }
+               alert(response.content)
+
+            },
+            error: function(xhr, status, error) {
+                alert('Erro'+error)
+                console.log(error);
+            }
+        });
+    });
+});
+
+</script>
 @endsection

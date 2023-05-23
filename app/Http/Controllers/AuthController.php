@@ -17,9 +17,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-
-        // Redirecionar para a página de login ou para outra rota de sua escolha
-        return redirect()->route('/');
+        return redirect()->route('login');
     }
 
 
@@ -39,8 +37,9 @@ class AuthController extends Controller
     public function authUrl($idweb, Request $request)
     {
 
+        $userExists = [];
+     $url = 'http://localhost:8001/'.$idweb.'/auth';
 
-     $url = 'https://vendas.mufitness.com.br/'.$idweb.'/auth';
 
     $data = array(
         'idweb' => $request->idweb,
@@ -72,7 +71,6 @@ class AuthController extends Controller
 
 
                 auth()->login($user);
-
 
                 return response(['content' => 'success', 200]);
 
