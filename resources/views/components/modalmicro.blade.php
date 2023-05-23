@@ -114,8 +114,8 @@
 <script>
   $(document).ready(function(){
 
-    getJustificativas(vendas_url_local, empresaId)
-    getUsers(vendas_url_local, empresaId)
+    getJustificativas(getUrlVendas() , empresaId)
+    getUsers(getUrlVendas() , empresaId)
 
     function getJustificativas(vendas_url_local, idweb)
         {
@@ -167,7 +167,7 @@
     var token = $('meta[name="csrf-token"]').attr('content');
 
     $.ajax({
-        url: vendas_url_local+empresaId+'/auth',
+        url: getUrlVendas() +empresaId+'/auth',
         dataType: 'json',
         method: 'POST',
 
@@ -213,7 +213,7 @@
         var justificativa = $('#justificativa :selected').text()
 
         $.ajax({
-            url: vendas_url_local+'/'+empresaId+'/acesso/store',
+            url: getUrlVendas() +'/'+empresaId+'/acesso/store',
             type: 'POST',
             data:{
                 "id_fonecedor":id_aluno,
@@ -265,7 +265,7 @@
 
         if (query.length >= 3) {
 
-            $.get(vendas_url_local+'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
+            $.get(getUrlVendas() +'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
                 console.log(data)
                 var options = '<option></option>';
                 $.each(data, function(key, value) {
