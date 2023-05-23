@@ -1,6 +1,7 @@
 
 $(document).ready(function(){
     try {
+        eMultifilial(empresaId)
         getMultiFiliais(empresaId)
         $('#nativaId').val(empresaId)
         getEmpresasByIdweb(getUrlVendas(), empresaId)
@@ -228,12 +229,26 @@ function loadCard()
     },  segundos * 1000);
 }
 
+    const eMultifilial = (idweb) => {
+        $.get('api/legado/' + idweb + '/multifilial', function (data) {
+            if(data.length > 0){
+
+
+
+                return;
+            } else
+            {
+                $('#id_filial').hide()
+              return;
+            }
+        });
+    }
 
 
         const getMultiFiliais = (idweb) => {
 
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-
+                console.log(data)
 
                 try {
 
@@ -256,15 +271,7 @@ function loadCard()
                     let selectOption = new Option('Nativa', '');
                     $('#id_filial').append(selectOption);
 
-                    if(data.length == 0){
-                        try {
-                            loadDataFromApi(getUrlVendas()+idweb+'/alunosnaosaomf');
-                        } catch (error) {
 
-                        }
-
-                        return;
-                     }
 
                     for (let i = 0; i < filteredData.length; i++) {
 

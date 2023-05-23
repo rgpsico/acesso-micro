@@ -9,7 +9,7 @@
     </div>
     <div class="form-group col-12 col-md-5 d-flex align-items-center my-2 mr-2">
       <div class="input-group col-12">
-        <select name="" id="id_filial" class="form-select mr-2 col-12 col-md-auto" style="display:none;">
+        <select name="" id="id_filial" class="form-select mr-2 col-12 col-md-auto" >
         </select>
 
         <input type="hidden" id="nativaId" class="form-control">
@@ -86,6 +86,7 @@ var $select = $('#alunos_multifilai').selectize({
 
 function loadDataFromApi(url) {
     $.get(url, function(data) {
+
         var selectizeControl = $('#alunos_multifilai')[0].selectize;
 
         // Limpar opções existentes
