@@ -75,9 +75,14 @@ $(document).ready(function(){
 
         $(document).on('click', '#buscar', function(event)
         {
-
-            var matricula = $('#alunos_multifilai').val();
-
+            var matricula = $('#inputField').val();
+           
+            if(isNaN(matricula))
+            {
+               matricula = $('#selectField').val()
+            }
+          
+          
             var empresa = $('#select_id_filial').val();
 
             if(empresa == '')
@@ -110,8 +115,8 @@ $(document).ready(function(){
         $(document).keypress(function(event) {
 
             if(event.which == 13){
-                var matricula = $('#alunos_multifilai-selectized').val();
-
+                var matricula = $('#inputField').val();
+               
                 var empresa = $('#select_id_filial').val();
 
                 if(empresa == '')
@@ -224,10 +229,9 @@ $(document).ready(function(){
         $("#spinner").hide()
       }
     });
-    var control = $select[0].selectize;
-    control.clear();
-    $('#alunos_multifilai-selectized').focus();
-    $('#alunos_multifilai-selectized').val('')
+  
+    // $('#alunos_multifilai-selectized').focus();
+    // $('#alunos_multifilai-selectized').val('')
     loadCard()
 }
 

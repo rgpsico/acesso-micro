@@ -13,13 +13,11 @@
         </select>
 
         <input type="hidden" id="nativaId" class="form-control">
-        <select name="alunos_multifilai"
-            id="alunos_multifilai"
-            class="form-select  ml-2"
-            style="display:block;"
-            placeholder="Nome Aluno"
-            style="position:absoulute; font-size:14px;">
+        
+        <input id="inputField" type="text" class="form-control">
+        <select id="selectField" class="form-control" style="display: none;">
         </select>
+
 
         <div class="col-12" style="position:absolute; right:0; width:250px; top:105%; z-index:10000;">
 
@@ -59,6 +57,45 @@
 </div>
 
 <script>
+
+
+$('#inputField').on('input', function() {
+                var inputVal = $(this).val();
+                $('#selectField').empty()
+                // Se o valor é um número, esconda o campo de seleção
+                if ($.isNumeric(inputVal)) {
+                    $('#selectField').hide();
+                }
+                // Caso contrário, faça uma solicitação AJAX para a API
+                else {
+                    $.ajax({
+                        url: 'http://127.0.0.1:8000/api/acesso/byNome', // Substitua pelo URL da sua API
+                        data: {
+                            'nome': inputVal
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            var selectField = $('#selectField');
+                            selectField.show();
+                            selectField.empty();
+
+                            // Assumindo que 'data' é uma lista de opções
+                            $.each(data, function(index, item) {
+                                selectField.append($('<option>', {
+                                    value: item.id,
+                                    text : item.nome // ou o que quer que seja apropriado para o seu caso
+                                }));
+                            });
+                        },
+                        error: function() {
+                            alert('Erro ao obter dados da API');
+                        }
+                    });
+                }
+            });
+   
+  
+
 
 var $select = $('#alunos_multifilai').selectize({
     options: [],
