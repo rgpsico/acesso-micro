@@ -29,6 +29,7 @@ function erro_004()
 
     function success_response(res)
     {
+
         $('#foto_avatar').attr('src', res.photoUrl).on('error', function() {
             $(this).attr('src', '/img/defaultAvatarPng2.png');
         }).fadeIn();
