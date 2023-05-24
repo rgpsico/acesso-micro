@@ -43,6 +43,7 @@ function erro_004()
             $('#motivo-status').text(res.text)
             $("#motivo-status").removeClass('bg-danger bg-info  bg-warning ')
             $("#motivo-status").addClass('bg-success')
+            $('#motivo-status').text("LIBERADO")
             document.getElementById("liberado").play();
             showNotification()
             execultarApp()
