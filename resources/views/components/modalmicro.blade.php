@@ -90,6 +90,11 @@
                         </select>
                     </div>
 
+                    <div class="form-group col-6 quando_for_numero" style="display:none;">
+                        <label for="" class="form-label m-0 label-aluno">Nome:</label>
+                         <input type='txt' name="nomeAluno_by_matricula" disabled id="nomeAluno_by_matricula"  class="form-control" autocomplete="off">
+                    </div>
+
                     <x-justificativacomponent/>
 
 
@@ -145,6 +150,22 @@
 
 
 
+        function getAlunoById(vendas_url_local, idweb, matricula)
+        {
+            $('.quando_for_numero').hide()
+            var formattedId = String(idweb).padStart(3, '0');
+            $.get(vendas_url_local+formattedId+'/aluno/justificativa/'+matricula+'/byid', function(data){
+                $('.quando_for_numero').show()
+                $('#nomeAluno_by_matricula').val(data.data.nome);
+                $('#aluno_id').val(data.data.id)
+
+
+            });
+
+        }
+
+
+
     $('.tipo_entrada').click(function(){
 
         if($(this).val() == 'aluno')
@@ -163,6 +184,7 @@
     })
 
     $('#logar').click(function(){
+
     var selectedNome = $('#user').find(":selected").data("name");
     var token = $('meta[name="csrf-token"]').attr('content');
 
@@ -194,14 +216,21 @@
 
 
 
-        $(document).on('click', '#salvar', function(event) {
+    $(document).on('click', '#salvar', function(event) {
         event.preventDefault();
-
         var id_user = $('#user').val();
 
         var nome = $('#nome').val();
         var descricao = $('#descricao').val();
         var id_aluno = $('#aluno_id').val();
+
+
+
+        if($('#nomeAluno').val() == '')
+        {
+            alert('O aluno é  obrigatório')
+            return;
+        }
 
         var tipo_entrada = $('input[name="tipo_entrada"]:checked').val();
 
@@ -242,9 +271,9 @@
                         $("#nomeAluno").val('')
                         $('#descricao').val('')
                         $('#aluno_id').val('')
-})              }
 
-
+                })
+            }
             },
             error: function(xhr, status, error){
                 // Callback de erro
@@ -253,27 +282,30 @@
         });
     })
 
-
-
 });
 
 
 
     $('#nomeAluno').on('keyup', function() {
         var query = $(this).val();
-        $('#aluno_select').show()
 
-        if (query.length >= 3) {
+        $('#aluno_select').hide()
 
+        if (query.length >= 3 && isNaN(query) )
+        {
+            $('#aluno_select').show()
             $.get(getUrlVendas() +'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
-                console.log(data)
+
                 var options = '<option></option>';
                 $.each(data, function(key, value) {
                     options += '<option selected data-empresa_origem='+value.empresa+' value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
                 });
                 $('#aluno_select').html(options);
             }, 'json');
+            return;
         }
+
+        getAlunoById(getUrlVendas(), empresaId, query)
     });
 
 
