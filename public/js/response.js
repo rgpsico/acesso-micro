@@ -70,10 +70,7 @@ function erro_004()
             $('#motivo-status').text(res.text)
         }
 
-        $("#matricula").val('');
-        $("#matricula").focus();
-        $('#buscar_aluno').focus()
-        $('#buscar_aluno').val('')
+
     }
 
 
