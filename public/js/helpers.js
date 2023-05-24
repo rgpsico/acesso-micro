@@ -13,9 +13,14 @@ function execultarApp()
 
 function formatarDataBr(data)
 {
-    let partes = data.split('-');
-    let dataBr = [partes[2], partes[1], partes[0]].join('/');
-    return dataBr;
+    try {
+        let partes = data.split('-');
+        let dataBr = [partes[2], partes[1], partes[0]].join('/');
+        return dataBr;
+    } catch (error) {
+
+    }
+
 }
 
 
