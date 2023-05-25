@@ -45,7 +45,11 @@ function erro_004()
             $("#motivo-status").removeClass('bg-danger bg-info  bg-warning ')
             $("#motivo-status").addClass('bg-success')
             $('#motivo-status').text("LIBERADO")
-            document.getElementById("liberado").play();
+
+            if(aConfiguracaoEstaAtiva(getUrlVendas(),empresaId, 'ativar_som_acesso')){
+                document.getElementById("liberado").play();
+            }
+
             showNotification()
             execultarApp()
         } else {

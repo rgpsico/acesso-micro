@@ -69,6 +69,56 @@ function pegarValorDaConfiguracaoPeloNome(vendas_url_local, idweb, nomeConfigura
 
 }
 
+function marcarCheckboxConfiguracaoById(vendas_url_local, idweb, nomeConfiguracao, elemento)
+{
+    var formattedId = String(idweb).padStart(3, '0');
+
+    try {
+        $.ajax({
+            type: 'GET',
+            url: vendas_url_local+''+ formattedId+'/configbyname',
+            data: {
+                configName:nomeConfiguracao
+            },
+            success: function(data)
+            {
+                if(data[nomeConfiguracao] == 1){
+                    $('#'+elemento).prop('checked', true);
+                }else {
+                    $('#'+elemento).prop('checked', false);
+                }
+            }
+        });
+
+    } catch (error) {
+
+    }
+
+}
+
+
+function aConfiguracaoEstaAtiva(vendas_url_local, idweb, nomeConfiguracao) {
+    var formattedId = String(idweb).padStart(3, '0');
+    var result = false; // default value
+
+    $.ajax({
+        type: 'GET',
+        async: false, // make the request synchronous
+        url: vendas_url_local + '' + formattedId + '/configbyname',
+        data: {
+            configName: nomeConfiguracao
+        },
+        success: function(data) {
+            result = data[nomeConfiguracao] == 1;
+        },
+        error: function() {
+            console.log("Error while trying to get the configuration value");
+        }
+    });
+
+    return result;
+}
+
 
 
 function menuFlutuante(vendas_url_local, idweb )

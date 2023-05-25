@@ -329,7 +329,7 @@ function getAlunoById(vendas_url_local, idweb, matricula)
                 {
                     $("#salvar").prop('disabled', true)
                     $('#modal_micro').fadeOut();
-                    $.get('http://127.0.0.1:8000/meu_endpoint', function(data){
+                    $.get(urlExe, function(data){
 
                         $('#password').removeClass('is-valid')
 
