@@ -327,8 +327,9 @@ function getAlunoById(vendas_url_local, idweb, matricula)
 
                 if(status == 'success')
                 {
+                    alert('Justificativa Salva com sucesso')
                     $("#salvar").prop('disabled', true)
-                    $('#modal_micro').fadeOut();
+
                     $.get(urlExe, function(data){
 
                         $('#password').removeClass('is-valid')
@@ -338,7 +339,7 @@ function getAlunoById(vendas_url_local, idweb, matricula)
                         $("#nomeAluno").val('')
                         $('#descricao').val('')
                         $('#aluno_id').val('')
-
+                        $('#modal_micro').fadeOut();
                 })
             }
             },

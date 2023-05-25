@@ -42,7 +42,6 @@ class ConfiguracaoControllerApi extends Controller
         ]);
 
 
-
         return response()->json(['status' => 'success', 'message' => 'Configuração atualizada com sucesso!']);
     }
 
