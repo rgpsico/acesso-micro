@@ -73,9 +73,11 @@ $('#inputField').on('input', function(e) {
 
 
     } else {
+
+        var formattedId = String(empresa).padStart(3, '0');
         $('#buscar').prop('disabled',true);
         $.ajax({
-            url: getUrlVendas() + empresa + '/aluno/byname',
+            url: getUrlVendas() + formattedId + '/aluno/byname',
             data: {
                 'name': inputVal
             },
