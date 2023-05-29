@@ -281,7 +281,11 @@ function loadCard()
 }
 
     const eMultifilial = (idweb) => {
-        $.get('api/legado/' + idweb + '/multifilial', function (data) {
+
+        var empresaFormate = String(idweb).padStart(3, '0');
+
+
+        $.get('api/legado/' + empresaFormate + '/multifilial', function (data) {
             if(data.length > 0){
 
                 return;
@@ -296,8 +300,10 @@ function loadCard()
 
 
         const getMultiFiliais = (idweb) => {
+
+
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
-                console.log(data)
+
                 $("#spinner").show()
                 try {
                     const newData = data.map(item => {
