@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AcessoController;
 use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GympassController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,9 @@ Route::prefix('admin')->group(function ()
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/gympass', [GympassController::class, 'index'])->name('home');
+
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/loginMicro/{idweb}/{name}', [HomeController::class, 'loginMicro'])->name('loginMicro');

@@ -5,22 +5,23 @@
 <div class="row">
     <input type="hidden" id="tempoReloadCard" >
 
-    <div class="form-group col-12 col-md-10 d-flex align-items-center">
+    <div class="form-group col-12 col-sm-12 d-flex align-items-center">
         <img src="" id="logo" alt="" height="40" width="100" class="img-fluid">
-        <select name="" id="select_id_filial" class="form-select mr-2 col-12 col-md-auto">
+        <select name="" id="select_id_filial" class="form-select" style="width:20%;" >
         </select>
 
+
         <input type="hidden" id="nativaId" class="form-control" >
-        <input id="inputField" type="text" class="form-control col-3" style="width:30%; border-radius:0;" placeholder="Buscar por Matricula ou Nome">
+        <input id="inputField" type="text" class="form-control" style="width:20%; margin-left:10px; border-radius:0;" placeholder="Buscar por Matricula ou Nome">
 
         <select id="selectField" class="form-control" style="width:20%; display: none; border-radius:0;"></select>
 
         <button class="btn-desktop" type="button" id="buscar" style="margin-left:5px; border-radius:0;">Buscar</button>
 
     </div>
-    <div class="col-1 my-4">
+    {{-- <div class="col-3 my-4">
         <span id="clock" class="col-1 bg-dark justify-content-end"></span>
-    </div>
+    </div> --}}
 
 
 
@@ -132,24 +133,18 @@ $('#inputField').on('input', function(e) {
 // });
 
 
-// function getTodosAlunos(url) {
-//     $.get(url, function(data) {
+function getTodosAlunos(url) {
+    $.get(url, function(data) {
+        console.log(data)
+        var selectizeControl = $('#alunos_multifilai');
 
-//         var selectizeControl = $('#alunos_multifilai')[0].selectize;
 
-//         // Limpar opções existentes
-//         selectizeControl.clearOptions();
 
-//         // Preencher o Selectize com os dados recebidos
-//         data.forEach(function(item) {
-//             selectizeControl.addOption({
-//                 manufacturer: item.manufacturer,
-//                 value: item.id,
-//                 name: item.id+ '-' +item.name
-//             });
-//         });
-//     });
-// }
+
+        // Preencher o Selectize com os dados recebidos
+
+    });
+}
 
 // Chamada de função para carregar os dados
 
@@ -170,9 +165,9 @@ $(document).on('change', '#select_id_filial', function(event) {
         }
 
 
-        //getEmpresasByIdweb(getUrlVendas(), formattedId)
+        getEmpresasByIdweb(getUrlVendas(), formattedId)
 
-        // getTodosAlunos(getUrlVendas()+formattedId+'/alunosmf');
+        getTodosAlunos(getUrlVendas()+formattedId+'/alunosmf');
 
 
     });

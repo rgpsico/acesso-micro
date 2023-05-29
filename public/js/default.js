@@ -51,10 +51,11 @@ $(document).ready(function(){
 
 
         $('#alunos_multifilai').on('change', function() {
+
             var selectedOption = $(this).find(':selected');
             $('#buscar_aluno').val(selectedOption.text());
             $('#matricula').val(selectedOption.val());
-            $('#alunos_multifilai').hide();
+            //$('#alunos_multifilai').hide();
         });
 
 
@@ -287,7 +288,7 @@ function loadCard()
             } else
             {
               //  getTodosAlunos(getUrlVendas()+idweb+'/alunosnaosaomf');
-                $('#select_id_filial').hide()
+                //$('#select_id_filial').hide()
               return;
             }
         });
@@ -296,6 +297,7 @@ function loadCard()
 
         const getMultiFiliais = (idweb) => {
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
+                console.log(data)
                 $("#spinner").show()
                 try {
                     const newData = data.map(item => {
