@@ -35,6 +35,8 @@ Route::prefix('legado')->group(function () {
 
 
 Route::post('validarGympass', [GympassController::class, 'validateAccess']);
+Route::get('alunosGympass', [GympassController::class, 'alunos']);
+Route::post('chekinStore', [GympassController::class, 'chekinStore']);
 
 Route::prefix('justificativa')->group(function () {
     Route::post('store', [JustificativaControllerApi::class, 'store']);

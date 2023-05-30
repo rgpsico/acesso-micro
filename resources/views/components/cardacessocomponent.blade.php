@@ -1,7 +1,13 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="container acesso">
-''
+<style>
+    .Gympass{
+        background:blue;
+        color:red;
+        font-size: 40px;
+    }
+    </style>
 <div class="row">
     <input type="hidden" id="tempoReloadCard" >
 
@@ -9,16 +15,29 @@
         <img src="" id="logo" alt="" height="40" width="100" class="img-fluid">
         <select name="" id="select_id_filial" class="form-select" style="width:20%;" >
         </select>
-
-
+    
         <input type="hidden" id="nativaId" class="form-control" >
         <input id="inputField" type="text" class="form-control" style="width:20%; margin-left:10px; border-radius:0;" placeholder="Buscar por Matricula ou Nome">
-
+    
         <select id="selectField" class="form-control" style="width:20%; display: none; border-radius:0;"></select>
-
+    
         <button class="btn-desktop" type="button" id="buscar" style="margin-left:5px; border-radius:0;">Buscar</button>
-
+    
+        <div style="width:20px; margin:10px;">
+            <input type="checkbox" class="form-control" id="gympassCheckbox" style="margin-left:5px;">
+        </div>
+    
+        <div style="margin:5px; width:50%;">
+            <select id="gympassSelect" class="form-control gympass-select" style="width:40%; display: none; border-radius:0;"></select>
+            <button id="searchButton" class="btn btn-success" style="display:none;">Buscar usuário Gympass</button>
+        </div>
     </div>
+    
+    <script>
+      
+    </script>
+    
+    
     {{-- <div class="col-3 my-4">
         <span id="clock" class="col-1 bg-dark justify-content-end"></span>
     </div> --}}
@@ -109,32 +128,6 @@ $('#inputField').on('input', function(e) {
 
 
 
-// var $select = $('#alunos_multifilai').selectize({
-//     options: [],
-
-//     optionGroupRegister: function (optgroup) {
-//     var capitalised = optgroup.charAt(0).toUpperCase() + optgroup.substring(1);
-
-//     var group = {
-//         label: 'Manufacturer: ' + capitalised
-//     };
-
-//     group[this.settings.optgroupValueField] = optgroup;
-
-//     return group;
-//     },
-
-//     optgroupField: 'manufacturer',
-
-//     labelField: 'name',
-
-//     //searchField: ['name', 'id'],
-
-//     sortField: 'name',
-//     openOnFocus: false,
-// });
-
-
 function getTodosAlunos(url) {
     $.get(url, function(data) {
         console.log(data)
@@ -194,6 +187,60 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         }
 
 
+
+
+        document.getElementById('gympassCheckbox').addEventListener('change', function() {
+            var gympassSelect = document.getElementById('gympassSelect');
+            var botaoBuscarGympass = document.getElementById('searchButton');
+            if (this.checked) {
+                gympassSelect.style.display = 'block';
+                botaoBuscarGympass.style.display ='block'
+            } else {
+                gympassSelect.style.display = 'none';
+                botaoBuscarGympass.style.display ='none'
+            }
+        });
+
+        $.get('/api/alunosGympass', function(data) {
+            // Preencha o menu suspenso com os dados retornados pela API
+            for (var i = 0; i < data.length; i++) {
+                var option = document.createElement('option');
+                option.value = data[i].gym_id;
+                option.text = data[i].first_name;
+                $('#gympassSelect').append(option);
+            }
+        });
+
+        // Quando o botão é pressionado, faça uma requisição POST com o ID selecionado
+     
+
+    $('#searchButton').click(function() {
+     var selectedId = $('#gympassSelect').val();
+     var selectedName = $('#gympassSelect option:selected').text();
+
+    $.ajax({
+        url: 'https://sandbox.partners.gympass.com/access/v1/validate',
+        type: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer testkey',
+            'X-Gym-Id': '1234'
+        },
+        data: JSON.stringify({ gympass_id: selectedId }),
+        success: function(response) {
+            $('.nome_Aluno1').text(selectedName);
+            $('#matricula-aluno').text(selectedId);
+            $('#descricaoPlano').text('Plano Gympass'); // Substitua por dados reais, se disponíveis
+            $('#data_venct').text('Vencimento Gympass'); // Substitua por dados reais, se disponíveis
+            $('#acessoMsg').text('Gympass'); // Substitua por dados reais, se disponíveis
+            $('#motivo-status').text('Liberado')
+            $('#motivo-status').removeClass('bg-danger bg-success bg-warning')
+            $('#motivo-status').addClass('bg-dark')
+        }
+    });
+});
+
+   
 
 
 

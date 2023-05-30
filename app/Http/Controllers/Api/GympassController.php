@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gympass;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class GympassController extends Controller
 {
+
+    protected $model;
+
+    public function __construct(Gympass $Gympass)
+    {
+        $this->model = $Gympass;
+    }
 
     public function validateAccess(Request $request)
     {
@@ -57,6 +65,67 @@ class GympassController extends Controller
         } catch (\Exception $e) {
             // Trate exceções aqui
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function alunos()
+    {
+        $model = new  Gympass();
+        return $model->all();
+    }
+
+    public function chekinStore(Request $request)
+    {
+
+        $data = $request->all();
+
+
+
+        ob_start();
+
+        // Envie a resposta 200
+        header('HTTP/1.1 200 OK');
+
+        header('Content-Type: application/json');
+
+        // Limpe e envie o buffer de saída
+        ob_end_flush();
+        flush();
+
+
+        // Agora você pode continuar a execução do script
+        $user = $this->model::where('email', $data['event_data']['user']['email'])
+            ->orWhere('phone_number', $data['event_data']['user']['phone_number'])
+            ->first();
+
+        if ($user) {
+            $atualizarGympass = $user->update(['gym_id' => $data['event_data']['gym']['id']]);
+            return response()->json(['message' => 'Usuario ja eta cadastrado o gym_id foi atualizado'], 201);
+        } else {
+            // O usuário não existe, então crie um novo registro
+            $checkin = $this->model::create([
+                'unique_token' => $data['event_data']['user']['unique_token'],
+                'event_type' => $data['event_type'],
+                'first_name' => $data['event_data']['user']['first_name'],
+                'last_name' => $data['event_data']['user']['last_name'],
+                'email' => $data['event_data']['user']['email'],
+                'phone_number' => $data['event_data']['user']['phone_number'],
+                'lat' => $data['event_data']['location']['lat'],
+                'lon' => $data['event_data']['location']['lon'],
+                'gym_id' => $data['event_data']['gym']['id'],
+                'gym_title' => $data['event_data']['gym']['title'],
+                'product_id' => $data['event_data']['gym']['product']['id'],
+                'product_description' => $data['event_data']['gym']['product']['description'],
+                'timestamp' =>  $data['event_data']['timestamp'],
+            ]);
+        }
+
+
+
+        if ($checkin) {
+            return response()->json(['message' => 'Check-in criado com sucesso, Aluno foi cadastrado na base da academia '], 201);
+        } else {
+            return response()->json(['message' => 'Failed to store check-in.'], 500);
         }
     }
 }
