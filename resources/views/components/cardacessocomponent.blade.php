@@ -10,7 +10,7 @@
     </style>
 <div class="row">
     <input type="hidden" id="tempoReloadCard" >
-
+    <input type="hidden" id="X-Gym-Id">
     <div class="form-group col-12 col-sm-12 d-flex align-items-center">
         <img src="" id="logo" alt="" height="40" width="100" class="img-fluid">
         <select name="" id="select_id_filial" class="form-select" style="width:20%;" >
@@ -218,7 +218,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
      var selectedId = $('#gympassSelect').val();
      var selectedName = $('#gympassSelect option:selected').text();
 
-    $.ajax({
+     $.ajax({
         url: 'https://sandbox.partners.gympass.com/access/v1/validate',
         type: 'POST',
         headers: {
@@ -228,6 +228,10 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         },
         data: JSON.stringify({ gympass_id: selectedId }),
         success: function(response) {
+            // Faça algo com a resposta aqui
+            console.log(response);
+
+            // Defina o conteúdo de texto dos elementos com os dados do aluno
             $('.nome_Aluno1').text(selectedName);
             $('#matricula-aluno').text(selectedId);
             $('#descricaoPlano').text('Plano Gympass'); // Substitua por dados reais, se disponíveis
@@ -236,6 +240,19 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
             $('#motivo-status').text('Liberado')
             $('#motivo-status').removeClass('bg-danger bg-success bg-warning')
             $('#motivo-status').addClass('bg-dark')
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 404) {
+                // Limpe todos os campos e defina o status para 'Não autorizado'
+                $('.nome_Aluno1').text(selectedName);
+                $('#matricula-aluno').text(selectedId);
+                $('#descricaoPlano').text('');
+                $('#data_venct').text('');
+                $('#acessoMsg').text('');
+                $('#motivo-status').text('Não autorizado')
+                $('#motivo-status').removeClass('bg-dark bg-success bg-warning')
+                $('#motivo-status').addClass('bg-danger')
+            }
         }
     });
 });

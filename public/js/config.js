@@ -16,7 +16,7 @@ menuFlutuante(getUrlVendas(), empresaId )
 
 
 pegarValorDaConfiguracaoPeloNome(getUrlVendas(), empresaId, 'tempo_reload_acesso', 'tempoReloadCard')
-
+pegarValorDaConfiguracaoPeloNome('', '', 'token_gympass', 'X-Gym-Id')
 
 function getUrlVendas() {
     const isHttps = window.location.href.startsWith('https');
