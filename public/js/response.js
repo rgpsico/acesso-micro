@@ -2,15 +2,12 @@
 function erro_004()
 {
     $('#foto_avatar').attr('src', '/img/defaultAvatarPng2.png')
-    $('#nomeAluno').text('')
+    $('.nome_Aluno1').text('')
     $("#matricula-aluno").text('')
     $('#motivo-status').text('')
-    $('#status').text('BLOQUEADO');
     $('#motivo-status').text('Aluno não encontrado');
     $('#motivo-status').removeClass('bg-success');
     $('#motivo-status').addClass('bg-danger');
-    $('#buscar_aluno').focus()
-    $('#buscar_aluno').val('')
 
 }
 
@@ -32,40 +29,40 @@ function erro_004()
 
     function success_response(res)
     {
+
         $('#foto_avatar').attr('src', res.photoUrl).on('error', function() {
             $(this).attr('src', '/img/defaultAvatarPng2.png');
         }).fadeIn();
 
-        if(res.released ==  true){
 
+        if(res.released ==  true){
             $('.nome_Aluno1').text(res.nome)
             $("#matricula-aluno").text(res.id)
-            $('#status').text('LIBERADO')
-            $(".message").removeClass('text-danger')
-            $(".message").addClass('text-success')
-            $("#motivo-status").removeClass('bg-danger')
-            $("#motivo-status").removeClass('bg-info')
-            $('#motivo-status').addClass('bg-success')
-            $('#data_venct').text(formatarDataBr(res.dueDate))
+            $('#descricaoPlano').text(res.descricaoPlano ?? 'Sem plano')
+            $('#data_venct').text(formatarDataBr(res.dueDate ?? ''))
+            $('.motivo-statu').text(res.text)
             $('#motivo-status').text(res.text)
-            $('.user-status').text(res.text)
-            $('#descricaoPlano').text(res.descricaoPlano)
-            $('#acessoMsg').text(res.acessoMsg)
-            document.getElementById("liberado").play();
+            $("#motivo-status").removeClass('bg-danger bg-info  bg-warning ')
+            $("#motivo-status").addClass('bg-success')
+            $('#motivo-status').text("LIBERADO")
+
+            if(aConfiguracaoEstaAtiva(getUrlVendas(),empresaId, 'ativar_som_acesso')){
+                document.getElementById("liberado").play();
+            }
+
             showNotification()
             execultarApp()
         } else {
+
             $('.nome_Aluno1').text(res.nome)
             $("#matricula-aluno").text(res.id)
-            $('#status').text(res.status)
-            $(".message").removeClass('text-success')
-            $(".message").addClass('text-danger')
-            $('#data_venct').text(formatarDataBr(res.dueDate))
-            $('#descricaoPlano').text(res.descricaoPlano)
-            $('#acessoMsg').text(res.text)
-            $('.user-status').text(res.text)
+            $('#descricaoPlano').text(res.descricaoPlano ?? 'Sem plano')
+            $('#data_venct').text(formatarDataBr(res.dueDate ?? ''))
             $('.motivo-statu').text(res.text)
-            document.getElementById("bloqueado").play();
+            $("#motivo-status").removeClass('bg-warning')
+            $("#motivo-status").addClass('bg-danger')
+            $('#motivo-status').text(res.text)
+
         }
 
         if(res.text == 'Cliente Vencido') {
@@ -78,10 +75,7 @@ function erro_004()
             $('#motivo-status').text(res.text)
         }
 
-        $("#matricula").val('');
-        $("#matricula").focus();
-        $('#buscar_aluno').focus()
-        $('#buscar_aluno').val('')
+
     }
 
 
@@ -99,7 +93,7 @@ function erro_004()
         $('#data_venct').text(' ')
         $('#acessoMsg').text('')
 
-        //$("#motivo-status").removeClass('bg-success')
-        //$('#motivo-status').addClass('bg-warning')
+        $("#motivo-status").removeClass('bg-success bg-danger ')
+        $('#motivo-status').addClass('bg-warning')
         $('#motivo-status').text('Espera')
     }

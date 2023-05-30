@@ -86,8 +86,14 @@
                         <label for="" class="form-label m-0 label-aluno">Alunos:</label>
                          <input type='txt' name="nomeAluno" id="nomeAluno"  class="form-control" autocomplete="off">
                          <input type='txt' name="aluno_id" id="aluno_id"  class="form-control" style="display:none;">
-                         <select name="aluno_select" id="aluno_select" class="form-control js-states" style="display:none;">
+
+                    </div>
+
+                    <div class="form-group col-6 quando_for_numero">
+                        <label for="" class="form-label m-0 label-aluno">Nome:</label>
+                        <select name="nomeAluno_by_matricula" id="nomeAluno_by_matricula" class="form-control js-states">
                         </select>
+                        <div id="message" style="display: none;"></div>
                     </div>
 
                     <x-justificativacomponent/>
@@ -114,6 +120,14 @@
 <script>
   $(document).ready(function(){
 
+    $(document).on({
+    ajaxStart: function() {
+        $("#message").show().text("Buscando aluno...");
+    },
+    ajaxStop: function() {
+        $("#message").text("Alunos localizados").delay(3000).fadeOut();
+    }
+});
     getJustificativas(getUrlVendas() , empresaId)
     getUsers(getUrlVendas() , empresaId)
 
@@ -145,6 +159,80 @@
 
 
 
+
+
+
+$('#nomeAluno').on('keyup', function() {
+    var query = $(this).val();
+    $("#nomeAluno_by_matricula").val('')
+
+    if (query.length >= 3 && isNaN(query) )
+    {
+        $('.quando_for_numero').show();
+        $('#nomeAluno_by_matricula').show()
+        $.get(getUrlVendas() +'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
+
+            var options = '<option></option>';
+            $.each(data, function(key, value) {
+                if(value.razao_social != ''){
+                    options += '<option selected data-empresa_origem='+value.empresa+' value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
+                }
+
+            });
+            $('#nomeAluno_by_matricula').html(options);
+        }, 'json');
+        return;
+    }
+
+    getAlunoById(getUrlVendas(), empresaId, query)
+});
+
+
+
+function getAlunoById(vendas_url_local, idweb, matricula)
+{
+
+    var formattedId = String(idweb).padStart(3, '0');
+    $.get(vendas_url_local+formattedId+'/aluno/justificativa/'+matricula+'/byid', function(data){
+
+
+        if(data.data.lenght == 0)
+         {
+            $('#nomeAluno_by_matricula').val('')
+            $('#aluno_id').val('')
+         }
+
+
+        $('#aluno_id').val(data.data.id);
+
+        var item = data.data;
+
+        $('#nomeAluno_by_matricula').append('<option value="' + item.id + '" data-name='+item.nome+'>' +item.id + '-' +item.nome + '</option>');
+    return;
+    });
+
+}
+
+
+
+
+
+
+
+
+    $('#nomeAluno').on('change', function() {
+        $("#nomeAluno_by_matricula").val('')
+    })
+
+
+    $('#nomeAluno_by_matricula').on('click', function() {
+        var selectedOption = $(this).find(':selected');
+        $('#nomeAluno').val(selectedOption.text());
+        $('#aluno_id').val(selectedOption.val());
+
+    });
+
+
     $('.tipo_entrada').click(function(){
 
         if($(this).val() == 'aluno')
@@ -163,6 +251,7 @@
     })
 
     $('#logar').click(function(){
+
     var selectedNome = $('#user').find(":selected").data("name");
     var token = $('meta[name="csrf-token"]').attr('content');
 
@@ -194,14 +283,21 @@
 
 
 
-        $(document).on('click', '#salvar', function(event) {
+    $(document).on('click', '#salvar', function(event) {
         event.preventDefault();
-
         var id_user = $('#user').val();
 
         var nome = $('#nome').val();
         var descricao = $('#descricao').val();
         var id_aluno = $('#aluno_id').val();
+
+
+
+        if($('#nomeAluno').val() == '')
+        {
+            alert('O aluno é  obrigatório')
+            return;
+        }
 
         var tipo_entrada = $('input[name="tipo_entrada"]:checked').val();
 
@@ -231,10 +327,11 @@
 
                 if(status == 'success')
                 {
+                    alert('Justificativa Salva com sucesso')
                     $("#salvar").prop('disabled', true)
 
-                    $.get('http://127.0.0.1:8000/meu_endpoint', function(data){
-                        $('#modal_micro').fadeOut();
+                    $.get(urlExe, function(data){
+
                         $('#password').removeClass('is-valid')
 
                         $('#user').val('')
@@ -242,9 +339,9 @@
                         $("#nomeAluno").val('')
                         $('#descricao').val('')
                         $('#aluno_id').val('')
-})              }
-
-
+                        $('#modal_micro').fadeOut();
+                })
+            }
             },
             error: function(xhr, status, error){
                 // Callback de erro
@@ -253,36 +350,11 @@
         });
     })
 
-
-
 });
 
 
 
-    $('#nomeAluno').on('keyup', function() {
-        var query = $(this).val();
-        $('#aluno_select').show()
 
-        if (query.length >= 3) {
-
-            $.get(getUrlVendas() +'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
-                console.log(data)
-                var options = '<option></option>';
-                $.each(data, function(key, value) {
-                    options += '<option selected data-empresa_origem='+value.empresa+' value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
-                });
-                $('#aluno_select').html(options);
-            }, 'json');
-        }
-    });
-
-
-    $('#aluno_select').on('click', function() {
-        var selectedOption = $(this).find(':selected');
-        $('#nomeAluno').val(selectedOption.text());
-        $('#aluno_id').val(selectedOption.val());
-        $('#aluno_select').hide()
-    });
 });
 
 

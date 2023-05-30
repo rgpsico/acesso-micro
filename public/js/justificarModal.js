@@ -30,7 +30,7 @@ $(document).ready(function(){
             const seconds = now.getSeconds().toString().padStart(2, "0");
 
             // Define o conteúdo do span com a hora e o minuto
-            clock.textContent = `${hours}:${minutes}:${seconds}`;
+            //clock.textContent = `${hours}:${minutes}:${seconds}`;
             }, 1000);
      } catch (error) {
 

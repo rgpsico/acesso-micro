@@ -4,33 +4,28 @@
 ''
 <div class="row">
     <input type="hidden" id="tempoReloadCard" >
-    <div class="col-12 col-md-1 d-flex align-items-center justify-content-center">
-      <img src="" id="logo" alt="" height="40" width="100" class="img-fluid mb-4 mx-auto">
-    </div>
-    <div class="form-group col-12 col-md-5 d-flex align-items-center my-2 mr-2">
-      <div class="input-group col-12">
-        <select name="" id="select_id_filial" class="form-select mr-2 col-12 col-md-auto" >
-        </select>
 
-        <input type="hidden" id="nativaId" class="form-control">
-        
-        <input id="inputField" type="text" class="form-control">
-        <select id="selectField" class="form-control" style="display: none;">
+    <div class="form-group col-12 col-sm-12 d-flex align-items-center">
+        <img src="" id="logo" alt="" height="40" width="100" class="img-fluid">
+        <select name="" id="select_id_filial" class="form-select" style="width:20%;" >
         </select>
 
 
-        <div class="col-12" style="position:absolute; right:0; width:250px; top:105%; z-index:10000;">
+        <input type="hidden" id="nativaId" class="form-control" >
+        <input id="inputField" type="text" class="form-control" style="width:20%; margin-left:10px; border-radius:0;" placeholder="Buscar por Matricula ou Nome">
 
-        </div>
-      </div>
-    </div>
+        <select id="selectField" class="form-control" style="width:20%; display: none; border-radius:0;"></select>
 
-    <div class="col-12 col-md-2 my-md-0 my-1 d-flex align-items-center">
-      <button class="btn-desktop" type="button" id="buscar">Buscar</button>
+        <button class="btn-desktop" type="button" id="buscar" style="margin-left:5px; border-radius:0;">Buscar</button>
+
     </div>
-    <div class="col-12 my-md-0 my-4 col-md-4 d-flex justify-content-end my-2 mr-2" style="margin-top:20px; text-align:center;">
-      <span id="clock" class="bg-dark d-flex"></span>
-    </div>
+    {{-- <div class="col-3 my-4">
+        <span id="clock" class="col-1 bg-dark justify-content-end"></span>
+    </div> --}}
+
+
+
+
   </div>
 
 
@@ -59,86 +54,97 @@
 <script>
 
 
-$('#inputField').on('input', function() {
-                var inputVal = $(this).val();
-                $('#selectField').empty()
-                // Se o valor é um número, esconda o campo de seleção
-                if ($.isNumeric(inputVal)) {
-                    $('#selectField').hide();
-                }
-                // Caso contrário, faça uma solicitação AJAX para a API
-                else {
-                    $.ajax({
-                        url: 'http://127.0.0.1:8000/api/acesso/byNome', // Substitua pelo URL da sua API
-                        data: {
-                            'nome': inputVal
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            var selectField = $('#selectField');
-                            selectField.show();
-                            selectField.empty();
+$('#inputField').on('input', function(e) {
 
-                            // Assumindo que 'data' é uma lista de opções
-                            $.each(data, function(index, item) {
-                                selectField.append($('<option>', {
-                                    value: item.id,
-                                    text : item.nome // ou o que quer que seja apropriado para o seu caso
-                                }));
-                            });
-                        },
-                        error: function() {
-                            alert('Erro ao obter dados da API');
-                        }
-                    });
-                }
-            });
-   
-  
+    var inputVal = $(this).val();
+
+    var empresa = $('#select_id_filial').val();
+
+    if (empresa == '')
+    {
+        empresa = $('#nativaId').val();
+    }
+
+    $('#selectField').empty();
+
+    if (inputVal.length < 3)
+    {
+        $('#selectField').hide();
 
 
-var $select = $('#alunos_multifilai').selectize({
-    options: [],
+    } else {
 
-    optionGroupRegister: function (optgroup) {
-    var capitalised = optgroup.charAt(0).toUpperCase() + optgroup.substring(1);
+        var formattedId = String(empresa).padStart(3, '0');
+        $('#buscar').prop('disabled',true);
+        $.ajax({
+            url: getUrlVendas() + formattedId + '/aluno/byname',
+            data: {
+                'name': inputVal
+            },
+            dataType: 'json',
+            success: function(data) {
 
-    var group = {
-        label: 'Manufacturer: ' + capitalised
-    };
 
-    group[this.settings.optgroupValueField] = optgroup;
+                var selectField = $('#selectField');
+                selectField.show();
+                selectField.empty();
 
-    return group;
-    },
-
-    optgroupField: 'manufacturer',
-
-    labelField: 'name',
-
-    //searchField: ['name', 'id'],
-
-    sortField: 'name',
-    openOnFocus: false,
+                // Assumindo que 'data' é uma lista de opções
+                $.each(data, function(index, item) {
+                    selectField.append($('<option>', {
+                        value: item.id_fornecedores_despesas,
+                        text: item.razao_social // ou o que quer que seja apropriado para o seu caso
+                    }));
+                });
+                $('#buscar').prop('disabled', false);
+            },
+            error: function() {
+                alert('Erro ao obter dados da API');
+            }
+        });
+    }
 });
+
+
+
+
+
+// var $select = $('#alunos_multifilai').selectize({
+//     options: [],
+
+//     optionGroupRegister: function (optgroup) {
+//     var capitalised = optgroup.charAt(0).toUpperCase() + optgroup.substring(1);
+
+//     var group = {
+//         label: 'Manufacturer: ' + capitalised
+//     };
+
+//     group[this.settings.optgroupValueField] = optgroup;
+
+//     return group;
+//     },
+
+//     optgroupField: 'manufacturer',
+
+//     labelField: 'name',
+
+//     //searchField: ['name', 'id'],
+
+//     sortField: 'name',
+//     openOnFocus: false,
+// });
 
 
 function getTodosAlunos(url) {
     $.get(url, function(data) {
+        console.log(data)
+        var selectizeControl = $('#alunos_multifilai');
 
-        var selectizeControl = $('#alunos_multifilai')[0].selectize;
 
-        // Limpar opções existentes
-        selectizeControl.clearOptions();
+
 
         // Preencher o Selectize com os dados recebidos
-        data.forEach(function(item) {
-            selectizeControl.addOption({
-                manufacturer: item.manufacturer,
-                value: item.id,
-                name: item.id+ '-' +item.name
-            });
-        });
+
     });
 }
 
@@ -161,7 +167,7 @@ $(document).on('change', '#select_id_filial', function(event) {
         }
 
 
-        //getEmpresasByIdweb(getUrlVendas(), formattedId)
+        getEmpresasByIdweb(getUrlVendas(), formattedId)
 
         getTodosAlunos(getUrlVendas()+formattedId+'/alunosmf');
 
@@ -183,7 +189,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
                 });
             });
 
-             getTodosAlunos(getUrlVendas()+idweb+'/alunosmf');
+            //  getTodosAlunos(getUrlVendas()+idweb+'/alunosmf');
 
         }
 

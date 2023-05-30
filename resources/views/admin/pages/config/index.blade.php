@@ -21,6 +21,7 @@
         <div class="col-12 p-2 d-flex  justify-content-end my-2 mr-2 " style="margin-top:20px; text-align:center; ">
             <span id="clock" class="bg-dark  d-flex" ></span>
         </div>
+
         <h1 style="color:#000; margin-top:10px;">Configuração de Controle de Acesso</h1>
 
         <div class="row bg-light">
@@ -30,6 +31,14 @@
                     <input class="form-check-input" type="checkbox" id="justificativa">
                 </div>
             </div>
+
+            <div class="col-md-6 col-6">
+                <div class="form-check form-switch  my-3">
+                    <label class="form-check-label" for="">Ativar Som  </label>
+                    <input class="form-check-input" type="checkbox" id="ativar_som_acesso">
+                </div>
+            </div>
+
 
 
         </div>
@@ -42,18 +51,26 @@
 @vite('resources/js/app.js')
 
 <script type="module">
-    function updateConfiguracao(nomeConfiguracao, status){
+
+marcarCheckboxConfiguracaoById(getUrlVendas(), empresaId, 'ativar_som_acesso', 'ativar_som_acesso')
+
+
+    function updateConfiguracao(urlVendas = getUrlVendas(), nomeConfiguracao, status, idweb){
+
+
         $.ajax({
-            url: '/api/configuracao/update',
-            type: 'PUT',
+            url: urlVendas+idweb+'/updateConfig',
+            type: 'POST',
+            'content-Type': 'json',
             data: {
-                nomeConfiguracao: nomeConfiguracao,
+                configName: nomeConfiguracao,
                 status: status
             },
             success: function(response){
+                console.log(response)
                 if(response.status == 'success')
                 {
-                    window.location.reload()
+                 alert(response.message)
                 }
 
             },
@@ -64,13 +81,24 @@
     }
 
 
+
+
+
+
 $(document).ready(function(){
 
 $(document).on('click', "#justificativa", function(){
 
     var status = $(this).prop('checked') ? 'on' : 'off';
-        updateConfiguracao('JUSTIFICATIVA', status)
+        updateConfiguracao(getUrlVendas(), 'JUSTIFICATIVA', status, empresaId)
     })
+
+$(document).on('click', "#ativar_som_acesso", function(){
+
+var status = $(this).prop('checked') ? 'on' : 'off';
+updateConfiguracao(getUrlVendas(),'ativar_som_acesso', status, empresaId)
+
+})
 
 
 

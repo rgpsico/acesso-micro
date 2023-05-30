@@ -5,11 +5,11 @@
 
     <!-- O spinner -->
 
-    <div id="spinner" class="text-center col-1" style="position:absolute; top:11%; right:48%; z-index:10000;">
+    {{-- <div id="spinner" class="text-center col-1" style="position:absolute; top:11%; right:48%; z-index:10000;">
         <div class="spinner-border" role="status">
           <span class="sr-only">Carregando...</span>
         </div>
-      </div>
+      </div> --}}
 
 
     <input type="hidden" name="cliente_id" id="cliente_id" value="">

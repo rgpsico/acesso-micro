@@ -51,10 +51,11 @@ $(document).ready(function(){
 
 
         $('#alunos_multifilai').on('change', function() {
+
             var selectedOption = $(this).find(':selected');
             $('#buscar_aluno').val(selectedOption.text());
             $('#matricula').val(selectedOption.val());
-            $('#alunos_multifilai').hide();
+            //$('#alunos_multifilai').hide();
         });
 
 
@@ -76,13 +77,14 @@ $(document).ready(function(){
         $(document).on('click', '#buscar', function(event)
         {
             var matricula = $('#inputField').val();
-           
+
             if(isNaN(matricula))
             {
                matricula = $('#selectField').val()
+
             }
-          
-          
+
+
             var empresa = $('#select_id_filial').val();
 
             if(empresa == '')
@@ -116,7 +118,7 @@ $(document).ready(function(){
 
             if(event.which == 13){
                 var matricula = $('#inputField').val();
-               
+
                 var empresa = $('#select_id_filial').val();
 
                 if(empresa == '')
@@ -124,6 +126,30 @@ $(document).ready(function(){
                    empresa = $('#nativaId').val()
 
                 }
+
+
+                if(isNaN(matricula))
+                {
+                   matricula = $('#selectField').val()
+
+                }
+
+
+                if(matricula == '')
+                {
+                    alert('Matricula não encontrada')
+                    return;
+                }
+
+
+                var empresa = $('#select_id_filial').val();
+
+                if(empresa == '')
+                {
+                   empresa = $('#nativaId').val()
+
+                }
+
 
                 var empresaFormate = String(empresa).padStart(3, '0');
 
@@ -196,11 +222,17 @@ $(document).ready(function(){
     }
 
 
-    function buscarByMatricula(vendas_url_local, empresaId, matricula, tipo_liberacao = 'multiflial')
+    function buscarByMatricula(vendas_url_local, empresaId, matricula, tipo_liberacao)
     {
         $("#spinner").show()
 
         $('#foto_avatar').fadeOut();;
+
+        if(matricula == '' || matricula == null)
+        {
+            alert('Matricula é Obrigatória')
+            return;
+        }
 
         $.ajax({
             url: vendas_url_local+'/'+empresaId+'/primeiroacessototal/'+matricula,
@@ -229,9 +261,9 @@ $(document).ready(function(){
         $("#spinner").hide()
       }
     });
-  
-    // $('#alunos_multifilai-selectized').focus();
-    // $('#alunos_multifilai-selectized').val('')
+
+     $('#inputField').focus();
+    $('#inputField').val('')
     loadCard()
 }
 
@@ -244,18 +276,23 @@ function loadCard()
 
     setTimeout(() => {
         limparCard()
+        $('#selectField').empty()
     },  segundos * 1000);
 }
 
     const eMultifilial = (idweb) => {
-        $.get('api/legado/' + idweb + '/multifilial', function (data) {
+
+        var empresaFormate = String(idweb).padStart(3, '0');
+
+
+        $.get('api/legado/' + empresaFormate + '/multifilial', function (data) {
             if(data.length > 0){
 
                 return;
             } else
             {
-                getTodosAlunos(getUrlVendas()+idweb+'/alunosnaosaomf');
-                $('#select_id_filial').hide()
+              //  getTodosAlunos(getUrlVendas()+idweb+'/alunosnaosaomf');
+                //$('#select_id_filial').hide()
               return;
             }
         });
@@ -263,7 +300,10 @@ function loadCard()
 
 
         const getMultiFiliais = (idweb) => {
+
+
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
+
                 $("#spinner").show()
                 try {
                     const newData = data.map(item => {
