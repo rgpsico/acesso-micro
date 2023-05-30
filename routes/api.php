@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AcessoControllerApi;
 use App\Http\Controllers\Api\AlunoControllerApi;
 use App\Http\Controllers\Api\ConfiguracaoControllerApi;
+use App\Http\Controllers\Api\GympassController;
 use App\Http\Controllers\Api\JustificativaControllerApi;
 use App\Http\Controllers\Api\LegadoControllerApi;
 use App\Http\Controllers\AuthController;
@@ -30,10 +31,10 @@ Route::prefix('acesso')->group(function () {
 Route::prefix('legado')->group(function () {
     Route::get('{idweb}/multifilial', [LegadoControllerApi::class, 'multiFilial']);
     Route::post('{idweb}/{nome}/{senha}', [LegadoControllerApi::class, 'authUrl']);
-
 });
 
 
+Route::post('validarGympass', [GympassController::class, 'validateAccess']);
 
 Route::prefix('justificativa')->group(function () {
     Route::post('store', [JustificativaControllerApi::class, 'store']);
@@ -51,12 +52,9 @@ Route::post('logout', [AuthController::class, 'logout']);
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'auth']);
-
 });
 
 
 Route::prefix('alunos')->group(function () {
     Route::get('byName', [AlunoControllerApi::class, 'byName']);
 });
-
-
