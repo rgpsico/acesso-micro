@@ -16,7 +16,8 @@ menuFlutuante(getUrlVendas(), empresaId )
 
 
 pegarValorDaConfiguracaoPeloNome(getUrlVendas(), empresaId, 'tempo_reload_acesso', 'tempoReloadCard')
-pegarValorDaConfiguracaoPeloNome('', '', 'token_gympass', 'X-Gym-Id')
+
+pegarValorDaConfigGympassPeloNome(getUrlVendas(), empresaId, 'filial', 'X-Gym-Id')
 
 function getUrlVendas() {
     const isHttps = window.location.href.startsWith('https');
@@ -96,6 +97,30 @@ function marcarCheckboxConfiguracaoById(vendas_url_local, idweb, nomeConfiguraca
 
 }
 
+function pegarValorDaConfigGympassPeloNome(vendas_url_local, idweb, nomeConfiguracao, elemento)
+{
+    var formattedId = String(idweb).padStart(3, '0');
+
+    try {
+        $.ajax({
+            type: 'GET',
+            url: vendas_url_local+''+ formattedId+'/gympass/config/byname',
+            data: {
+                configName:nomeConfiguracao
+            },
+
+            success: function(data)
+            {
+              var res = data;
+              $('#'+elemento).val(res[nomeConfiguracao])
+            }
+        });
+
+    } catch (error) {
+
+    }
+
+}
 
 function aConfiguracaoEstaAtiva(vendas_url_local, idweb, nomeConfiguracao) {
     var formattedId = String(idweb).padStart(3, '0');

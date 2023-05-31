@@ -96,7 +96,7 @@ $('#inputField').on('input', function(e) {
         var formattedId = String(empresa).padStart(3, '0');
         $('#buscar').prop('disabled',true);
         $.ajax({
-            url: getUrlVendas() + formattedId + '/aluno/byname',
+            url: 'http://localhost:8001/004/' + formattedId + '/aluno/byname',
             data: {
                 'name': inputVal
             },
@@ -200,8 +200,8 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
                 botaoBuscarGympass.style.display ='none'
             }
         });
-
-        $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
+        try {
+            $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
             // Preencha o menu suspenso com os dados retornados pela API
             for (var i = 0; i < data.length; i++) {
                 var option = document.createElement('option');
@@ -210,6 +210,11 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
                 $('#gympassSelect').append(option);
             }
         });
+
+        } catch (error) {
+
+        }
+
 
         // Quando o botão é pressionado, faça uma requisição POST com o ID selecionado
 
