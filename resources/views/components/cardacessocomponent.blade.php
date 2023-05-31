@@ -204,7 +204,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
 
 
 
-        $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
+        $.get('https://vendas.mufitness.com.br/'+EmpresaId+'gympass/checkin/list', function(data) {
             // Preencha o menu suspenso com os dados retornados pela API
             for (var i = 0; i < data.length; i++) {
                 var option = document.createElement('option');
