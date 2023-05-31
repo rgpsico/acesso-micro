@@ -201,8 +201,10 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
                 botaoBuscarGympass.style.display ='none'
             }
         });
-        try {
-              $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
+
+
+
+        $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
             // Preencha o menu suspenso com os dados retornados pela API
             for (var i = 0; i < data.length; i++) {
                 var option = document.createElement('option');
@@ -211,10 +213,6 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
                 $('#gympassSelect').append(option);
             }
         });
-
-        } catch (error) {
-
-        }
 
 
         // Quando o botão é pressionado, faça uma requisição POST com o ID selecionado
