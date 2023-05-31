@@ -15,29 +15,29 @@
         <img src="" id="logo" alt="" height="40" width="100" class="img-fluid">
         <select name="" id="select_id_filial" class="form-select" style="width:20%;" >
         </select>
-    
+
         <input type="hidden" id="nativaId" class="form-control" >
         <input id="inputField" type="text" class="form-control" style="width:20%; margin-left:10px; border-radius:0;" placeholder="Buscar por Matricula ou Nome">
-    
+
         <select id="selectField" class="form-control" style="width:20%; display: none; border-radius:0;"></select>
-    
+
         <button class="btn-desktop" type="button" id="buscar" style="margin-left:5px; border-radius:0;">Buscar</button>
-    
+
         <div style="width:20px; margin:10px;">
             <input type="checkbox" class="form-control" id="gympassCheckbox" style="margin-left:5px;">
         </div>
-    
+
         <div style="margin:5px; width:50%;">
             <select id="gympassSelect" class="form-control gympass-select" style="width:40%; display: none; border-radius:0;"></select>
             <button id="searchButton" class="btn btn-success" style="display:none;">Buscar usuário Gympass</button>
         </div>
     </div>
-    
+
     <script>
-      
+
     </script>
-    
-    
+
+
     {{-- <div class="col-3 my-4">
         <span id="clock" class="col-1 bg-dark justify-content-end"></span>
     </div> --}}
@@ -201,7 +201,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
             }
         });
 
-        $.get('/api/alunosGympass', function(data) {
+        $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
             // Preencha o menu suspenso com os dados retornados pela API
             for (var i = 0; i < data.length; i++) {
                 var option = document.createElement('option');
@@ -212,7 +212,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         });
 
         // Quando o botão é pressionado, faça uma requisição POST com o ID selecionado
-     
+
 
     $('#searchButton').click(function() {
      var selectedId = $('#gympassSelect').val();
@@ -257,7 +257,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
     });
 });
 
-   
+
 
 
 
