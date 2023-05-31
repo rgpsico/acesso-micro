@@ -11,6 +11,7 @@
 <div class="row">
     <input type="hidden" id="tempoReloadCard" >
     <input type="hidden" id="X-Gym-Id">
+    <input type="hidden" id="gympass-auth-token">
     <div class="form-group col-12 col-sm-12 d-flex align-items-center">
         <img src="" id="logo" alt="" height="40" width="100" class="img-fluid">
         <select name="" id="select_id_filial" class="form-select" style="width:20%;" >
@@ -228,7 +229,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         type: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer testkey',
+            'Authorization': 'Bearer '+$('#gympass-token').val(),
             'X-Gym-Id': $('#X-Gym-Id').val()
         },
         data: JSON.stringify({ gympass_id: selectedId }),

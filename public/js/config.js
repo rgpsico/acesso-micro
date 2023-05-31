@@ -19,6 +19,8 @@ pegarValorDaConfiguracaoPeloNome(getUrlVendas(), empresaId, 'tempo_reload_acesso
 
 pegarValorDaConfigGympassPeloNome(getUrlVendas(), empresaId, 'gym_number', 'X-Gym-Id')
 
+pegarValorDaConfigGympassPeloNome(getUrlVendas(), empresaId, 'auth_token', 'gympass-auth-token')
+
 function getUrlVendas() {
     const isHttps = window.location.href.startsWith('https');
 
