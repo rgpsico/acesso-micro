@@ -96,7 +96,7 @@ $('#inputField').on('input', function(e) {
         var formattedId = String(empresa).padStart(3, '0');
         $('#buscar').prop('disabled',true);
         $.ajax({
-            url: 'http://localhost:8001/004/' + formattedId + '/aluno/byname',
+            url: getUrlVendas() + formattedId + '/aluno/byname',
             data: {
                 'name': inputVal
             },
@@ -201,7 +201,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
             }
         });
         try {
-            $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
+              $.get(getUrlVendas()+'/'+EmpresaId+'gympass/checkin/list', function(data) {
             // Preencha o menu suspenso com os dados retornados pela API
             for (var i = 0; i < data.length; i++) {
                 var option = document.createElement('option');
