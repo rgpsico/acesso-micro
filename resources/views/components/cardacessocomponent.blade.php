@@ -229,7 +229,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer testkey',
-            'X-Gym-Id': '1234'
+            'X-Gym-Id': $('#X-Gym-Id').val()
         },
         data: JSON.stringify({ gympass_id: selectedId }),
         success: function(response) {
