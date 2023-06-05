@@ -77,10 +77,64 @@
 
 
 <script>
+// Função debounce
+function debounce(func, wait) {
+    var timeout;
+
+    return function executedFunction() {
+        var context = this;
+        var args = arguments;
+
+        var later = function() {
+          timeout = null;
+          func.apply(context, args);
+        };
+
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+// Função que faz a chamada para a API
+function apiCall(inputVal, empresa) {
+    var formattedId = String(empresa).padStart(3, '0');
+    $('#buscar').prop('disabled',true);
+
+    $.ajax({
+        url: getUrlVendas() + formattedId + '/aluno/byname',
+        data: {
+            'name': inputVal
+        },
+        dataType: 'json',
+        success: function(data) {
+            var selectField = $('#selectField');
+            selectField.show();
+            selectField.empty();
+
+            // Assumindo que 'data' é uma lista de opções
+            $.each(data, function(index, item) {
+                selectField.append($('<option>', {
+                    value: item.id_fornecedores_despesas,
+                    text: item.razao_social
+                }));
+            });
+            $('#buscar').prop('disabled', false);
+        },
+        error: function() {
+            alert('Erro ao obter dados da API');
+        }
+    });
+};
+
+// Criando a função debounced fora do manipulador de eventos
+var debouncedApiCall = debounce(apiCall, 500);
+
 $('#inputField').on('input', function(e) {
 
-    var inputVal = $(this).val();
+    $("#gympassSelect").hide()
+    $("#searchButton").hide()
 
+    var inputVal = $(this).val();
     var empresa = $('#select_id_filial').val();
 
     var isAllLetters = /^[a-zA-Z]*$/.test(inputVal);
@@ -95,45 +149,16 @@ $('#inputField').on('input', function(e) {
     if (inputVal.length < 3)
     {
         $('#selectField').hide();
-
-
-    } else {
-
-        var formattedId = String(empresa).padStart(3, '0');
-        $('#buscar').prop('disabled',true);
-
-        if(isAllLetters){
-        $.ajax({
-            url: getUrlVendas() + formattedId + '/aluno/byname',
-            data: {
-                'name': inputVal
-            },
-            dataType: 'json',
-            success: function(data) {
-
-
-                var selectField = $('#selectField');
-                selectField.show();
-                selectField.empty();
-
-                // Assumindo que 'data' é uma lista de opções
-                $.each(data, function(index, item) {
-                    selectField.append($('<option>', {
-                        value: item.id_fornecedores_despesas,
-                        text: item.razao_social // ou o que quer que seja apropriado para o seu caso
-                    }));
-                });
-                $('#buscar').prop('disabled', false);
-            },
-            error: function() {
-                alert('Erro ao obter dados da API');
-            }
-        });
     }
-
-
+    else
+    {
+        if(isAllLetters){
+            // Usando a função debounced
+            debouncedApiCall(inputVal, empresa);
+        }
     }
 });
+
 
 
 
@@ -200,9 +225,13 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
             if (this.checked) {
                 gympassSelect.style.display = 'block';
                 botaoBuscarGympass.style.display ='block'
+                $('#selectField').hide()
+                $('#inputField').val('')
             } else {
                 gympassSelect.style.display = 'none';
                 botaoBuscarGympass.style.display ='none'
+                botaoBuscarGympass.style.display ='none'
+
             }
         });
 
