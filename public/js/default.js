@@ -298,6 +298,10 @@ function loadCard()
 
             $.get('api/legado/' + idweb + '/multifilial', function (data) {
 
+                if(data.length == 0){
+                    $('#select_id_filial').hide()
+
+               }
                 $("#spinner").show()
                 try {
                     const newData = data.map(item => {
