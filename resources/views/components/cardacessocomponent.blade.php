@@ -48,7 +48,6 @@
 
   </div>
 
-
     <div class="card p-2">
         <div class="card-header text-center" style="min-height:300px; max-height:300px;">
             <img src="{{ asset('img/defaultAvatarPng2.png') }}"
@@ -71,14 +70,20 @@
 </div>
 </div>
 
+<script src="{{ asset('js/helpers.js') }}">
+
+</script>
+
+
+
 <script>
-
-
 $('#inputField').on('input', function(e) {
 
     var inputVal = $(this).val();
 
     var empresa = $('#select_id_filial').val();
+
+    var isAllLetters = /^[a-zA-Z]*$/.test(inputVal);
 
     if (empresa == '')
     {
@@ -96,6 +101,8 @@ $('#inputField').on('input', function(e) {
 
         var formattedId = String(empresa).padStart(3, '0');
         $('#buscar').prop('disabled',true);
+
+        if(isAllLetters){
         $.ajax({
             url: getUrlVendas() + formattedId + '/aluno/byname',
             data: {
@@ -123,6 +130,9 @@ $('#inputField').on('input', function(e) {
             }
         });
     }
+
+
+    }
 });
 
 
@@ -131,13 +141,7 @@ $('#inputField').on('input', function(e) {
 
 function getTodosAlunos(url) {
     $.get(url, function(data) {
-        console.log(data)
         var selectizeControl = $('#alunos_multifilai');
-
-
-
-
-        // Preencher o Selectize com os dados recebidos
 
     });
 }
@@ -205,7 +209,27 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
 
         const empresaIdLocal = localStorage.getItem('loginEmpresa')
 
-        $.get('https://vendas.mufitness.com.br/'+empresaIdLocal+'/gympass/checkin/list', function(data) {
+        function getUrl()
+        {
+            // pega a URL atual
+            const currentUrl = window.location.href;
+
+            // define as URLs para produção e local
+            const urlProducao = 'https://vendas.mufitness.com.br/';
+            const urlLocal = 'http://localhost:8001';
+
+            // verifica se a URL atual é a URL local
+            if (currentUrl.startsWith('http')) {
+                return urlLocal;
+            } else {
+                return urlProducao;
+            }
+        }
+
+// Agora você pode usar getUrl() para pegar a URL a
+
+
+        $.get(getUrl()+'/'+empresaIdLocal+'/gympass/checkin/list', function(data) {
             // Preencha o menu suspenso com os dados retornados pela API
             for (var i = 0; i < data.length; i++) {
                 var option = document.createElement('option');
@@ -228,15 +252,12 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         type: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+$('#gympass-token').val(),
+            'Authorization': 'Bearer '+$('#gympass-auth-token').val(),
             'X-Gym-Id': $('#X-Gym-Id').val()
         },
         data: JSON.stringify({ gympass_id: selectedId }),
         success: function(response) {
-            // Faça algo com a resposta aqui
-            console.log(response);
 
-            // Defina o conteúdo de texto dos elementos com os dados do aluno
             $('.nome_Aluno1').text(selectedName);
             $('#matricula-aluno').text(selectedId);
             $('#descricaoPlano').text('Plano Gympass'); // Substitua por dados reais, se disponíveis
@@ -248,7 +269,7 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (jqXHR.status == 404) {
-                // Limpe todos os campos e defina o status para 'Não autorizado'
+
                 $('.nome_Aluno1').text(selectedName);
                 $('#matricula-aluno').text(selectedId);
                 $('#descricaoPlano').text('');

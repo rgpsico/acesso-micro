@@ -102,14 +102,8 @@ $(document).ready(function(){
 
             buscarByMatricula(getUrlVendas(),empresaFormate, matricula, 'Manual')
 
-                  // Exemplo de dados a serem enviados
-                var data = {
-                    id_fornecedores_despesas: 1,
-                    id_web: 2,
-                    nativa: true
-                };
 
-             //cadastrarRedesQuandoForPrimeiroAcesso(vendas_url_local, data);
+            $('#selectField').empty()
         });
 
 

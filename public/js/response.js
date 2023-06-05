@@ -1,6 +1,7 @@
 
 function erro_004()
 {
+
     $('#foto_avatar').attr('src', '/img/defaultAvatarPng2.png')
     $('.nome_Aluno1').text('')
     $("#matricula-aluno").text('')

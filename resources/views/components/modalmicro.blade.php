@@ -162,30 +162,40 @@
 
 
 
-$('#nomeAluno').on('keyup', function() {
-    var query = $(this).val();
-    $("#nomeAluno_by_matricula").val('')
+$('#nomeAluno').on('click', (function() {
+    $("#nomeAluno_by_matricula").empty()
+}));
 
-    if (query.length >= 3 && isNaN(query) )
-    {
-        $('.quando_for_numero').show();
-        $('#nomeAluno_by_matricula').show()
-        $.get(getUrlVendas() +'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
+$('#nomeAluno').on('keyup', (function() {
+    var timeout;
 
-            var options = '<option></option>';
-            $.each(data, function(key, value) {
-                if(value.razao_social != ''){
-                    options += '<option selected data-empresa_origem='+value.empresa+' value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
-                }
+    return function(e) {
+        clearTimeout(timeout);
 
-            });
-            $('#nomeAluno_by_matricula').html(options);
-        }, 'json');
-        return;
-    }
+        var query = $(this).val();
 
-    getAlunoById(getUrlVendas(), empresaId, query)
-});
+
+        timeout = setTimeout(function() {
+            if (query.length >= 3 && isNaN(query)) {
+                $('.quando_for_numero').show();
+                $('#nomeAluno_by_matricula').show()
+                $.get(getUrlVendas() +'/'+empresaId+'/aluno/byname', { name: query }, function(data) {
+
+                    var options = '<option></option>';
+                    $.each(data, function(key, value) {
+                        if(value.razao_social != ''){
+                            options += '<option selected data-empresa_origem='+value.empresa+' value="' + value.id_fornecedores_despesas + '">' + value.razao_social + '</option>';
+                        }
+                    });
+                    $('#nomeAluno_by_matricula').html(options);
+                }, 'json');
+            } else {
+                getAlunoById(getUrlVendas(), empresaId, query)
+            }
+        }, 500);
+    };
+})());
+
 
 
 
@@ -283,7 +293,7 @@ function getAlunoById(vendas_url_local, idweb, matricula)
 
 
 
-    $(document).on('click', '#salvar', function(event) {
+$('#salvar').off('click').on('click', function(event) {
         event.preventDefault();
         var id_user = $('#user').val();
 
@@ -330,17 +340,14 @@ function getAlunoById(vendas_url_local, idweb, matricula)
                     alert('Justificativa Salva com sucesso')
                     $("#salvar").prop('disabled', true)
 
+                    $('#modal_micro').fadeOut();
+
                     $.get(urlExe, function(data){
 
-                        $('#password').removeClass('is-valid')
-
-                        $('#user').val('')
-                        $('#nome').val('')
-                        $("#nomeAluno").val('')
-                        $('#descricao').val('')
-                        $('#aluno_id').val('')
-                        $('#modal_micro').fadeOut();
                 })
+
+                limparInputs()
+
             }
             },
             error: function(xhr, status, error){
@@ -352,6 +359,19 @@ function getAlunoById(vendas_url_local, idweb, matricula)
 
 });
 
+
+function limparInputs()
+{
+    $('#password').removeClass('is-valid')
+    $('#nomeAluno_by_matricula').val('')
+    $('#user').val('')
+    $('#nome').val('')
+    $("#nomeAluno").val('')
+    $('#descricao').val('')
+    $('#aluno_id').val('')
+    $('#modal_micro').fadeOut();
+
+}
 
 
 

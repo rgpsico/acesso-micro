@@ -21,7 +21,8 @@ pegarValorDaConfigGympassPeloNome(getUrlVendas(), empresaId, 'gym_number', 'X-Gy
 
 pegarValorDaConfigGympassPeloNome(getUrlVendas(), empresaId, 'auth_token', 'gympass-auth-token')
 
-function getUrlVendas() {
+function getUrlVendas()
+{
     const isHttps = window.location.href.startsWith('https');
 
     if (isHttps) {
@@ -29,16 +30,20 @@ function getUrlVendas() {
     } else {
       return vendas_url_local;
     }
-  }
+}
 
 
 
-  function getUrlLegado() {
+  function getUrlLegado()
+  {
     const isHttps = window.location.href.startsWith('https');
 
-    if (isHttps) {
+    if (isHttps)
+    {
       return legado_url_producao;
-    } else {
+
+    } else
+    {
       return legado_url_local;
     }
   }
