@@ -277,13 +277,15 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
      var selectedId = $('#gympassSelect').val();
      var selectedName = $('#gympassSelect option:selected').text();
 
+     // 'Authorization': 'Bearer '+$('#gympass-auth-token').val(),
+
+
      $.ajax({
         url: 'https://sandbox.partners.gympass.com/access/v1/validate',
         type: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': $('#gympass-auth-token').val(),
-            // 'Authorization': 'Bearer '+$('#gympass-auth-token').val(),
             'X-Gym-Id': $('#X-Gym-Id').val()
         },
         data: JSON.stringify({ gympass_id: selectedId }),
