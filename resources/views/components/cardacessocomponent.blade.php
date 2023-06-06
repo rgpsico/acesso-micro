@@ -248,10 +248,10 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
             const urlLocal = 'http://localhost:8001';
 
             // verifica se a URL atual é a URL local
-            if (currentUrl.startsWith('http')) {
-                return urlLocal;
-            } else {
+            if (currentUrl.startsWith('https')) {
                 return urlProducao;
+            } else {
+                return urlLocal;
             }
         }
 
