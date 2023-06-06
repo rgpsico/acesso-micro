@@ -255,12 +255,13 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
             }
         }
 
-// Agora você pode usar getUrl() para pegar a URL a
 
 
-        $.get(getUrl()+'/'+empresaIdLocal+'/gympass/checkin/list', function(data) {
-            // Preencha o menu suspenso com os dados retornados pela API
-            for (var i = 0; i < data.length; i++) {
+        $.get(getUrl()+'/'+empresaIdLocal+'/gympass/checkin/list', function(data)
+        {
+
+            for (var i = 0; i < data.length; i++)
+            {
                 var option = document.createElement('option');
                 option.value = data[i].gym_id;
                 option.text = data[i].first_name;
@@ -281,7 +282,8 @@ function getEmpresasByIdweb(vendas_url_local, idweb)
         type: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+$('#gympass-auth-token').val(),
+            'Authorization': $('#gympass-auth-token').val(),
+            // 'Authorization': 'Bearer '+$('#gympass-auth-token').val(),
             'X-Gym-Id': $('#X-Gym-Id').val()
         },
         data: JSON.stringify({ gympass_id: selectedId }),
