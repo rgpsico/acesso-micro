@@ -245,7 +245,7 @@ $(document).ready(function(){
                 setTimeout(function() {
                     $("#buscar").prop("disabled", false);
                     bloquearEnter = false;
-                }, 5000);
+                }, 1000);
                 erro_004()
                 $("#spinner").hide()
             },
@@ -254,7 +254,7 @@ $(document).ready(function(){
                 setTimeout(function() {
                     $("#buscar").prop("disabled", false);
                     bloquearEnter = false;
-                }, 5000);
+                }, 1000);
                 erro_403()
                 $("#spinner").hide()
             }
