@@ -215,18 +215,22 @@ $(document).ready(function(){
 
     }
 
+    var bloquearEnter = false;
+    function buscarByMatricula(vendas_url_local, empresaId, matricula, tipo_liberacao) {
 
-    function buscarByMatricula(vendas_url_local, empresaId, matricula, tipo_liberacao)
-    {
         $("#spinner").show()
 
-        $('#foto_avatar').fadeOut();;
+        $('#foto_avatar').fadeOut();
 
-        if(matricula == '' || matricula == null)
-        {
+        if(matricula == '' || matricula == null) {
             alert('Matricula é Obrigatória')
             return;
         }
+
+
+        // Desabilitar botão buscar e tecla enter
+        $("#buscar").prop("disabled", true);
+
 
         $.ajax({
             url: vendas_url_local+'/'+empresaId+'/primeiroacessototal/'+matricula,
@@ -237,29 +241,53 @@ $(document).ready(function(){
             },
             statusCode: {
             404: function(data) {
+                bloquearEnter = true;
+                setTimeout(function() {
+                    $("#buscar").prop("disabled", false);
+                    bloquearEnter = false;
+                }, 5000);
                 erro_004()
                 $("#spinner").hide()
-
+            },
+            403: function(data) {
+                bloquearEnter = true;
+                setTimeout(function() {
+                    $("#buscar").prop("disabled", false);
+                    bloquearEnter = false;
+                }, 5000);
+                erro_403()
+                $("#spinner").hide()
+            }
         },
-        403: function(data) {
-            erro_403()
+        success: function(data) {
+            var res = data;
+            bloquearEnter = true;
+            success_response(res)
+            showNotification()
             $("#spinner").hide()
-          }
 
-      },
-      success: function(data) {
-        var res = data;
+            // Habilitar botão buscar e tecla enter após 5 segundos
+            setTimeout(function() {
+                $("#buscar").prop("disabled", false);
+                bloquearEnter = false;
+            }, 5000);
+        }
+        });
 
-        success_response(res)
-        showNotification()
-        $("#spinner").hide()
-      }
+        $('#inputField').focus();
+        $('#inputField').val('')
+        loadCard()
+    }
+
+    // Impedir tecla enter
+    $(window).keydown(function(event){
+
+        if(event.keyCode == 13 && bloquearEnter) {
+            event.preventDefault();
+            return false;
+        }
     });
 
-     $('#inputField').focus();
-    $('#inputField').val('')
-    loadCard()
-}
 
 
 
@@ -291,6 +319,9 @@ function loadCard()
             }
         });
     }
+
+
+
 
 
         const getMultiFiliais = (idweb) => {
