@@ -36,7 +36,8 @@ function erro_004()
         }).fadeIn();
 
 
-        if(res.released ==  true){
+        if(res.released ==  true)
+        {
             $('.nome_Aluno1').text(res.nome)
             $("#matricula-aluno").text(res.id)
             $('#descricaoPlano').text(res.descricaoPlano ?? 'Sem plano')
@@ -47,6 +48,7 @@ function erro_004()
             $("#motivo-status").addClass('bg-success')
             $('#motivo-status').text("LIBERADO")
 
+
             if(aConfiguracaoEstaAtiva(getUrlVendas(),empresaId, 'ativar_som_acesso')){
                 document.getElementById("liberado").play();
             }
@@ -56,8 +58,21 @@ function erro_004()
             }
 
             showNotification()
+            return;
 
         } else {
+
+            try {
+                gympass = JSON.parse(res);
+
+                if(verificarSeEGympass(gympass)){
+                 return;
+                }
+
+            } catch (error) {
+
+            }
+
 
             $('.nome_Aluno1').text(res.nome)
             $("#matricula-aluno").text(res.id)
@@ -67,6 +82,7 @@ function erro_004()
             $("#motivo-status").removeClass('bg-warning')
             $("#motivo-status").addClass('bg-danger')
             $('#motivo-status').text(res.text)
+            return;
 
         }
 
@@ -83,7 +99,14 @@ function erro_004()
 
     }
 
-
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
     function limparCard()
     {
@@ -101,4 +124,31 @@ function erro_004()
         $("#motivo-status").removeClass('bg-success bg-danger ')
         $('#motivo-status').addClass('bg-warning')
         $('#motivo-status').text('Espera')
+    }
+
+    function verificarSeEGympass(gympass)
+    {
+
+        $('.modal-body').empty();
+
+        if(gympass['metadata']['total'] == 1)
+        {
+            produto = gympass['results']['gym']['product']['description']
+            gympass_id = gympass['results']['user']['gympass_id']
+            let validated_at = gympass['results']['validated_at'];
+            var selectedId = $('#gympassSelect').val();
+
+
+
+
+        $('.nome_Aluno1').text('Aluno Gympass');
+        $('#matricula-aluno').text(selectedId);
+        $('#descricaoPlano').text(produto);
+        $('#data_venct').text(validated_at);
+        $('#acessoMsg').text('Gympass');
+        $('#motivo-status').text('Liberado')
+        $('#motivo-status').removeClass('bg-danger bg-warning')
+        $('#motivo-status').addClass('bg-success')
+        return true;
+        }
     }
