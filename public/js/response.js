@@ -51,8 +51,12 @@ function erro_004()
                 document.getElementById("liberado").play();
             }
 
+            if(aConfiguracaoEstaAtiva(getUrlVendas(),empresaId, 'liberar_catraca_rele')){
+                execultarApp()
+            }
+
             showNotification()
-            execultarApp()
+
         } else {
 
             $('.nome_Aluno1').text(res.nome)
